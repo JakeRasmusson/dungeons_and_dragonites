@@ -6,6 +6,19 @@ const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
 
 
+let monsterData = {}
+const monsterArray = [
+    'crab',
+    'mimic',
+    'minotaur',
+    'mammoth',
+    'ghost',
+    'zombie',
+    'flying-sword',
+    'awakened-tree'
+]
+    
+
 /* ------------------- FUNCTIONS FOR DICE ROLLS --------------------- */
 
 // One roll of a specified numbered die
@@ -108,6 +121,59 @@ function monsterWins() {
 }
 /* ------------------------------------------------------------------------------- */
 
+//Fetch
+
+//Get random monster
+function getRandomMonster() {
+    const randomIndex = Math.floor(Math.random() * (monsterArray.length))
+    console.log(monsterArray[randomIndex])
+    dNDFetchMonster(monsterArray[randomIndex])
+}
+
+
+//DND Fetch
+
+function dNDFetchMonster(monster) {
+    fetch(`https://www.dnd5eapi.co/api/monsters/${monster}`)
+        .then(function (response){
+            return response.json()
+        })
+        .then(function (data){
+            parseMonsterData(data)
+        })
+}
+
+function fetchPokemon() {
+        fetch(`https://pokeapi.co/api/v2/pokemon/ditto`)
+        .then(function (response){
+            return response.json()
+        })
+        .then(function (data){
+        })
+}
+
+/* ------------------------------------------------------------------------------*/
+
+function parseMonsterData(data) {
+    console.log(data)
+    monsterData.name = data.name
+    monsterData.hitPoints = data.hit_points
+    monsterData.dmgDice = data.actions[0].damage[0].damage_dice
+
+    
+    console.log(monsterData)
+
+
+}
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------------------- */
+
 
 // Init
 
@@ -123,3 +189,5 @@ attackBtn.addEventListener('click', function(e) {
     setTimeout(monsterHits, 2000)
     setTimeout(pokemonWins, 4000)
 })
+
+getRandomMonster()
