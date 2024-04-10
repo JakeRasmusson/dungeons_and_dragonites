@@ -4,9 +4,9 @@ const rollTotalSpan = document.getElementById('rollTotal')
 const diceImage = document.getElementById('diceImage')
 const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
-
-
+//Global object to be populated by parseMonsterData
 let monsterData = {}
+//Array for the current monsters added to the game
 const monsterArray = [
     'crab',
     'mimic',
@@ -155,12 +155,9 @@ function fetchPokemon() {
 /* ------------------------------------------------------------------------------*/
 
 function parseMonsterData(data) {
-    console.log(data)
     monsterData.name = data.name
     monsterData.hitPoints = data.hit_points
     monsterData.dmgDice = data.actions[0].damage[0].damage_dice
-
-    
     console.log(monsterData)
 
 
