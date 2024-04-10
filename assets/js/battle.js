@@ -5,7 +5,8 @@ const diceImage = document.getElementById('diceImage')
 const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
 
-//Global object to be populated by parseMonsterData
+//Global object to be populated by parseMonsterData/parsePokemonData
+let pokemonData = {}
 let monsterData = {}
 //Array for the current monsters added to the game
 const monsterArray = [
@@ -138,10 +139,15 @@ function getRandomMonster() {
     dNDFetchMonster(monsterArray[randomIndex])
 }
 
+function getRandomPokemon() {
+    const randomIndex = Math.floor(Math.random() * 151)
+    console.log(randomIndex)
+    fetchPokemon(randomIndex)
+}
 
 //DND Fetch
 
-function dNDFetchMonster(monster) {
+function FetchDNDMonster(monster) {
     fetch(`https://www.dnd5eapi.co/api/monsters/${monster}`)
         .then(function (response){
             return response.json()
@@ -157,22 +163,28 @@ function fetchPokemon(pokemon) {
             return response.json()
         })
         .then(function (data){
+            parsePokemonData(data)
         })
 }
 
 /* ------------------------------------------------------------------------------*/
-
+//Parse Fetch Data
 function parseMonsterData(data) {
-    monsterName = data.name
+    const monsterName = data.name
     monsterData.name = monsterName
     monsterData.hitPoints = data.hit_points
     monsterData.dmgDice = data.actions[0].damage[0].damage_dice
     monsterData.imgUrl = `/assets/images/${monsterName}`
-    console.log(monsterData)
-
 
 }
 
+function parsePokemonData(data) {
+    pokemonData.name = data.name
+    pokemonData.hp = data.stats[0].base_stat
+    pokemonData.attack = data.stats[1].base_stat
+    pokemonData.sprite = data.sprites.other.showdown.front_default
+
+}
 
 
 
