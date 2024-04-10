@@ -6,42 +6,42 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
     <title>DnD Battle</title>
 </head>
-<body class="transition-transform ease-in-out">
-    <header class="bg-base-300">
+<body class="bg-cover bg-no-repeat bg-center">
+    <header class=" bg-black bg-opacity-80 text-white">
         <h1 class="text-4xl sm:text-6xl text-center py-5">Battle 1</h1>
     </header>
-    <div class="flex justify-around w-full flex-row sm:text-3xl">
-        <div class="grid flex-grow h-[10vh] w-1/2 place-items-center text-center">
-            <h2>Pikachu</h2>
-            <h3 class="sm:text-2xl">HP: 38/50</h3>
-        </div> 
-        <div class="divider divider-horizontal"></div> 
-        <div class="grid flex-grow h-[10vh] w-1/2 place-items-center text-center">
-            <h2>Mimic</h2>
-            <h3 class="sm:text-2xl">HP: 32/55</h3>
-        </div>
-    </div>
-    <div class="flex justify-evenly w-full flex-row">
-        <div class="grid flex-1 max-w-lg aspect-square bg-base-300 rounded-box place-items-center ml-4 object-cover">
-            <img class="h-[75%] w-[75%] object-fill transition ease-in-out" src="assets/images/pikachu.png" id="pokemonImage" />
-        </div> 
-        <div class="divider divider-horizontal"></div> 
-        <div class="grid flex-1 max-w-lg aspect-square bg-base-300 rounded-box place-items-center mr-4">
-            <img class="h-[75%] w-[75%] object-fill transition ease-in-out" src="assets/images/minotaur.png" id="monsterImage" />
-        </div>
-    </div>
-
-    <div class="w-[50%] shadow-xl mx-auto my-5">
-        <button class="btn btn-primary w-[100%]" id="attackBtn">Attack!</button>
-    </div>
-    <div class="w-[50%] shadow-xl mx-auto max-w-96">
-            <div class="grid flex-1 aspect-square bg-base-300 rounded-box place-items-center relative">
-                <span class="absolute top-[36%] text-white font-bold" id="rollTotal"></span>
-                <img class="h-[75%] w-[75%] object-fill" id="diceImage" src="assets/images/d-20-roll.gif" />
+    <div class="py-5">
+        <div class="max-h-full flex justify-center w-full flex-row sm:text-3xl text-white font-bold">
+            <div class="grid flex-1 max-w-lg aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center ml-4 object-cover">
+                <div class="border-white border-b-2 w-full text-center sm:flex justify-between px-2 py-2">
+                    <h2>Pikachu</h2>
+                    <h3 class="sm:text-2xl">HP: 38/50</h3>
+                </div>
+                <div class="grid flex-1 h-[100%] w-[100%] max-w-lg aspect-square place-items-center">
+                    <img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="pokemonImage" src="assets/images/pikachu.png" />
+                </div>
             </div>
+            <div class="divider divider-horizontal mx-[5%]"></div>
+            <div class="grid flex-1 max-w-lg aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mr-4">
+                <div class="border-white border-b-2 w-full text-center sm:flex justify-between px-3 py-2">
+                    <h2>Minotaur</h2>
+                    <h3 class="sm:text-2xl">HP: 32/70</h3>
+                </div>
+                <div class="grid flex-1 h-[100%] w-[100%] max-w-lg aspect-square place-items-center">
+                    <img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="monsterImage" src="assets/images/minotaur.png" />
+                </div>
+            </div>
+        </div>
+        <div class="w-[50%] shadow-xl mx-auto my-5">
+            <button class="btn btn-primary w-[100%]" id="attackBtn">Attack!</button>
+        </div>
+        <div class="w-[50%] shadow-xl mx-auto max-w-96">
+                <div class="grid flex-1 aspect-square bg-base-300 bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center relative">
+                    <span class="absolute top-[36%] text-white font-bold" id="rollTotal"></span>
+                    <img class="h-[75%] w-[75%] object-fill transition ease-in-out" id="diceImage" alt="gif of a d20 spinning" src="assets/images/d-20-roll.gif" />
+                </div>
+        </div>
     </div>
-
-    
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/battle.js"></script>

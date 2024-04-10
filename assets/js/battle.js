@@ -4,6 +4,7 @@ const rollTotalSpan = document.getElementById('rollTotal')
 const diceImage = document.getElementById('diceImage')
 const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
+
 //Global object to be populated by parseMonsterData
 let monsterData = {}
 //Array for the current monsters added to the game
@@ -17,7 +18,14 @@ const monsterArray = [
     'flying-sword',
     'awakened-tree'
 ]
-    
+
+const bgArray = ['assets/images/dungeon-bg-1.png', 'assets/images/dungeon-bg-2.png', 'assets/images/dungeon-bg-3.png', 'assets/images/dungeon-bg-4.png', 'assets/images/dungeon-bg-5.png', 'assets/images/dungeon-bg-6.png']
+
+function setBackground() {
+    const choice = Math.floor(Math.random() * bgArray.length)
+    document.body.style = `background-image: url(${bgArray[choice]});`
+}
+
 
 /* ------------------- FUNCTIONS FOR DICE ROLLS --------------------- */
 
@@ -56,11 +64,11 @@ function pokemonHits() {
     
     setTimeout(function() {
         pokemonImage.classList.remove('translate-y-[25%]')
-        pokemonImage.classList.add('translate-x-[40%]')
+        pokemonImage.classList.add('translate-x-[100%]')
         toggleMonsterVisibility()
     }, 150)
     setTimeout(function() {
-        pokemonImage.classList.remove('translate-x-[40%]')
+        pokemonImage.classList.remove('translate-x-[100%]')
     }, 200)
     setTimeout(toggleMonsterVisibility, 400)
     setTimeout(toggleMonsterVisibility, 600)
@@ -73,11 +81,11 @@ function pokemonWins() {
     
     setTimeout(function() {
         pokemonImage.classList.remove('translate-y-[25%]')
-        pokemonImage.classList.add('translate-x-[40%]')
+        pokemonImage.classList.add('translate-x-[100%]')
         monsterImage.classList.add('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
     }, 150)
     setTimeout(function() {
-        pokemonImage.classList.remove('translate-x-[40%]')
+        pokemonImage.classList.remove('translate-x-[100%]')
     }, 200)
     setTimeout(toggleMonsterVisibility, 400)
     setTimeout(toggleMonsterVisibility, 600)
@@ -91,11 +99,11 @@ function monsterHits() {
     
     setTimeout(function() {
         monsterImage.classList.remove('translate-y-[25%]')
-        monsterImage.classList.add('-translate-x-[40%]')
+        monsterImage.classList.add('-translate-x-[100%]')
         togglePokemonVisibility()
     }, 150)
     setTimeout(function() {
-        monsterImage.classList.remove('-translate-x-[40%]')
+        monsterImage.classList.remove('-translate-x-[100%]')
     }, 200)
     setTimeout(togglePokemonVisibility, 400)
     setTimeout(togglePokemonVisibility, 600)
@@ -108,11 +116,11 @@ function monsterWins() {
     
     setTimeout(function() {
         monsterImage.classList.remove('translate-y-[25%]')
-        monsterImage.classList.add('-translate-x-[40%]')
+        monsterImage.classList.add('-translate-x-[100%]')
         pokemonImage.classList.add('origin-bottom','-rotate-90', 'translate-x-[25%]', '-translate-y-[25%]')
     }, 150)
     setTimeout(function() {
-        monsterImage.classList.remove('-translate-x-[40%]')
+        monsterImage.classList.remove('-translate-x-[100%]')
     }, 200)
     setTimeout(togglePokemonVisibility, 400)
     setTimeout(togglePokemonVisibility, 600)
@@ -175,6 +183,8 @@ function parseMonsterData(data) {
 
 
 // Init
+
+setBackground()
 
 // Event listener
 attackBtn.addEventListener('click', function(e) {
