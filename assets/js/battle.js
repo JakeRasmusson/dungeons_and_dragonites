@@ -5,6 +5,20 @@ const diceImage = document.getElementById('diceImage')
 const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
 
+//Global object to be populated by parseMonsterData
+let monsterData = {}
+//Array for the current monsters added to the game
+const monsterArray = [
+    'crab',
+    'mimic',
+    'minotaur',
+    'mammoth',
+    'ghost',
+    'zombie',
+    'flying-sword',
+    'awakened-tree'
+]
+
 const bgArray = ['assets/images/dungeon-bg-1.png', 'assets/images/dungeon-bg-2.png', 'assets/images/dungeon-bg-3.png', 'assets/images/dungeon-bg-4.png', 'assets/images/dungeon-bg-5.png', 'assets/images/dungeon-bg-6.png']
 
 function setBackground() {
@@ -113,6 +127,58 @@ function monsterWins() {
     setTimeout(togglePokemonVisibility, 800)
     setTimeout(togglePokemonVisibility, 1000)
 }
+/* ------------------------------------------------------------------------------- */
+
+//Fetch
+
+//Get random monster
+function getRandomMonster() {
+    const randomIndex = Math.floor(Math.random() * (monsterArray.length))
+    console.log(monsterArray[randomIndex])
+    dNDFetchMonster(monsterArray[randomIndex])
+}
+
+
+//DND Fetch
+
+function dNDFetchMonster(monster) {
+    fetch(`https://www.dnd5eapi.co/api/monsters/${monster}`)
+        .then(function (response){
+            return response.json()
+        })
+        .then(function (data){
+            parseMonsterData(data)
+        })
+}
+
+function fetchPokemon(pokemon) {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+        .then(function (response){
+            return response.json()
+        })
+        .then(function (data){
+        })
+}
+
+/* ------------------------------------------------------------------------------*/
+
+function parseMonsterData(data) {
+    monsterName = data.name
+    monsterData.name = monsterName
+    monsterData.hitPoints = data.hit_points
+    monsterData.dmgDice = data.actions[0].damage[0].damage_dice
+    monsterData.imgUrl = `/assets/images/${monsterName}`
+    console.log(monsterData)
+
+
+}
+
+
+
+
+
+
+
 /* ------------------------------------------------------------------------------- */
 
 
