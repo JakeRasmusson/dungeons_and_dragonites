@@ -143,8 +143,8 @@ function dNDFetchMonster(monster) {
         })
 }
 
-function fetchPokemon() {
-        fetch(`https://pokeapi.co/api/v2/pokemon/ditto`)
+function fetchPokemon(pokemon) {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then(function (response){
             return response.json()
         })
@@ -155,9 +155,11 @@ function fetchPokemon() {
 /* ------------------------------------------------------------------------------*/
 
 function parseMonsterData(data) {
-    monsterData.name = data.name
+    monsterName = data.name
+    monsterData.name = monsterName
     monsterData.hitPoints = data.hit_points
     monsterData.dmgDice = data.actions[0].damage[0].damage_dice
+    monsterData.imgUrl = `/assets/images/${monsterName}`
     console.log(monsterData)
 
 
@@ -186,5 +188,3 @@ attackBtn.addEventListener('click', function(e) {
     setTimeout(monsterHits, 2000)
     setTimeout(pokemonWins, 4000)
 })
-
-getRandomMonster()
