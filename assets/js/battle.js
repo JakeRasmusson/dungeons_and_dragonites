@@ -4,6 +4,12 @@ const rollTotalSpan = document.getElementById('rollTotal')
 const diceImage = document.getElementById('diceImage')
 const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
+const pokemonNameHeader = document.getElementById('pokemonNameHeader')
+const pokemonCurrentHpSpan = document.getElementById('pokemonCurrentHp')
+const pokemonTotalHpSpan = document.getElementById('pokemonTotalHp')
+const monsterNameHeader = document.getElementById('monsterNameHeader')
+const monsterCurrentHpSpan = document.getElementById('monsterCurrentHp')
+const monsterTotalHpSpan = document.getElementById('monsterTotalHp')
 
 //Global object to be populated by parseMonsterData/parsePokemonData
 let pokemonData = {}
@@ -29,11 +35,13 @@ function setBackground() {
 /* ------------------- FUNCTIONS FOR COMBAT--------------------- */
 function combatFunction(){
     playerTurn()
+    setMonsterCard()
     setTimeout(function(){    
     if (monsterData.currentHp <= 0) {
         victory()
     } else {
         monsterTurn()
+        setPokemonCard()
         if (pokemonData.currentHp <= 0) {
             defeat()
         }
@@ -214,6 +222,32 @@ function fetchPokemon(pokemon) {
 }
 
 /* ------------------------------------------------------------------------------*/
+
+// Render Pokemon and Monster
+function setPokemonImage() {
+    pokemonImage.src = pokemonData.sprite
+
+}
+
+function setPokemonCard() {
+    let pokemonName = pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)
+    pokemonNameHeader.innerText = pokemonName
+    pokemonCurrentHpSpan.innerText = `HP: ${pokemonData.currentHp}/`
+    pokemonTotalHpSpan.innerText = pokemonData.hp
+}
+
+function setMonsterCard() {
+    let monsterName = monsterData.name.charAt(0).toUpperCase() + monsterData.name.slice(1)
+    monsterNameHeader.innerText = monsterName
+    monsterCurrentHpSpan.innerText = `HP: ${monsterData.currentHp}/`
+    monsterTotalHpSpan.innerText = monsterData.hp
+}
+
+function setMonsterImage(){
+    monsterImage.src = monsterData.imgUrl
+
+}
+
 //Parse Fetch Data
 function parseMonsterData(data) {
     const monsterName = data.index
@@ -223,6 +257,7 @@ function parseMonsterData(data) {
     monsterData.dmgDice = data.actions[0].damage[0].damage_dice
     monsterData.imgUrl = `assets/images/${monsterName}.png`
     setMonsterImage()
+    setMonsterCard()
     splitDamageDice()
 
 }
@@ -234,19 +269,11 @@ function parsePokemonData(data) {
     pokemonData.attack = data.stats[1].base_stat
     pokemonData.sprite = data.sprites.other.showdown.front_default
     setPokemonImage()
+    setPokemonCard()
     console.log(pokemonData.name)
 
 }
 
-function setPokemonImage() {
-    pokemonImage.src = pokemonData.sprite
-
-}
-
-function setMonsterImage(){
-    monsterImage.src = monsterData.imgUrl
-
-}
 
 
 /* ------------------------------------------------------------------------------- */
