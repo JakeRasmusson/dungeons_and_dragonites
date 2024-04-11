@@ -1,20 +1,55 @@
-// Set DOM variables
+/* ------------ SET DOM VARIABLES --------------------------------------------- */
+// Buttons
 const attackBtn = document.getElementById('attackBtn')
 const healthPotionBtn = document.getElementById('healthBtn')
 const increaseAttackBtn = document.getElementById('increaseAttackBtn')
 const postFightButtons = document.querySelectorAll('.post-fight-btn')
+// Roll result rendering
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceImage = document.getElementById('diceImage')
+// Character images
 const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
+// Character Cards
 const pokemonNameHeader = document.getElementById('pokemonNameHeader')
 const pokemonCurrentHpSpan = document.getElementById('pokemonCurrentHp')
 const pokemonTotalHpSpan = document.getElementById('pokemonTotalHp')
 const monsterNameHeader = document.getElementById('monsterNameHeader')
 const monsterCurrentHpSpan = document.getElementById('monsterCurrentHp')
 const monsterTotalHpSpan = document.getElementById('monsterTotalHp')
+// Modals
+const improvePokemonModal = document.getElementById('improvePokemonModal')
+const highScoreModal = document.getElementById('highScoreModal')
+/* ---------------------------------------------------------------------------- */
+
+/* ------------ MODAL POP-UPS ------------------------------------------------- */
+
+function showImproveModal() {
+    improvePokemonModal.showModal()
+    function stopEscape(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+    }
+    document.addEventListener('keydown', stopEscape)
+}
+function showHighScoreModal() {
+    highScoreModal.showModal()
+    function stopEscape(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+    }
+    document.addEventListener('keydown', stopEscape)
+}
+/* ---------------------------------------------------------------------------- */
+
+/* ------------ OBJECTS, ARRAYS, VARIABLES ------------------------------------ */
+// Total score
 let score = 0
-//Global object to be populated by parseMonsterData/parsePokemonData
+//Global objects to be populated by parseMonsterData/parsePokemonData
 let pokemonData = {}
 let monsterData = {}
 let monsterDice = {}
@@ -28,28 +63,20 @@ const monsterArray = [
     'flying-sword',
     'awakened-tree'
 ]
+// Background dungeon image array
+const bgArray = [
+    'assets/images/dungeon-bg-1.png',
+    'assets/images/dungeon-bg-2.png',
+    'assets/images/dungeon-bg-3.png',
+    'assets/images/dungeon-bg-4.png',
+    'assets/images/dungeon-bg-5.png',
+    'assets/images/dungeon-bg-6.png'
+]
+/* ---------------------------------------------------------------------------- */
 
-const bgArray = ['assets/images/dungeon-bg-1.png', 'assets/images/dungeon-bg-2.png', 'assets/images/dungeon-bg-3.png', 'assets/images/dungeon-bg-4.png', 'assets/images/dungeon-bg-5.png', 'assets/images/dungeon-bg-6.png']
-
-function showPostFightButtons() {
-    for (const btn of postFightButtons) {
-        btn.classList.remove('hidden')
-    }
-}
-
-function hidePostFightButtons() {
-    for (const btn of postFightButtons) {
-        btn.classList.add('hidden')
-    }
-}
-
-function setBackground() {
-    const choice = Math.floor(Math.random() * bgArray.length)
-    document.body.style = `background-image: url(${bgArray[choice]});`
-}
-/* ------------------- FUNCTIONS FOR COMBAT--------------------- */
+/* ------------ FUNCTIONS FOR COMBAT ------------------------------------------ */
+// Pokemon attacks first, then monster if monster is still alive, then check for pokemon hp
 function combatFunction(){
-    hidePostFightButtons()
     playerTurn()
     setMonsterCard()
     setTimeout(function(){    
@@ -62,35 +89,34 @@ function combatFunction(){
             defeat()
         }
     }}, 2000)
-
 }
-
+// Pokemon attack
 function playerTurn(){
-    const dmgModifier = pokemonData.attack / 20
+    const dmgModifier = Math.round(pokemonData.attack / 20)
     const attackDmg = rollDice(20) * dmgModifier
     pokemonHits()
     monsterData.currentHp -= attackDmg
 }
-
+// Monster attack
 function monsterTurn(){
     const attackDmg = damageRoll(monsterDice.numberOfRolls, monsterDice.diceMax, monsterDice.additionalDmg)
     monsterHits()
     pokemonData.currentHp -= attackDmg
     console.log(pokemonData.currentHp)
 }
-
+// Victory
 function victory() {
     console.log('You have done it')
     score++
-    pokemonWins()
-    showPostFightButtons()
+    showImproveModal()
 }
-
+// Defeat
 function defeat() {
     console.log('You kind of smell')
-    monsterWins()
+    // Need to add function to check if score is high score
+    showHighScoreModal()
 }
-
+// Take health potion
 function healthPotion() {
     pokemonData.currentHp += 20
     if (pokemonData.currentHp > pokemonData.hp) {
@@ -100,13 +126,15 @@ function healthPotion() {
     getRandomMonster()
     console.log(pokemonData.currentHp)
 }
-
+// Increase pokemon attack
 function increaseAttack() {
     pokemonData.attack += 2
     getRandomMonster()
     console.log(pokemonData.attack)
 }
-/* ------------------- FUNCTIONS FOR DICE ROLLS --------------------- */
+/* ---------------------------------------------------------------------------- */
+
+/* ------------ FUNCTIONS FOR DICE ROLLS -------------------------------------- */
 //Split monster damageDice string
 function splitDamageDice() {
     const dmgDice = monsterData.dmgDice
@@ -124,7 +152,6 @@ function rollDice(number) {
     console.log(result)
     return result
 }
-
 // Multiple rolls of the same numbered die
 function damageRoll(numberofRolls, diceMax, additionalDmg) {
     let result = 0;
@@ -137,7 +164,7 @@ function damageRoll(numberofRolls, diceMax, additionalDmg) {
 }
 /* ------------------------------------------------------------------------- */
 
-/* ------------------- FUNCTIONS FOR BATTLE ANIMATIONS --------------------- */
+/* ------------ FUNCTIONS FOR BATTLE ANIMATIONS ------------------------------- */
 
 // Toggle whether pokemon image is visible so it can flash in and out
 function togglePokemonVisibility() {
@@ -147,11 +174,15 @@ function togglePokemonVisibility() {
 function toggleMonsterVisibility() {
     monsterImage.classList.toggle('invisible');
 };
-
-// Pokemon hits monster, does not take monster to 0 HP
+// Pokemon hits monster
 function pokemonHits() {
     pokemonImage.classList.add('translate-y-[25%]')
     
+    setTimeout(function() {
+        if (monsterData.currentHp <= 0) {
+            monsterImage.classList.add('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
+        }
+    }, 50)
     setTimeout(function() {
         pokemonImage.classList.remove('translate-y-[25%]')
         pokemonImage.classList.add('translate-x-[100%]')
@@ -164,29 +195,15 @@ function pokemonHits() {
     setTimeout(toggleMonsterVisibility, 600)
     setTimeout(toggleMonsterVisibility, 800)
 }
-
-// Pokemon hits monster to 0 HP
-function pokemonWins() {
-    pokemonImage.classList.add('translate-y-[25%]')
-    
-    setTimeout(function() {
-        pokemonImage.classList.remove('translate-y-[25%]')
-        pokemonImage.classList.add('translate-x-[100%]')
-        monsterImage.classList.add('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
-    }, 150)
-    setTimeout(function() {
-        pokemonImage.classList.remove('translate-x-[100%]')
-    }, 200)
-    setTimeout(toggleMonsterVisibility, 400)
-    setTimeout(toggleMonsterVisibility, 600)
-    setTimeout(toggleMonsterVisibility, 800)
-    setTimeout(toggleMonsterVisibility, 1000)
-}
-
-// Monster hits pokemon, does not take pokemon to 0 HP
+// Monster hits pokemon
 function monsterHits() {
     monsterImage.classList.add('translate-y-[25%]')
     
+    setTimeout(function() {
+        if (pokemonData.currentHp <= 0) {
+            pokemonImage.classList.add('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
+        }
+    }, 50)
     setTimeout(function() {
         monsterImage.classList.remove('translate-y-[25%]')
         monsterImage.classList.add('-translate-x-[100%]')
@@ -199,33 +216,14 @@ function monsterHits() {
     setTimeout(togglePokemonVisibility, 600)
     setTimeout(togglePokemonVisibility, 800)
 }
-
-// Monster hits pokemon to 0 HP
-function monsterWins() {
-    monsterImage.classList.add('translate-y-[25%]')
-    
-    setTimeout(function() {
-        monsterImage.classList.remove('translate-y-[25%]')
-        monsterImage.classList.add('-translate-x-[100%]')
-        pokemonImage.classList.add('origin-bottom','-rotate-90', 'translate-x-[25%]', '-translate-y-[25%]')
-    }, 150)
-    setTimeout(function() {
-        monsterImage.classList.remove('-translate-x-[100%]')
-    }, 200)
-    setTimeout(togglePokemonVisibility, 400)
-    setTimeout(togglePokemonVisibility, 600)
-    setTimeout(togglePokemonVisibility, 800)
-    setTimeout(togglePokemonVisibility, 1000)
-}
 /* ------------------------------------------------------------------------------- */
 
-//Fetch
-
-//Get random monster
+/* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
+//Get random characters
 function getRandomMonster() {
     const randomIndex = Math.floor(Math.random() * (monsterArray.length))
     console.log(monsterArray[randomIndex])
-    FetchDNDMonster(monsterArray[randomIndex])
+    fetchDNDMonster(monsterArray[randomIndex])
 }
 
 function getRandomPokemon() {
@@ -233,9 +231,8 @@ function getRandomPokemon() {
     fetchPokemon(randomIndex)
 }
 
-//DND Fetch
-
-function FetchDNDMonster(monster) {
+// Fetch from APIs
+function fetchDNDMonster(monster) {
     fetch(`https://www.dnd5eapi.co/api/monsters/${monster}`)
         .then(function (response){
             return response.json()
@@ -255,14 +252,23 @@ function fetchPokemon(pokemon) {
         })
 }
 
-/* ------------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------------------------*/
 
-// Render Pokemon and Monster
+/* ------------ FUNCTIONS FOR RENDERING CHARACTERS AND BG --------------------- */
+// Set Background
+function setBackground() {
+    const choice = Math.floor(Math.random() * bgArray.length)
+    document.body.style = `background-image: url(${bgArray[choice]});`
+}
+// Set Character Images
 function setPokemonImage() {
     pokemonImage.src = pokemonData.sprite
-
 }
 
+function setMonsterImage(){
+    monsterImage.src = monsterData.imgUrl
+}
+// Set Character Cards
 function setPokemonCard() {
     let pokemonName = pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)
     pokemonNameHeader.innerText = pokemonName
@@ -271,6 +277,7 @@ function setPokemonCard() {
     }
     pokemonCurrentHpSpan.innerText = `HP: ${pokemonData.currentHp}/`
     pokemonTotalHpSpan.innerText = pokemonData.hp
+    pokemonImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
 }
 
 function setMonsterCard() {
@@ -281,14 +288,12 @@ function setMonsterCard() {
     }
     monsterCurrentHpSpan.innerText = `HP: ${monsterData.currentHp}/`
     monsterTotalHpSpan.innerText = monsterData.hp
+    monsterImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
 }
+/* ---------------------------------------------------------------------------- */
 
-function setMonsterImage(){
-    monsterImage.src = monsterData.imgUrl
-
-}
-
-//Parse Fetch Data
+/* ------------ FUNCTIONS FOR CREATING CHARACTERS ----------------------------- */
+//Parse Monster Fetch Data
 function parseMonsterData(data) {
     const monsterName = data.index
     monsterData.name = monsterName
@@ -301,7 +306,7 @@ function parseMonsterData(data) {
     splitDamageDice()
 
 }
-
+// Parse Pokemon Fetch Data
 function parsePokemonData(data) {
     pokemonData.name = data.name
     pokemonData.hp = data.stats[0].base_stat
@@ -313,36 +318,30 @@ function parsePokemonData(data) {
     console.log(pokemonData.name)
 
 }
+/* ---------------------------------------------------------------------------- */
 
-
-
-/* ------------------------------------------------------------------------------- */
-
-
-// Init
-
+/* ------------ INIT ---------------------------------------------------------- */
+// Render characters and background on start
 setBackground()
 getRandomMonster()
 getRandomPokemon()
 
-// Event listener
+// Event listeners
 attackBtn.addEventListener('click', function(e) {
     // These roll parameters will change based on attack
     rollTotalSpan.innerText = rollTotal
     diceImage.src = 'assets/images/d-20-still.png'
     diceImage.alt = 'image of a d20'
-    // Will remove these - this is just to show how the animations look
     combatFunction()
 })
 
 healthPotionBtn.addEventListener('click', function(e) {
-    hidePostFightButtons()
     healthPotion()
 
 })
 
 increaseAttackBtn.addEventListener('click', function(e) {
-    hidePostFightButtons()
     increaseAttack()
 
 })
+/* ---------------------------------------------------------------------------- */
