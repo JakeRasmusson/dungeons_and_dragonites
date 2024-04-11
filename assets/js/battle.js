@@ -13,7 +13,7 @@ const pokemonTotalHpSpan = document.getElementById('pokemonTotalHp')
 const monsterNameHeader = document.getElementById('monsterNameHeader')
 const monsterCurrentHpSpan = document.getElementById('monsterCurrentHp')
 const monsterTotalHpSpan = document.getElementById('monsterTotalHp')
-
+let score = 0
 //Global object to be populated by parseMonsterData/parsePokemonData
 let pokemonData = {}
 let monsterData = {}
@@ -81,6 +81,7 @@ function monsterTurn(){
 
 function victory() {
     console.log('You have done it')
+    score++
     pokemonWins()
     showPostFightButtons()
 }
@@ -92,11 +93,17 @@ function defeat() {
 
 function healthPotion() {
     pokemonData.currentHp += 20
+    if (pokemonData.currentHp > pokemonData.hp) {
+        pokemonData.currentHp = pokemonData.hp
+    }
+    setPokemonCard()
+    getRandomMonster()
     console.log(pokemonData.currentHp)
 }
 
 function increaseAttack() {
     pokemonData.attack += 2
+    getRandomMonster()
     console.log(pokemonData.attack)
 }
 /* ------------------- FUNCTIONS FOR DICE ROLLS --------------------- */
