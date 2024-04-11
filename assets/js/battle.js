@@ -32,10 +32,10 @@ function setBackground() {
 //Split monster damageDice string
 function splitDamageDice() {
     const dmgDice = monsterData.dmgDice
-    const numberOfRolls = dmgDice.split('d')[0]
+    const numberOfRolls = parseInt(dmgDice.split('d')[0])
     const dmgDice2 = dmgDice.split('d')[1]
-    const diceMax = dmgDice2.split('+')[0]
-    const additionalDmg = dmgDice2.split('+')[1]
+    const diceMax = parseInt(dmgDice2.split('+')[0])
+    const additionalDmg = parseInt(dmgDice2.split('+')[1])
     monsterDice.numberOfRolls = numberOfRolls
     monsterDice.diceMax = diceMax
     monsterDice.additionalDmg = additionalDmg
@@ -48,11 +48,12 @@ function rollDice(number) {
 }
 
 // Multiple rolls of the same numbered die
-function multiRoll(rolls, number) {
+function damageRoll(numberofRolls, diceMax, additionalDmg) {
     let result = 0;
-    for (let i = 0; i < rolls; i++) {
-        result += rollDice(number)
+    for (let i = 0; i < numberofRolls; i++) {
+        result += rollDice(diceMax)
     }
+    result += additionalDmg
     console.log("Total: " + result)
     return result
 }
