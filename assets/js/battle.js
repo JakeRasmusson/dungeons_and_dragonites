@@ -63,6 +63,11 @@ let monsterData = {}
 let monsterDice = {}
 //Array for the current monsters added to the game
 const monsterArray = [
+    'clay-golem',
+    'fire-giant',
+    'giant-ape',
+    'giant-crab',
+    'pit-fiend',
     'mimic',
     'minotaur',
     'mammoth',
@@ -379,11 +384,13 @@ function displayBattleCount() {
 /* ------------ FUNCTIONS FOR CREATING CHARACTERS ----------------------------- */
 //Parse Monster Fetch Data
 function parseMonsterData(data) {
+    console.log(data.actions)
+    const damageDice = data.actions[0].name == 'Multiattack'? data.actions[1].damage[0].damage_dice : data.actions[0].damage[0].damage_dice
     const monsterName = data.index
     monsterData.name = monsterName
     monsterData.hp = data.hit_points
     monsterData.currentHp = data.hit_points
-    monsterData.dmgDice = data.actions[0].damage[0].damage_dice
+    monsterData.dmgDice = damageDice
     monsterData.imgUrl = `assets/images/${monsterName}.png`
     setMonsterImage()
     setMonsterCard()
