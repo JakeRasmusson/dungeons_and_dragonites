@@ -294,7 +294,7 @@ function parseMonsterData(data) {
     monsterData.name = monsterName
     monsterData.hp = data.hit_points
     monsterData.currentHp = data.hit_points
-    monsterData.dmgDice = data.actions[0].damage[0].damage_dice
+    monsterData.dmgDice = data.actions[0].damage[0].damage_dice || data.actions[1].damage[0].damage_dice
     monsterData.imgUrl = `assets/images/${monsterName}.png`
     setMonsterImage()
     setMonsterCard()
