@@ -8,9 +8,9 @@ const monsterImage = document.getElementById('monsterImage')
 //Global object to be populated by parseMonsterData/parsePokemonData
 let pokemonData = {}
 let monsterData = {}
+let monsterDice = {}
 //Array for the current monsters added to the game
 const monsterArray = [
-    'crab',
     'mimic',
     'minotaur',
     'mammoth',
@@ -29,7 +29,17 @@ function setBackground() {
 
 
 /* ------------------- FUNCTIONS FOR DICE ROLLS --------------------- */
-
+//Split monster damageDice string
+function splitDamageDice() {
+    const dmgDice = monsterData.dmgDice
+    const numberOfRolls = dmgDice.split('d')[0]
+    const dmgDice2 = dmgDice.split('d')[1]
+    const diceMax = dmgDice2.split('+')[0]
+    const additionalDmg = dmgDice2.split('+')[1]
+    monsterDice.numberOfRolls = numberOfRolls
+    monsterDice.diceMax = diceMax
+    monsterDice.additionalDmg = additionalDmg
+}
 // One roll of a specified numbered die
 function rollDice(number) {
     let result = Math.ceil(Math.random() * number)
@@ -136,7 +146,7 @@ function monsterWins() {
 function getRandomMonster() {
     const randomIndex = Math.floor(Math.random() * (monsterArray.length))
     console.log(monsterArray[randomIndex])
-    dNDFetchMonster(monsterArray[randomIndex])
+    FetchDNDMonster(monsterArray[randomIndex])
 }
 
 function getRandomPokemon() {
@@ -175,6 +185,7 @@ function parseMonsterData(data) {
     monsterData.hitPoints = data.hit_points
     monsterData.dmgDice = data.actions[0].damage[0].damage_dice
     monsterData.imgUrl = `/assets/images/${monsterName}`
+    splitDamageDice()
 
 }
 
@@ -197,6 +208,7 @@ function parsePokemonData(data) {
 // Init
 
 setBackground()
+getRandomMonster()
 
 // Event listener
 attackBtn.addEventListener('click', function(e) {
