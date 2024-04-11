@@ -26,8 +26,44 @@ function setBackground() {
     const choice = Math.floor(Math.random() * bgArray.length)
     document.body.style = `background-image: url(${bgArray[choice]});`
 }
+/* ------------------- FUNCTIONS FOR COMBAT--------------------- */
+function combatFunction(){
+    playerTurn()
+    setTimeout(function(){    
+    if (monsterData.currentHp <= 0) {
+        victory()
+    } else {
+        monsterTurn()
+        if (pokemonData.currentHp <= 0) {
+            defeat()
+        }
+    }}, 2000)
 
+}
 
+function playerTurn(){
+    const dmgModifier = pokemonData.attack / 20
+    const attackDmg = rollDice(20) * dmgModifier
+    pokemonHits()
+    monsterData.currentHp -= attackDmg
+}
+
+function monsterTurn(){
+    const attackDmg = damageRoll(monsterDice.numberOfRolls, monsterDice.diceMax, monsterDice.additionalDmg)
+    monsterHits()
+    pokemonData.currentHp -= attackDmg
+    console.log(pokemonData.currentHp)
+}
+
+function victory() {
+    console.log('You have done it')
+    pokemonWins()
+}
+
+function defeat() {
+    console.log('You kind of smell')
+    monsterWins()
+}
 /* ------------------- FUNCTIONS FOR DICE ROLLS --------------------- */
 //Split monster damageDice string
 function splitDamageDice() {
@@ -152,7 +188,6 @@ function getRandomMonster() {
 
 function getRandomPokemon() {
     const randomIndex = Math.floor(Math.random() * 151)
-    console.log(randomIndex)
     fetchPokemon(randomIndex)
 }
 
@@ -181,11 +216,13 @@ function fetchPokemon(pokemon) {
 /* ------------------------------------------------------------------------------*/
 //Parse Fetch Data
 function parseMonsterData(data) {
-    const monsterName = data.name
+    const monsterName = data.index
     monsterData.name = monsterName
-    monsterData.hitPoints = data.hit_points
+    monsterData.hp = data.hit_points
+    monsterData.currentHp = data.hit_points
     monsterData.dmgDice = data.actions[0].damage[0].damage_dice
-    monsterData.imgUrl = `/assets/images/${monsterName}`
+    monsterData.imgUrl = `assets/images/${monsterName}.png`
+    setMonsterImage()
     splitDamageDice()
 
 }
@@ -193,14 +230,23 @@ function parseMonsterData(data) {
 function parsePokemonData(data) {
     pokemonData.name = data.name
     pokemonData.hp = data.stats[0].base_stat
+    pokemonData.currentHp = data.stats[0].base_stat
     pokemonData.attack = data.stats[1].base_stat
     pokemonData.sprite = data.sprites.other.showdown.front_default
+    setPokemonImage()
+    console.log(pokemonData.name)
 
 }
 
+function setPokemonImage() {
+    pokemonImage.src = pokemonData.sprite
 
+}
 
+function setMonsterImage(){
+    monsterImage.src = monsterData.imgUrl
 
+}
 
 
 /* ------------------------------------------------------------------------------- */
@@ -210,16 +256,14 @@ function parsePokemonData(data) {
 
 setBackground()
 getRandomMonster()
+getRandomPokemon()
 
 // Event listener
 attackBtn.addEventListener('click', function(e) {
     // These roll parameters will change based on attack
-    const rollTotal = multiRoll(6, 8)
     rollTotalSpan.innerText = rollTotal
     diceImage.src = 'assets/images/d-20-still.png'
     diceImage.alt = 'image of a d20'
     // Will remove these - this is just to show how the animations look
-    pokemonHits()
-    setTimeout(monsterHits, 2000)
-    setTimeout(pokemonWins, 4000)
+    combatFunction()
 })
