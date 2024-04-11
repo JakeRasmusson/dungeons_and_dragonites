@@ -266,6 +266,9 @@ function setPokemonImage() {
 function setPokemonCard() {
     let pokemonName = pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)
     pokemonNameHeader.innerText = pokemonName
+    if (pokemonData.currentHp <= 0) {
+        pokemonData.currentHp = 0
+    }
     pokemonCurrentHpSpan.innerText = `HP: ${pokemonData.currentHp}/`
     pokemonTotalHpSpan.innerText = pokemonData.hp
 }
@@ -273,6 +276,9 @@ function setPokemonCard() {
 function setMonsterCard() {
     let monsterName = monsterData.name.charAt(0).toUpperCase() + monsterData.name.slice(1)
     monsterNameHeader.innerText = monsterName
+    if (monsterData.currentHp <= 0) {
+        monsterData.currentHp = 0
+    }
     monsterCurrentHpSpan.innerText = `HP: ${monsterData.currentHp}/`
     monsterTotalHpSpan.innerText = monsterData.hp
 }
