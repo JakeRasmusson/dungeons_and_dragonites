@@ -34,8 +34,7 @@
         </div>
         <div class="w-[50%] shadow-xl mx-auto my-5">
             <button class="btn btn-primary w-[100%]" id="attackBtn">Attack!</button>
-            <button class="post-fight-btn btn btn-primary hidden w-[100%]" id="healthBtn">Increase Health</button>
-            <button class="post-fight-btn btn btn-primary hidden w-[100%]" id="increaseAttackBtn">Increase Attack</button>
+            
             
         </div>
         <div class="w-[50%] shadow-xl mx-auto max-w-96">
@@ -45,6 +44,21 @@
                 </div>
         </div>
     </div>
+
+    <!-- Open the modal using ID.showModal() method -->
+<dialog id="improvePokemonModal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Hello!</h3>
+    <p class="py-4">You win! Would you like to heal your Pokemon or increase attack power?</p>
+    <div class="flex flex-col">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="post-fight-btn btn btn-primary w-[100%] my-5" id="healthBtn">Increase Health</button>
+        <button class="post-fight-btn btn btn-primary w-[100%] my-5" id="increaseAttackBtn">Increase Attack</button>
+      </form>
+    </div>
+  </div>
+</dialog>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/battle.js"></script>
