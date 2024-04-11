@@ -1,13 +1,16 @@
 /* ------------ SET DOM VARIABLES --------------------------------------------- */
+// Top Header
+const battleCountEl = document.getElementById('battleCountEl')
 // Buttons
 const attackBtn = document.getElementById('attackBtn')
 const healthPotionBtn = document.getElementById('healthBtn')
 const increaseAttackBtn = document.getElementById('increaseAttackBtn')
 const postFightButtons = document.querySelectorAll('.post-fight-btn')
-// Roll result rendering
+// Dice Images
 const rollTotalSpan = document.getElementById('rollTotal')
-const diceImage = document.getElementById('diceImage')
-// Character images
+const diceRollingImage = document.getElementById('diceRollingImage')
+const diceStillImage = document.getElementById('diceStillImage')
+// Character Images
 const pokemonImage = document.getElementById('pokemonImage')
 const monsterImage = document.getElementById('monsterImage')
 // Character Cards
@@ -17,6 +20,11 @@ const pokemonTotalHpSpan = document.getElementById('pokemonTotalHp')
 const monsterNameHeader = document.getElementById('monsterNameHeader')
 const monsterCurrentHpSpan = document.getElementById('monsterCurrentHp')
 const monsterTotalHpSpan = document.getElementById('monsterTotalHp')
+// Roll Results
+const rollTypeEl = document.getElementById('rollTypeEl')
+const rollTotalEl = document.getElementById('rollTotalEl')
+const damageModEl = document.getElementById('damageModEl')
+const rollDamageEl = document.getElementById('rollDamageEl')
 // Modals
 const improvePokemonModal = document.getElementById('improvePokemonModal')
 const highScoreModal = document.getElementById('highScoreModal')
@@ -78,13 +86,13 @@ const bgArray = [
 // Pokemon attacks first, then monster if monster is still alive, then check for pokemon hp
 function combatFunction(){
     playerTurn()
-    setMonsterCard()
+    
     setTimeout(function(){    
     if (monsterData.currentHp <= 0) {
         victory()
     } else {
         monsterTurn()
-        setPokemonCard()
+        
         if (pokemonData.currentHp <= 0) {
             defeat()
         }
@@ -93,16 +101,32 @@ function combatFunction(){
 // Pokemon attack
 function playerTurn(){
     const dmgModifier = Math.round(pokemonData.attack / 20)
-    const attackDmg = rollDice(20) * dmgModifier
-    pokemonHits()
+    const thisRoll = rollDice(20)
+    const attackDmg = thisRoll * dmgModifier
+    resultsReset()
+    rollRender(thisRoll)
+    setTimeout(function() {
+        pokemonHits()
+        resultsRender('1d20', thisRoll, dmgModifier, attackDmg)
+        setMonsterCard()
+    }, 1500)
     monsterData.currentHp -= attackDmg
+    console.log('Damage: ' + attackDmg);
+    console.log('Damage mod: ' + dmgModifier);
 }
 // Monster attack
 function monsterTurn(){
-    const attackDmg = damageRoll(monsterDice.numberOfRolls, monsterDice.diceMax, monsterDice.additionalDmg)
-    monsterHits()
+    const thisRoll = damageRoll(monsterDice.numberOfRolls, monsterDice.diceMax, monsterDice.additionalDmg)
+    const attackDmg = thisRoll
+    resultsReset()
+    rollRender(thisRoll)
+    setTimeout(function() {
+        monsterHits()
+        resultsRender(monsterData.dmgDice, (thisRoll - monsterDice.additionalDmg), monsterDice.additionalDmg, attackDmg)
+        setPokemonCard()
+    }, 1500)
     pokemonData.currentHp -= attackDmg
-    console.log(pokemonData.currentHp)
+    console.log('Damage: ' + attackDmg)
 }
 // Victory
 function victory() {
@@ -123,12 +147,14 @@ function healthPotion() {
         pokemonData.currentHp = pokemonData.hp
     }
     setPokemonCard()
+    displayBattleCount()
     getRandomMonster()
     console.log(pokemonData.currentHp)
 }
 // Increase pokemon attack
 function increaseAttack() {
     pokemonData.attack += 2
+    displayBattleCount()
     getRandomMonster()
     console.log(pokemonData.attack)
 }
@@ -216,6 +242,48 @@ function monsterHits() {
     setTimeout(togglePokemonVisibility, 600)
     setTimeout(togglePokemonVisibility, 800)
 }
+// Get random number between -150 and 150 for dice bounces
+function randomNumber() {
+    const posOrNeg = Math.round(Math.random()) * 2 -1
+    const randomInt = Math.ceil(Math.random() * 150)
+    const randomNumber = posOrNeg * randomInt
+    return randomNumber
+}
+// Set random translations for dice bounces
+function randomBounce() {
+    const randomX = randomNumber();
+    const randomY = randomNumber();
+    diceRollingImage.classList.add(`translate-x-[${randomX}%]`)
+    diceRollingImage.classList.add(`translate-y-[${randomY}%]`)
+}
+// Reset both dice images
+function diceImageReset() {
+    diceRollingImage.className = 'h-[25%] w-[25%] object-fill transition ease-in-out'
+    diceStillImage.className = 'h-[75%] w-[75%] object-fill transition ease-in-out hidden'
+}
+// Toggle dice gif visibility
+function diceRollingVisibility() {
+    diceRollingImage.classList.toggle('hidden');
+};
+// Toggle dice image visibility
+function diceStillVisibility() {
+    diceStillImage.classList.toggle('hidden');
+};
+// Roll dice gif then display roll result on dice image
+function rollRender(roll) {
+    rollTotalSpan.innerText = ''
+    diceImageReset()
+    randomBounce()
+    setTimeout(randomBounce, 200)
+    setTimeout(randomBounce, 400)
+    setTimeout(randomBounce, 600)
+    setTimeout(randomBounce, 800)
+    setTimeout(function() {
+        diceRollingVisibility()
+        diceStillVisibility()
+        rollTotalSpan.innerText = roll
+    }, 1200)
+}
 /* ------------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
@@ -264,7 +332,6 @@ function setBackground() {
 function setPokemonImage() {
     pokemonImage.src = pokemonData.sprite
 }
-
 function setMonsterImage(){
     monsterImage.src = monsterData.imgUrl
 }
@@ -279,7 +346,6 @@ function setPokemonCard() {
     pokemonTotalHpSpan.innerText = pokemonData.hp
     pokemonImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
 }
-
 function setMonsterCard() {
     let monsterName = monsterData.name.charAt(0).toUpperCase() + monsterData.name.slice(1)
     monsterNameHeader.innerText = monsterName
@@ -289,6 +355,24 @@ function setMonsterCard() {
     monsterCurrentHpSpan.innerText = `HP: ${monsterData.currentHp}/`
     monsterTotalHpSpan.innerText = monsterData.hp
     monsterImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
+}
+// Render Roll Results
+function resultsRender(type, total, modifier, damage) {
+    rollTypeEl.innerText = `Roll Type: ${type}`
+    rollTotalEl.innerText = `Roll Total: ${total}`
+    damageModEl.innerText = `Damage Mod: ${modifier}`
+    rollDamageEl.innerText = `Damage: ${damage}`
+}
+// Reset Roll Results 
+function resultsReset() {
+    rollTypeEl.innerText = ''
+    rollTotalEl.innerText = ''
+    damageModEl.innerText = ''
+    rollDamageEl.innerText = ''
+}
+// Render Battle Count Header
+function displayBattleCount() {
+    battleCountEl.innerText = `Battle ${score + 1}`
 }
 /* ---------------------------------------------------------------------------- */
 
@@ -323,25 +407,20 @@ function parsePokemonData(data) {
 /* ------------ INIT ---------------------------------------------------------- */
 // Render characters and background on start
 setBackground()
+displayBattleCount()
 getRandomMonster()
 getRandomPokemon()
 
 // Event listeners
 attackBtn.addEventListener('click', function(e) {
-    // These roll parameters will change based on attack
-    rollTotalSpan.innerText = rollTotal
-    diceImage.src = 'assets/images/d-20-still.png'
-    diceImage.alt = 'image of a d20'
     combatFunction()
 })
 
 healthPotionBtn.addEventListener('click', function(e) {
     healthPotion()
-
 })
 
 increaseAttackBtn.addEventListener('click', function(e) {
     increaseAttack()
-
 })
 /* ---------------------------------------------------------------------------- */
