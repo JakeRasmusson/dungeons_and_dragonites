@@ -1,5 +1,8 @@
 // Set DOM variables
 const attackBtn = document.getElementById('attackBtn')
+const healthPotionBtn = document.getElementById('healthBtn')
+const increaseAttackBtn = document.getElementById('increaseAttackBtn')
+const postFightButtons = document.querySelectorAll('.post-fight-btn')
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceImage = document.getElementById('diceImage')
 const pokemonImage = document.getElementById('pokemonImage')
@@ -10,7 +13,7 @@ const pokemonTotalHpSpan = document.getElementById('pokemonTotalHp')
 const monsterNameHeader = document.getElementById('monsterNameHeader')
 const monsterCurrentHpSpan = document.getElementById('monsterCurrentHp')
 const monsterTotalHpSpan = document.getElementById('monsterTotalHp')
-
+let score = 0
 //Global object to be populated by parseMonsterData/parsePokemonData
 let pokemonData = {}
 let monsterData = {}
@@ -28,12 +31,25 @@ const monsterArray = [
 
 const bgArray = ['assets/images/dungeon-bg-1.png', 'assets/images/dungeon-bg-2.png', 'assets/images/dungeon-bg-3.png', 'assets/images/dungeon-bg-4.png', 'assets/images/dungeon-bg-5.png', 'assets/images/dungeon-bg-6.png']
 
+function showPostFightButtons() {
+    for (const btn of postFightButtons) {
+        btn.classList.remove('hidden')
+    }
+}
+
+function hidePostFightButtons() {
+    for (const btn of postFightButtons) {
+        btn.classList.add('hidden')
+    }
+}
+
 function setBackground() {
     const choice = Math.floor(Math.random() * bgArray.length)
     document.body.style = `background-image: url(${bgArray[choice]});`
 }
 /* ------------------- FUNCTIONS FOR COMBAT--------------------- */
 function combatFunction(){
+    hidePostFightButtons()
     playerTurn()
     setMonsterCard()
     setTimeout(function(){    
@@ -65,12 +81,30 @@ function monsterTurn(){
 
 function victory() {
     console.log('You have done it')
+    score++
     pokemonWins()
+    showPostFightButtons()
 }
 
 function defeat() {
     console.log('You kind of smell')
     monsterWins()
+}
+
+function healthPotion() {
+    pokemonData.currentHp += 20
+    if (pokemonData.currentHp > pokemonData.hp) {
+        pokemonData.currentHp = pokemonData.hp
+    }
+    setPokemonCard()
+    getRandomMonster()
+    console.log(pokemonData.currentHp)
+}
+
+function increaseAttack() {
+    pokemonData.attack += 2
+    getRandomMonster()
+    console.log(pokemonData.attack)
 }
 /* ------------------- FUNCTIONS FOR DICE ROLLS --------------------- */
 //Split monster damageDice string
@@ -293,4 +327,16 @@ attackBtn.addEventListener('click', function(e) {
     diceImage.alt = 'image of a d20'
     // Will remove these - this is just to show how the animations look
     combatFunction()
+})
+
+healthPotionBtn.addEventListener('click', function(e) {
+    hidePostFightButtons()
+    healthPotion()
+
+})
+
+increaseAttackBtn.addEventListener('click', function(e) {
+    hidePostFightButtons()
+    increaseAttack()
+
 })
