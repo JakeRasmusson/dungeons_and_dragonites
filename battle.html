@@ -45,18 +45,28 @@
         </div>
     </div>
 
-    <!-- Open the modal using ID.showModal() method -->
 <dialog id="improvePokemonModal" class="modal">
   <div class="modal-box">
-    <h3 class="font-bold text-lg">Hello!</h3>
-    <p class="py-4">You win! Would you like to heal your Pokemon or increase attack power?</p>
+    <h3 class="font-bold text-2xl text-center">You win!</h3>
+    <p class="py-4 text-center">Would you like to heal your Pokemon or increase attack power?</p>
     <div class="flex flex-col">
       <form method="dialog">
-        <!-- if there is a button in form, it will close the modal -->
-        <button class="post-fight-btn btn btn-primary w-[100%] my-5" id="healthBtn">Increase Health</button>
-        <button class="post-fight-btn btn btn-primary w-[100%] my-5" id="increaseAttackBtn">Increase Attack</button>
+        <button class="post-fight-btn btn btn-primary w-[100%] my-3" id="healthBtn">Increase Health</button>
+        <button class="post-fight-btn btn btn-primary w-[100%] my-3" id="increaseAttackBtn">Increase Attack</button>
       </form>
     </div>
+  </div>
+</dialog>
+
+
+<dialog id="highScoreModal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-2xl text-center">Game Over!</h3>
+    <p class="py-4">You made the high score list! Enter your name below.</p>
+    <form class="flex flex-col" method="submit">
+        <input type="text" placeholder="Enter Name" class="input input-bordered w-full max-w-xs" id="nameEntry" />
+        <button class="btn btn-primary w-24 mt-4" id="submitNameBtn" >Submit</button>
+    </form>
   </div>
 </dialog>
     
