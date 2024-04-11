@@ -8,7 +8,7 @@
 </head>
 <body class="bg-cover bg-no-repeat bg-center">
     <header class=" bg-black bg-opacity-80 text-white">
-        <h1 class="text-4xl sm:text-6xl text-center py-5">Battle 1</h1>
+        <h1 class="text-4xl sm:text-6xl text-center py-5" id="battleCountEl"></h1>
     </header>
     <div class="py-5">
         <div class="max-h-full flex justify-center w-full flex-row sm:text-3xl text-white font-bold">
@@ -33,15 +33,27 @@
             </div>
         </div>
         <div class="w-[50%] shadow-xl mx-auto my-5">
-            <button class="btn btn-primary w-[100%]" id="attackBtn">Attack!</button>
-            
-            
+            <button class="btn btn-primary w-[100%]" id="attackBtn">Attack!</button>      
         </div>
-        <div class="w-[50%] shadow-xl mx-auto max-w-96">
-                <div class="grid flex-1 aspect-square bg-base-300 bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center relative">
+
+        <div class="max-h-full flex justify-center w-full flex-row sm:text-2xl text-white font-bold">
+            <div class="w-[50%] shadow-xl max-w-96 mx-4">
+                <div class="grid flex-1 aspect-square bg-[#929BAD] border-2 border-white rounded-box place-items-center relative">
                     <span class="absolute top-[36%] text-white font-bold" id="rollTotal"></span>
-                    <img class="h-[75%] w-[75%] object-fill transition ease-in-out" id="diceImage" alt="gif of a d20 spinning" src="assets/images/d-20-roll.gif" />
+                    <img class="h-[25%] w-[25%] object-fill transition ease-in-out" id="diceRollingImage" alt="gif of a d20 spinning" src="assets/images/d-20-roll.gif" />
+                    <img class="h-[75%] w-[75%] object-fill transition ease-in-out hidden" id="diceStillImage" alt="image of a d20" src="assets/images/d-20-still.png" />
                 </div>
+            </div>
+            <div class="w-[50%] shadow-xl max-w-96 mx-4">
+                <div class="grid flex-1 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box justify-start">
+                    <ul class="flex flex-1 flex-col ml-3 justify-evenly">
+                        <li id="rollTypeEl"></li>
+                        <li id="rollTotalEl"></li>
+                        <li id="damageModEl"></li>
+                        <li id="rollDamageEl"></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
