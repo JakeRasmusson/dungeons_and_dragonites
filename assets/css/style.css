@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-image: url('../images/stone-wall.png');
+    background-color: 0,0,0,.5;
+}
+
+body::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+    font-size: 80px;
+    text-align: center;
+    height: 30%;
+    text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.774),
+    1px 1px 0 rgba(133, 37, 37, 0.801),
+    3px 3px 3px rgba(94, 2, 2, 0.863),
+    10px 10px 20px rgba(102, 2, 2, 0.795),
+    20px 40px 40px rgba(0,0,0);
+}
+
+#selectionArea {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    position: relative;
+    height: 35%;
+}
+
+.doorTxt {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: -.45px -.45px 0 rgba(231, 229, 229, 0.788),
+    1px 1px 0 rgba(116, 32, 32, 0.726),
+    3px 3px 3px rgba(77, 2, 2, 0.801),
+    7px 7px 15px rgba(92, 11, 11, 0.829),
+    20px 40px 40px rgb(0, 0, 0);
+    position: absolute;
+    top: 150px;
+    left: 80px;
+}
+
+.doors {
+    position: relative;
+    scale: 150%;
+    z-index: -1;
+    height: 72.75%;
+}
+
+
+#floor {
+    margin-top: 30px;
+    bottom: 0;
+    height: 31.75%;
+    background-image: url('../images/grass-floor.jpg');
+}
