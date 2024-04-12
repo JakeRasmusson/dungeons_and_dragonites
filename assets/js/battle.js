@@ -30,6 +30,7 @@ const rollDamageEl = document.getElementById('rollDamageEl')
 const improvePokemonModal = document.getElementById('improvePokemonModal')
 const highScoreModal = document.getElementById('highScoreModal')
 const rollModal = document.getElementById('rollModal')
+const highScoreForm = document.getElementById('highScoreForm')
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ MODAL POP-UPS ------------------------------------------------- */
@@ -71,7 +72,9 @@ function showrollModal() {
 /* ------------ OBJECTS, ARRAYS, VARIABLES ------------------------------------ */
 // Total score
 let score = 0
-
+//Gets local high scores if any exist
+let highScores = JSON.parse(localStorage.getItem('highScores')) || []
+//Sets player turn
 let isPlayerTurn = true
 //Global objects to be populated by parseMonsterData/parsePokemonData
 let pokemonData = {}
@@ -427,7 +430,26 @@ function parsePokemonData(data) {
     attackBtn.classList.remove('hidden')
 }
 /* ---------------------------------------------------------------------------- */
+/* ------------------------High Score Functions--------------------------------------------- */
+function setHighScores(scoreObject) {
+    if (highScores.length < 10){
+        highScores.push(scoreObject)
+    } else {
+        if (highScores[9].score < scoreObject.score){
+            highScores.pop()
+            highScores.push(scoreObject)
+        }
 
+    }
+    highScores.sort((a, b) => a.score - b.score)
+    localStorage.setItem('highScores', JSON.stringify( highScores))
+    console.log(highScores)
+
+}
+
+
+
+/* ---------------------------------------------------------------------------- */
 /* ------------ INIT ---------------------------------------------------------- */
 // Render characters and background on start
 setBackground()
@@ -460,5 +482,16 @@ healthPotionBtn.addEventListener('click', function(e) {
 
 increaseAttackBtn.addEventListener('click', function(e) {
     increaseAttack()
+})
+
+highScoreForm.addEventListener('submit', function(e) {
+    e.preventDefault()
+    const highScoreName = document.getElementById('nameEntry').value
+    const scoreObject = {'name': highScoreName, 'pokemon': pokemonData.name, 'score': score}
+    setHighScores(scoreObject)
+    highScoreForm.reset()
+    highScoreModal.style.display = 'none'
+
+
 })
 /* ---------------------------------------------------------------------------- */
