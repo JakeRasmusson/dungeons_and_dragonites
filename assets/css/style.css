@@ -40,18 +40,20 @@ h1 {
     justify-content: space-around;
     align-items: flex-end;
     position: relative;
-    height: 35%;
+    height: 32%;
+    margin-bottom: 40px;
 }
 
 .doorTxt {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
+    color: black;
     text-shadow: -.45px -.45px 0 rgba(247, 244, 244, 0.856),
     1px 1px 0 rgba(116, 32, 32, 0.726),
     3px 3px 3px rgba(77, 2, 2, 0.801),
-    7px 7px 15px rgba(92, 11, 11, 0.829),
-    20px 40px 40px rgb(0, 0, 0);
+    5px 5px 10px rgba(92, 11, 11, 0.829),
+    10px 20px 20px rgb(0, 0, 0);
     position: absolute;
     top: 150px;
     left: 80px;
@@ -59,15 +61,14 @@ h1 {
 
 .doors {
     position: relative;
-    scale: 150%;
+    scale: 175%;
     z-index: -1;
     height: 72.75%;
+    margin-bottom: 10%;
+
 }
 
-
 #floor {
-    margin-top: 30px;
-    bottom: 0;
-    height: 31.75%;
+    height: 35%;
     background-image: url('../images/grass-floor.jpg');
 }
