@@ -1,0 +1,70 @@
+* {
+    margin:0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-image: url('../images/gold-room.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 2000px 1000px;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+button {
+    height: 20%;
+    margin: 50px;
+    float: right;
+    scale: 250%;
+    box-shadow:  -1px -1px 0 rgba(255, 255, 255, 0.774),
+    1px 1px 0 rgba(133, 37, 37, 0.712),
+    3px 3px 3px rgba(94, 2, 2, 0.767),
+    10px 10px 20px rgba(102, 2, 2, 0.699),
+    20px 40px 40px rgba(0,0,0);
+    background-color: rgba(0, 0, 0, 0.651);
+    text-shadow: -.5px -.5px 0 rgba(255, 255, 255, 0.774),
+    1px 1px 0 rgba(85, 5, 5, 0.658),
+    2px 2px 2px rgba(58, 3, 3, 0.685),
+    20px 40px 40px rgba(0,0,0)
+}
+
+section {
+    display: flex;
+    width: 100%;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+#highScoreBox {
+    height: 100%;
+    width: 25%;
+    border: 5px outset red;
+    border-image: linear-gradient(rgb(141, 0, 0), rgb(0, 0, 0), rgb(141, 0, 0)) 1;
+    background-color: rgba(0, 0, 0, 0.863);
+}
+
+h2 {
+    font-size: 48px;
+    text-align: center;
+    color: white;
+    text-shadow: -1px -1px 0 rgb(0, 0, 0),
+    1px 1px 0 rgba(85, 5, 5, 0.658),
+    3px 3px 3px rgba(107, 4, 4, 0.904)
+}
+
+.score {
+    margin: 20px;
+    font-size: 48px;
+    color: white;
+    text-shadow: -1px -1px 0 rgb(0, 0, 0),
+    1px 1px 0 rgba(85, 5, 5, 0.658),
+    3px 3px 3px rgba(107, 4, 4, 0.904)
+}
