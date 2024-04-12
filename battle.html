@@ -5,65 +5,50 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
-	<title>DnD Battle</title>
+	<title>Dungeons and Dragonites</title>
 </head>
 
-<body class="bg-cover bg-no-repeat bg-center">
+<body class="bg-cover bg-no-repeat bg-center h-[100vh]">
 	<header class=" bg-black bg-opacity-80 text-white">
-		<h1 class="text-4xl sm:text-6xl text-center py-5" id="battleCountEl"></h1>
+		<h1 class="text-4xl md:text-6xl text-center py-5" id="battleCountEl"></h1>
 	</header>
 	<div class="py-5">
-		<div class="max-h-full flex justify-center w-full flex-row sm:text-3xl text-white font-bold">
-			<div
-				class="grid flex-1 max-w-lg aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center ml-4 object-cover">
-				<div class="border-white border-b-2 w-full text-center sm:flex justify-between px-2 py-2">
-					<h2 id="pokemonNameHeader"></h2>
-					<h3 class="sm:text-2xl"><span id="pokemonCurrentHp"></span><span id="pokemonTotalHp"></span> </h3>
+		<div class="max-h-full flex flex-wrap justify-center w-full flex-row text-white font-bold">
+			<div class="grid flex-1 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4 object-cover">
+				<div class="border-white border-b-2 w-[100%] text-center sm:flex justify-between px-2 py-2">
+					<h2 class="md:text-base lg:text-3xl" id="pokemonNameHeader"></h2>
+					<h3 class="md:text-base lg:text-2xl"><span id="pokemonCurrentHp"></span><span id="pokemonTotalHp"></span> </h3>
 				</div>
-				<div class="grid flex-1 h-[100%] w-[100%] max-w-lg aspect-square place-items-center">
+				<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
 					<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="pokemonImage" />
 				</div>
 			</div>
-			<div class="divider divider-horizontal mx-[5%]"></div>
-			<div
-				class="grid flex-1 max-w-lg aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mr-4">
-				<div class="border-white border-b-2 w-full text-center sm:flex justify-between px-3 py-2">
-					<h2 id="monsterNameHeader"></h2>
-					<h3 class="sm:text-2xl"><span id="monsterCurrentHp"></span><span id="monsterTotalHp"></span></h3>
+			<!-- <div class="divider divider-horizontal mx-[5%]"></div> -->
+			<div class="grid flex-1 md:order-2 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4">
+				<div class="border-white border-b-2 w-[100%] text-center sm:flex justify-between px-3 py-2">
+					<h2 class="md:text-base lg:text-3xl" id="monsterNameHeader"></h2>
+					<h3 class="md:text-base lg:text-2xl"><span id="monsterCurrentHp"></span><span id="monsterTotalHp"></span></h3>
 				</div>
-				<div class="grid flex-1 h-[100%] w-[100%] max-w-lg aspect-square place-items-center">
+				<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
 					<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="monsterImage" />
 				</div>
 			</div>
-		</div>
-		<div class="w-[50%] shadow-xl mx-auto my-5">
-			<button class="btn btn-primary w-[100%] hidden" id="attackBtn">Attack!</button>
-		</div>
-
-		<div class="max-h-full flex justify-center w-full flex-row sm:text-2xl text-white font-bold">
-			<div class="w-[50%] shadow-xl max-w-96 mx-4">
-				<div
-					class="grid flex-1 aspect-square bg-[#929BAD] border-2 border-white rounded-box place-items-center relative">
-					<span class="absolute top-[36%] text-white font-bold" id="rollTotal"></span>
-					<img class="h-[25%] w-[25%] object-fill transition ease-in-out" id="diceRollingImage"
-						alt="gif of a d20 spinning" src="assets/images/d-20-roll.gif" />
-					<img class="h-[75%] w-[75%] object-fill transition ease-in-out hidden" id="diceStillImage"
-						alt="image of a d20" src="assets/images/d-20-still.png" />
+			<div class="flex-1 order-4 flex-grow-1 md:flex-1 md:order-1 max-w-48 md:max-w-32 lg:max-w-48 shadow-xl mx-4 self-center">
+					<div class="grid flex-1 aspect-square bg-[#929BAD] border-2 border-white rounded-box place-items-center relative">
+						<span class="absolute top-[33%] text-white font-bold text-xl" id="rollTotal"></span>
+						<img class="h-[25%] w-[25%] object-fill transition ease-in-out" id="diceRollingImage"
+							alt="gif of a d20 spinning" src="assets/images/d-20-roll.gif" />
+						<img class="h-[75%] w-[75%] object-fill transition ease-in-out hidden" id="diceStillImage"
+							alt="image of a d20" src="assets/images/d-20-still.png" />
 				</div>
 			</div>
-			<div class="w-[50%] shadow-xl max-w-96 mx-4">
-				<div class="grid flex-1 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box justify-start">
-					<!-- <ul class="flex flex-1 flex-col ml-3 justify-evenly">
-						<li id="rollTypeEl"></li>
-						<li id="rollTotalEl"></li>
-						<li id="damageModEl"></li>
-						<li id="rollDamageEl"></li>
-					</ul> -->
-				</div>
+			<div class="w-[100%] flex-grow-1 order-3 shadow-xl mx-auto my-5 text-center">
+				<button class="btn btn-primary w-[50%] hidden" id="attackBtn">Attack!</button>
 			</div>
 		</div>
 	</div>
 
+<!-- /* ---------------------------------------------------------------------------- */ -->
 	<dialog id="improvePokemonModal" class="modal">
 		<div class="modal-box">
 			<h3 class="font-bold text-2xl text-center">You win!</h3>
