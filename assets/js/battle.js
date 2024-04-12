@@ -441,7 +441,7 @@ function setHighScores(scoreObject) {
         }
 
     }
-    highScores.sort((a, b) => a.score - b.score)
+    highScores.sort((a, b) => b.score - a.score)
     localStorage.setItem('highScores', JSON.stringify( highScores))
     console.log(highScores)
 
