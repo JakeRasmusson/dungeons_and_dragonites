@@ -6,6 +6,7 @@ const attackBtn = document.getElementById('attackBtn')
 const healthPotionBtn = document.getElementById('healthBtn')
 const increaseAttackBtn = document.getElementById('increaseAttackBtn')
 const postFightButtons = document.querySelectorAll('.post-fight-btn')
+const continueAttackBtn = document.getElementById('continueAttack')
 // Dice Images
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceRollingImage = document.getElementById('diceRollingImage')
@@ -28,10 +29,11 @@ const rollDamageEl = document.getElementById('rollDamageEl')
 // Modals
 const improvePokemonModal = document.getElementById('improvePokemonModal')
 const highScoreModal = document.getElementById('highScoreModal')
+const rollModal = document.getElementById('rollModal')
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ MODAL POP-UPS ------------------------------------------------- */
-
+// Improve Pokemon Modal
 function showImproveModal() {
     improvePokemonModal.showModal()
     function stopEscape(e) {
@@ -42,8 +44,20 @@ function showImproveModal() {
     }
     document.addEventListener('keydown', stopEscape)
 }
+// High Score Entry Modal
 function showHighScoreModal() {
     highScoreModal.showModal()
+    function stopEscape(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+    }
+    document.addEventListener('keydown', stopEscape)
+}
+// Roll Summary Modal
+function showrollModal() {
+    rollModal.showModal()
     function stopEscape(e) {
         if (e.key === 'Escape') {
           e.preventDefault()
@@ -57,6 +71,8 @@ function showHighScoreModal() {
 /* ------------ OBJECTS, ARRAYS, VARIABLES ------------------------------------ */
 // Total score
 let score = 0
+
+let isPlayerTurn = true
 //Global objects to be populated by parseMonsterData/parsePokemonData
 let pokemonData = {}
 let monsterData = {}
@@ -88,21 +104,15 @@ const bgArray = [
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR COMBAT ------------------------------------------ */
-// Pokemon attacks first, then monster if monster is still alive, then check for pokemon hp
-function combatFunction(){
-    playerTurn()
-    
-    setTimeout(function(){    
+
+function checkHealth() {
     if (monsterData.currentHp <= 0) {
         victory()
-    } else {
-        monsterTurn()
-        
-        if (pokemonData.currentHp <= 0) {
-            defeat()
-        }
-    }}, 2000)
+    } else if (pokemonData.currentHp <= 0) {
+        defeat()
+    }
 }
+
 // Pokemon attack
 function playerTurn(){
     const dmgModifier = Math.round(pokemonData.attack / 20)
@@ -118,6 +128,9 @@ function playerTurn(){
     monsterData.currentHp -= attackDmg
     console.log('Damage: ' + attackDmg);
     console.log('Damage mod: ' + dmgModifier);
+    // checkHealth()
+    isPlayerTurn = false
+    setTimeout(showrollModal, 3000)
 }
 // Monster attack
 function monsterTurn(){
@@ -132,12 +145,16 @@ function monsterTurn(){
     }, 1500)
     pokemonData.currentHp -= attackDmg
     console.log('Damage: ' + attackDmg)
+    // checkHealth()
+    isPlayerTurn = true
+    setTimeout(showrollModal, 3000)
 }
 // Victory
 function victory() {
     console.log('You have done it')
     score++
     showImproveModal()
+    attackBtn.classList.add('hidden')
 }
 // Defeat
 function defeat() {
@@ -384,18 +401,18 @@ function displayBattleCount() {
 /* ------------ FUNCTIONS FOR CREATING CHARACTERS ----------------------------- */
 //Parse Monster Fetch Data
 function parseMonsterData(data) {
-    console.log(data.actions)
     const damageDice = data.actions[0].name == 'Multiattack'? data.actions[1].damage[0].damage_dice : data.actions[0].damage[0].damage_dice
-    const monsterName = data.index
+    const monsterIndex = data.index
+    const monsterName = data.name
     monsterData.name = monsterName
     monsterData.hp = data.hit_points
     monsterData.currentHp = data.hit_points
     monsterData.dmgDice = damageDice
-    monsterData.imgUrl = `assets/images/${monsterName}.png`
+    monsterData.imgUrl = `assets/images/${monsterIndex}.png`
     setMonsterImage()
     setMonsterCard()
     splitDamageDice()
-
+    attackBtn.classList.remove('hidden')
 }
 // Parse Pokemon Fetch Data
 function parsePokemonData(data) {
@@ -407,7 +424,7 @@ function parsePokemonData(data) {
     setPokemonImage()
     setPokemonCard()
     console.log(pokemonData.name)
-
+    attackBtn.classList.remove('hidden')
 }
 /* ---------------------------------------------------------------------------- */
 
@@ -420,7 +437,21 @@ getRandomPokemon()
 
 // Event listeners
 attackBtn.addEventListener('click', function(e) {
-    combatFunction()
+    playerTurn()
+    attackBtn.classList.add('hidden')
+})
+
+continueAttackBtn.addEventListener('click', function(e) {
+    if (monsterData.currentHp <= 0) {
+        victory()
+    } else if (pokemonData.currentHp <= 0) {
+        defeat()
+    } else if (isPlayerTurn === false) {
+        monsterTurn()
+    } else {
+        attackBtn.classList.remove('hidden')
+        return
+    }
 })
 
 healthPotionBtn.addEventListener('click', function(e) {
