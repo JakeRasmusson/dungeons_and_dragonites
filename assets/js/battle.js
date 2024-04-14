@@ -118,7 +118,7 @@ function checkHealth() {
 
 // Pokemon attack
 function playerTurn(){
-    const dmgModifier = Math.round(pokemonData.attack / 20)
+    const dmgModifier = Math.round(pokemonData.baseAttack / 20)
     const thisRoll = rollDice(20)
     const attackDmg = thisRoll * dmgModifier
     resultsReset()
@@ -138,9 +138,10 @@ function playerTurn(){
 // Monster attack
 function monsterTurn(){
     const thisRoll = damageRoll(monsterDice.numberOfRolls, monsterDice.diceMax, monsterDice.additionalDmg)
+    const thisRollNoMod = thisRoll - monsterDice.additionalDmg
     const attackDmg = thisRoll
     resultsReset()
-    rollRender(thisRoll)
+    rollRender(thisRollNoMod)
     setTimeout(function() {
         monsterHits()
         resultsRender(monsterData.dmgDice, (thisRoll - monsterDice.additionalDmg), monsterDice.additionalDmg, attackDmg)
@@ -178,10 +179,10 @@ function healthPotion() {
 }
 // Increase pokemon attack
 function increaseAttack() {
-    pokemonData.attack += 2
+    pokemonData.baseAttack += 2
     displayBattleCount()
     getRandomMonster()
-    console.log(pokemonData.attack)
+    console.log(pokemonData.baseAttack)
 }
 /* ---------------------------------------------------------------------------- */
 
@@ -423,10 +424,19 @@ function parsePokemonData(data) {
     pokemonData.hp = data.stats[0].base_stat
     pokemonData.currentHp = data.stats[0].base_stat
     pokemonData.attack = data.stats[1].base_stat
+    pokemonData.spAttack = data.stats[3].base_stat
+    if (pokemonData.spAttack > pokemonData.attack) {
+        pokemonData.baseAttack = pokemonData.spAttack
+    } else {
+        pokemonData.baseAttack = pokemonData.attack
+    }
     pokemonData.sprite = data.sprites.other.showdown.front_default
     setPokemonImage()
     setPokemonCard()
     console.log(pokemonData.name)
+    console.log(`Attack: ${pokemonData.attack}`);
+    console.log(`Special Attack: ${pokemonData.spAttack}`);
+    console.log(`Base Attack: ${pokemonData.baseAttack}`);
     attackBtn.classList.remove('hidden')
 }
 /* ---------------------------------------------------------------------------- */
