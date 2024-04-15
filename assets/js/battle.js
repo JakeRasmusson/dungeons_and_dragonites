@@ -323,7 +323,7 @@ function getRandomMonster() {
 }
 
 function getRandomPokemon() {
-    const randomIndex = Math.floor(Math.random() * 151)
+    const randomIndex = Math.ceil(Math.random() * 151)
     fetchPokemon(randomIndex)
 }
 
