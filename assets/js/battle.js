@@ -82,21 +82,7 @@ let isPlayerTurn = true
 let pokemonData = {}
 let monsterData = {}
 let monsterDice = {}
-//Array for the current monsters added to the game
-const monsterArray = [
-    'clay-golem',
-    'fire-giant',
-    'giant-ape',
-    'giant-crab',
-    'pit-fiend',
-    'mimic',
-    'minotaur',
-    'mammoth',
-    'ghost',
-    'zombie',
-    'flying-sword',
-    'awakened-tree'
-]
+
 // Background dungeon image array
 const bgArray = [
     'assets/images/dungeon-bg-1.png',
@@ -317,9 +303,47 @@ function rollRender(roll) {
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
 //Get random characters
 function getRandomMonster() {
-    const randomIndex = Math.floor(Math.random() * (monsterArray.length))
-    console.log(monsterArray[randomIndex])
-    fetchDNDMonster(monsterArray[randomIndex])
+const lvlOneToFourArray = [
+    'giant-crab',
+    'mimic',
+    'ghost',
+    'zombie',
+    'flying-sword',
+    'nightmare',
+    'awakened-tree'
+]
+const lvlSixToTen = [
+    'mammoth',
+    'clay-golem',
+    'minotaur',
+    'fire-giant',
+    'berserker'
+]
+const lvlTenAndBeyond = [
+    'pit-fiend',
+    'giant-ape',
+    'hydra',
+    'tyrannosaurus-rex'
+
+
+
+]
+    if (score < 4) {
+        const randomIndex = Math.floor(Math.random() * (lvlOneToFourArray.length))
+        fetchDNDMonster(lvlOneToFourArray[randomIndex])
+    } else if (score == 4) {
+        fetchDNDMonster('archmage')
+    } else if (score >= 5 && score < 9){
+        const randomIndex = Math.floor(Math.random() * (lvlSixToTen.length))
+        fetchDNDMonster(lvlSixToTen[randomIndex])
+    } else if (score == 9){
+        fetchDNDMonster('ancient-black-dragon')
+    } else if (score == 14){
+        fetchDNDMonster('kraken')
+    } else {
+        const randomIndex = Math.floor(Math.random() * (lvlTenAndBeyond.length))
+        fetchDNDMonster(lvlTenAndBeyond[randomIndex])
+    }
 }
 
 function getRandomPokemon() {
@@ -411,6 +435,7 @@ function displayBattleCount() {
 /* ------------ FUNCTIONS FOR CREATING CHARACTERS ----------------------------- */
 //Parse Monster Fetch Data
 function parseMonsterData(data) {
+    console.log(data)
     const damageDice = data.actions[0].name == 'Multiattack'? data.actions[1].damage[0].damage_dice : data.actions[0].damage[0].damage_dice
     const monsterIndex = data.index
     const monsterName = data.name
@@ -419,6 +444,9 @@ function parseMonsterData(data) {
     monsterData.currentHp = data.hit_points
     monsterData.dmgDice = damageDice
     monsterData.imgUrl = `assets/images/${monsterIndex}.png`
+    monsterData.armor = data.armor_class[0].value
+    monsterData.strength = data.strength
+    console.log(monsterData)
     setMonsterImage()
     setMonsterCard()
     splitDamageDice()
@@ -430,6 +458,7 @@ function parsePokemonData(data) {
     pokemonData.hp = data.stats[0].base_stat
     pokemonData.currentHp = data.stats[0].base_stat
     pokemonData.attack = data.stats[1].base_stat
+    pokemonData.defense = data.stats[2].base_stat
     pokemonData.spAttack = data.stats[3].base_stat
     if (pokemonData.spAttack > pokemonData.attack) {
         pokemonData.baseAttack = pokemonData.spAttack
@@ -441,6 +470,7 @@ function parsePokemonData(data) {
     setPokemonCard()
     console.log(pokemonData.name)
     console.log(`Attack: ${pokemonData.attack}`);
+    console.log(`Defense: ${pokemonData.defense}`);
     console.log(`Special Attack: ${pokemonData.spAttack}`);
     console.log(`Base Attack: ${pokemonData.baseAttack}`);
     attackBtn.classList.remove('hidden')
