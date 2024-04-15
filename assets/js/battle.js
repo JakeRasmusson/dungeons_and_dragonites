@@ -306,18 +306,26 @@ function getRandomMonster() {
 const lvlOneToFourArray = [
     'giant-crab',
     'mimic',
-    'minotaur',
     'ghost',
     'zombie',
     'flying-sword',
+    'nightmare',
     'awakened-tree'
 ]
-const lvlSixToTenAndBeyond = [
+const lvlSixToTen = [
     'mammoth',
-    'pit-fiend',
     'clay-golem',
+    'minotaur',
     'fire-giant',
+    'berserker'
+]
+const lvlTenAndBeyond = [
+    'pit-fiend',
     'giant-ape',
+    'hydra',
+    'tyrannosaurus-rex'
+
+
 
 ]
     if (score < 4) {
@@ -325,13 +333,16 @@ const lvlSixToTenAndBeyond = [
         fetchDNDMonster(lvlOneToFourArray[randomIndex])
     } else if (score == 4) {
         fetchDNDMonster('archmage')
-    } else if (score >= 5 && score != 9 && score != 14){
-        const randomIndex = Math.floor(Math.random() * (lvlSixToTenAndBeyond.length))
-        fetchDNDMonster(lvlSixToTenAndBeyond[randomIndex])
+    } else if (score >= 5 && score < 9){
+        const randomIndex = Math.floor(Math.random() * (lvlSixToTen.length))
+        fetchDNDMonster(lvlSixToTen[randomIndex])
     } else if (score == 9){
         fetchDNDMonster('ancient-black-dragon')
-    } else {
+    } else if (score == 14){
         fetchDNDMonster('kraken')
+    } else {
+        const randomIndex = Math.floor(Math.random() * (lvlTenAndBeyond.length))
+        fetchDNDMonster(lvlTenAndBeyond[randomIndex])
     }
 }
 
