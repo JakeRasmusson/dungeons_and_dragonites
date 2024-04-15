@@ -441,6 +441,7 @@ function parsePokemonData(data) {
     pokemonData.hp = data.stats[0].base_stat
     pokemonData.currentHp = data.stats[0].base_stat
     pokemonData.attack = data.stats[1].base_stat
+    pokemonData.defense = data.stats[2].base_stat
     pokemonData.spAttack = data.stats[3].base_stat
     if (pokemonData.spAttack > pokemonData.attack) {
         pokemonData.baseAttack = pokemonData.spAttack
@@ -452,6 +453,7 @@ function parsePokemonData(data) {
     setPokemonCard()
     console.log(pokemonData.name)
     console.log(`Attack: ${pokemonData.attack}`);
+    console.log(`Defense: ${pokemonData.defense}`);
     console.log(`Special Attack: ${pokemonData.spAttack}`);
     console.log(`Base Attack: ${pokemonData.baseAttack}`);
     attackBtn.classList.remove('hidden')
