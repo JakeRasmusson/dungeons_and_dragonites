@@ -301,7 +301,6 @@ function rollRender(roll) {
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
 //Get random characters
 function getRandomMonster() {
-    //Array for the current monsters added to the game
 const lvlOneToFourArray = [
     'giant-crab',
     'mimic',
@@ -319,20 +318,17 @@ const lvlSixToTenAndBeyond = [
     'giant-ape',
 
 ]
-if (score <= 4) {
-    const randomIndex = Math.floor(Math.random() * (lvlOneToFourArray.length))
-    fetchDNDMonster(lvlOneToFourArray[randomIndex])
-} else if (score == 5) {
-    fetchDNDMonster('arch-mage')
-} else if (score > 5 && score != 10){
-    const randomIndex = Math.floor(Math.random() * (lvlSixToTenAndBeyond.length))
-    fetchDNDMonster(lvlSixToTenAndBeyond[randomIndex])
-} else {
-    fetchDNDMonster('kraken')
-}
-    // const randomIndex = Math.floor(Math.random() * (monsterArray.length))
-    // console.log(monsterArray[randomIndex])
-    // fetchDNDMonster(monsterArray[randomIndex])
+    if (score <= 4) {
+        const randomIndex = Math.floor(Math.random() * (lvlOneToFourArray.length))
+        fetchDNDMonster(lvlOneToFourArray[randomIndex])
+    } else if (score == 5) {
+        fetchDNDMonster('archmage')
+    } else if (score > 5 && score != 10){
+        const randomIndex = Math.floor(Math.random() * (lvlSixToTenAndBeyond.length))
+        fetchDNDMonster(lvlSixToTenAndBeyond[randomIndex])
+    } else {
+        fetchDNDMonster('kraken')
+    }
 }
 
 function getRandomPokemon() {
