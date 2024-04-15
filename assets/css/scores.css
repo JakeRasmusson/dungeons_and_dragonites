@@ -9,65 +9,99 @@ html {
 }
 
 body {
-    background-image: url('../images/gold-room.jpg');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 2000px 1000px;
+    background-size: 1400px 1000px;
     height: 100%;
     width: 100%;
 }
 
-button {
-    height: 20%;
-    margin: 50px;
+@media (min-width: 1400px) {
+    body {
+        background-size: 1800px 1000px;
+    }
+}
+
+@media (min-width: 1800px) {
+    body {
+        background-size: 2200px 1000px;
+    }
+}
+
+@media (min-width: 2200px) {
+    body {
+        background-size: 2600px 1000px;
+    }
+}
+
+@media (min-width: 2600px) {
+    body {
+        background-size: cover;
+    }
+}
+
+#back {
+    height: 10%;
+    width: 50px;
+    margin: 50px 50px 0 0;
     float: right;
     scale: 250%;
-    box-shadow:  -1px -1px 0 rgba(255, 255, 255, 0.774),
-    1px 1px 0 rgba(133, 37, 37, 0.712),
-    3px 3px 3px rgba(94, 2, 2, 0.767),
-    10px 10px 20px rgba(102, 2, 2, 0.699),
-    20px 40px 40px rgba(0,0,0);
-    background-color: rgba(0, 0, 0, 0.651);
-    text-shadow: -.5px -.5px 0 rgba(255, 255, 255, 0.774),
+    box-shadow:  -.75px -.75px 0 rgba(255, 255, 255, 0.726),
+    .5px .5px 0 rgba(133, 37, 37, 0.637),
+    1px 1px 1px rgba(94, 2, 2, 0.616),
+    3px 3px 5px rgba(102, 2, 2, 0.623);
+    background-color: rgba(12, 0, 0, 0.473);
+    text-shadow: -.35px -.35px 0 rgba(255, 255, 255, 0.774),
     1px 1px 0 rgba(85, 5, 5, 0.658),
     2px 2px 2px rgba(58, 3, 3, 0.685),
     20px 40px 40px rgba(0,0,0)
 }
 
 button:hover {
+    scale: 255%;
     cursor: pointer;
+    color: darkred;
+    background-color: rgb(150, 122, 122);
 }
 
 section {
     display: flex;
     width: 100%;
-    height: 80%;
+    height: 90%;
     align-items: center;
     justify-content: center;
 }
 
 #highScoreBox {
     height: 100%;
-    width: 25%;
+    width: 600px;
     border: 5px outset red;
     border-image: linear-gradient(rgb(141, 0, 0), rgb(0, 0, 0), rgb(141, 0, 0)) 1;
-    background-color: rgba(0, 0, 0, 0.863);
+    background-color: rgba(0, 0, 0, 0.753);
+    text-shadow: -2px -2px 0 rgb(0, 0, 0),
+    1px 1px 0 rgba(85, 5, 5, 0.658),
+    3px 3px 3px rgba(107, 4, 4, 0.904);
+    color: white;
 }
 
 h2 {
-    font-size: 48px;
     text-align: center;
-    color: white;
-    text-shadow: -1px -1px 0 rgb(0, 0, 0),
-    1px 1px 0 rgba(85, 5, 5, 0.658),
-    3px 3px 3px rgba(107, 4, 4, 0.904)
+}
+
+#scoreList {
+    height: 90%;
+    width: 100%;
 }
 
 .score {
     margin: 20px;
-    font-size: 48px;
-    color: white;
-    text-shadow: -1px -1px 0 rgb(0, 0, 0),
-    1px 1px 0 rgba(85, 5, 5, 0.658),
-    3px 3px 3px rgba(107, 4, 4, 0.904)
+    font-size: 38px;
+}
+
+.highNumber {
+    color: rgb(197, 13, 0);
+    text-shadow: -.25px -.25px 0 rgba(236, 230, 228, 0.445),
+    1px 1px 0 rgba(0, 0, 0, 0.596),
+    2px 2px .5px rgba(224, 94, 7, 0.685),
+    3px 3px 3px rgba(207, 186, 94, 0.479);  
 }

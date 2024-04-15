@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./assets/css/scores.css" />
     <title>Highscores</title>
 </head>
-<body>
+
+<body class='font-serif bg-[url("./assets/images/gold-room.jpg")]'>
     <nav>
         <a href="index.html">
-            <button>Back</button>
+            <button class="text-md" id="back">Back</button>
         </a>
     </nav>
     <section>
         <div id="highScoreBox">
-            <h2>Highscores</h2>
-            <p class="score"></p>
-
+            <h2 class="text-5xl">Highscores</h2>
+            <div id="scoreList"></div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/scores.js"></script>
 </body>
+
 </html>
