@@ -80,21 +80,7 @@ let isPlayerTurn = true
 let pokemonData = {}
 let monsterData = {}
 let monsterDice = {}
-//Array for the current monsters added to the game
-const monsterArray = [
-    'clay-golem',
-    'fire-giant',
-    'giant-ape',
-    'giant-crab',
-    'pit-fiend',
-    'mimic',
-    'minotaur',
-    'mammoth',
-    'ghost',
-    'zombie',
-    'flying-sword',
-    'awakened-tree'
-]
+
 // Background dungeon image array
 const bgArray = [
     'assets/images/dungeon-bg-1.png',
@@ -315,9 +301,38 @@ function rollRender(roll) {
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
 //Get random characters
 function getRandomMonster() {
-    const randomIndex = Math.floor(Math.random() * (monsterArray.length))
-    console.log(monsterArray[randomIndex])
-    fetchDNDMonster(monsterArray[randomIndex])
+    //Array for the current monsters added to the game
+const lvlOneToFourArray = [
+    'giant-crab',
+    'mimic',
+    'minotaur',
+    'ghost',
+    'zombie',
+    'flying-sword',
+    'awakened-tree'
+]
+const lvlSixToTenAndBeyond = [
+    'mammoth',
+    'pit-fiend',
+    'clay-golem',
+    'fire-giant',
+    'giant-ape',
+
+]
+if (score <= 4) {
+    const randomIndex = Math.floor(Math.random() * (lvlOneToFourArray.length))
+    fetchDNDMonster(lvlOneToFourArray[randomIndex])
+} else if (score == 5) {
+    fetchDNDMonster('arch-mage')
+} else if (score > 5 && score != 10){
+    const randomIndex = Math.floor(Math.random() * (lvlSixToTenAndBeyond.length))
+    fetchDNDMonster(lvlSixToTenAndBeyond[randomIndex])
+} else {
+    fetchDNDMonster('kraken')
+}
+    // const randomIndex = Math.floor(Math.random() * (monsterArray.length))
+    // console.log(monsterArray[randomIndex])
+    // fetchDNDMonster(monsterArray[randomIndex])
 }
 
 function getRandomPokemon() {
