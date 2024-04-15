@@ -1,3 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1 {
+      @apply text-4xl;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +19,6 @@ html {
 
 body {
     height: 100%;
-    background-image: url('../images/stone-wall.png');
     background-color: 0,0,0,.5;
 }
 
@@ -27,7 +36,7 @@ body::before {
 h1 {
     font-size: 80px;
     text-align: center;
-    height: 30%;
+    height: 20%;
     text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.774),
     1px 1px 0 rgba(133, 37, 37, 0.801),
     3px 3px 3px rgba(94, 2, 2, 0.863),
@@ -40,35 +49,39 @@ h1 {
     justify-content: space-around;
     align-items: flex-end;
     position: relative;
-    height: 32%;
-    margin-bottom: 40px;
+    height: 50%;
+    bottom: -6px;
 }
 
 .doorTxt {
     text-align: center;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
     color: black;
     text-shadow: -.45px -.45px 0 rgba(247, 244, 244, 0.856),
     1px 1px 0 rgba(116, 32, 32, 0.726),
-    3px 3px 3px rgba(77, 2, 2, 0.801),
-    5px 5px 10px rgba(92, 11, 11, 0.829),
-    10px 20px 20px rgb(0, 0, 0);
+    2px 2px 1px rgba(92, 5, 5, 0.801),
+    3px 3px 5px rgba(58, 5, 5, 0.829);
     position: absolute;
     top: 150px;
-    left: 80px;
+    left: 50px;
+    visibility: hidden;
 }
 
 .doors {
     position: relative;
-    scale: 175%;
+    /* scale: 175%; */
     z-index: -1;
-    height: 72.75%;
-    margin-bottom: 10%;
+    bottom: 0;
+}
 
+a:hover .doorTxt  {
+    visibility: visible;
 }
 
 #floor {
-    height: 35%;
-    background-image: url('../images/grass-floor.jpg');
+    position: absolute;
+    bottom: 0px;
+    height: 30%;
+    width: 100%;
 }
