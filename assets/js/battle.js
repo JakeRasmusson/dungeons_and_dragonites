@@ -318,14 +318,16 @@ const lvlSixToTenAndBeyond = [
     'giant-ape',
 
 ]
-    if (score <= 4) {
+    if (score < 4) {
         const randomIndex = Math.floor(Math.random() * (lvlOneToFourArray.length))
         fetchDNDMonster(lvlOneToFourArray[randomIndex])
-    } else if (score == 5) {
+    } else if (score == 4) {
         fetchDNDMonster('archmage')
-    } else if (score > 5 && score != 10){
+    } else if (score >= 5 && score != 9 && score != 14){
         const randomIndex = Math.floor(Math.random() * (lvlSixToTenAndBeyond.length))
         fetchDNDMonster(lvlSixToTenAndBeyond[randomIndex])
+    } else if (score == 9){
+        fetchDNDMonster('ancient-black-dragon')
     } else {
         fetchDNDMonster('kraken')
     }
@@ -416,6 +418,7 @@ function displayBattleCount() {
 /* ------------ FUNCTIONS FOR CREATING CHARACTERS ----------------------------- */
 //Parse Monster Fetch Data
 function parseMonsterData(data) {
+    console.log(data)
     const damageDice = data.actions[0].name == 'Multiattack'? data.actions[1].damage[0].damage_dice : data.actions[0].damage[0].damage_dice
     const monsterIndex = data.index
     const monsterName = data.name
@@ -424,6 +427,9 @@ function parseMonsterData(data) {
     monsterData.currentHp = data.hit_points
     monsterData.dmgDice = damageDice
     monsterData.imgUrl = `assets/images/${monsterIndex}.png`
+    monsterData.armor = data.armor_class[0].value
+    monsterData.strength = data.strength
+    console.log(monsterData)
     setMonsterImage()
     setMonsterCard()
     splitDamageDice()
