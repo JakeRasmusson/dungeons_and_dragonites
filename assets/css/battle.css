@@ -1,0 +1,27 @@
+@font-face {
+    font-family: pokemon-hollow;
+    src: url(../fonts/pokemon-hollow.ttf)
+}
+
+@font-face {
+    font-family: pokemon-solid;
+    src: url(../fonts/pokemon-solid.ttf)
+}
+
+@font-face {
+    font-family: pokemon-gb;
+    src: url(../fonts/pokemon-gameboy.ttf)
+}
+
+h1 {
+    font-family: pokemon-hollow;
+    text-shadow: blue 3px 3px 0;
+}
+
+#pokemonNameHeader {
+    font-family: pokemon-gb;
+}
+
+.hp-bar {
+    background-color: white;
+}
