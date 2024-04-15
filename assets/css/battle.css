@@ -1,0 +1,48 @@
+@font-face {
+    font-family: pokemon-hollow;
+    src: url(../fonts/pokemon-hollow.ttf)
+}
+
+@font-face {
+    font-family: pokemon-solid;
+    src: url(../fonts/pokemon-solid.ttf)
+}
+
+@font-face {
+    font-family: pokemon-gb;
+    src: url(../fonts/pokemon-gameboy.ttf)
+}
+
+@font-face {
+    font-family: dragon-hunter;
+    src: url(../fonts/dragon-hunter.otf)
+}
+
+@font-face {
+    font-family: zelda;
+    src: url(../fonts/zelda.ttf)
+}
+
+@font-face {
+    font-family: ringbearer;
+    src: url(../fonts/ringbearer.ttf)
+}
+
+h1 {
+    font-family: zelda;
+    text-shadow: blue 3px 3px 0;
+}
+
+#rollModal,
+dialog,
+.btn-primary {
+    font-family: pokemon-gb;
+}
+
+#monsterCard {
+    font-family: dragon-hunter;
+}
+
+#pokemonCard {
+    font-family: pokemon-solid;
+}

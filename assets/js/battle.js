@@ -18,9 +18,11 @@ const monsterImage = document.getElementById('monsterImage')
 const pokemonNameHeader = document.getElementById('pokemonNameHeader')
 const pokemonCurrentHpSpan = document.getElementById('pokemonCurrentHp')
 const pokemonTotalHpSpan = document.getElementById('pokemonTotalHp')
+const pokemonHpBar = document.getElementById('pokemonHpBar')
 const monsterNameHeader = document.getElementById('monsterNameHeader')
 const monsterCurrentHpSpan = document.getElementById('monsterCurrentHp')
 const monsterTotalHpSpan = document.getElementById('monsterTotalHp')
+const monsterHpBar = document.getElementById('monsterHpBar')
 // Roll Results
 const rollTypeEl = document.getElementById('rollTypeEl')
 const rollTotalEl = document.getElementById('rollTotalEl')
@@ -334,7 +336,7 @@ const lvlSixToTenAndBeyond = [
 }
 
 function getRandomPokemon() {
-    const randomIndex = Math.floor(Math.random() * 151)
+    const randomIndex = Math.ceil(Math.random() * 151)
     fetchPokemon(randomIndex)
 }
 
@@ -384,6 +386,8 @@ function setPokemonCard() {
     pokemonCurrentHpSpan.innerText = `HP: ${pokemonData.currentHp}/`
     pokemonTotalHpSpan.innerText = pokemonData.hp
     pokemonImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
+    pokemonHpBar.value = pokemonData.currentHp
+    pokemonHpBar.max = pokemonData.hp
 }
 function setMonsterCard() {
     let monsterName = monsterData.name.charAt(0).toUpperCase() + monsterData.name.slice(1)
@@ -394,6 +398,8 @@ function setMonsterCard() {
     monsterCurrentHpSpan.innerText = `HP: ${monsterData.currentHp}/`
     monsterTotalHpSpan.innerText = monsterData.hp
     monsterImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
+    monsterHpBar.value = monsterData.currentHp
+    monsterHpBar.max = monsterData.hp
 }
 // Render Roll Results
 function resultsRender(type, total, modifier, damage) {
