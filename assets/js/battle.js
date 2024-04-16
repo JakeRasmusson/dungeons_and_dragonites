@@ -11,6 +11,8 @@ const postFightButtons = document.querySelectorAll('.post-fight-btn')
 const continueAttackBtn = document.getElementById('continueAttack')
 const fetchBtn = document.getElementById('fetchBtn')
 const muteToggle = document.getElementById('muteToggle')
+const quitToMainBtn = document.getElementById('quitBtn')
+const playAgainBtn = document.getElementById('playAgainBtn')
 // Dice Images
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceRollingImage = document.getElementById('diceRollingImage')
@@ -590,12 +592,10 @@ function setHighScores(scoreObject) {
             highScores.pop()
             highScores.push(scoreObject)
         }
-
     }
     highScores.sort((a, b) => b.score - a.score)
     localStorage.setItem('highScores', JSON.stringify(highScores))
-    console.log(highScores)
-
+    window.location.href = 'scores.html'
 }
 
 
@@ -603,10 +603,13 @@ function setHighScores(scoreObject) {
 /* ---------------------------------------------------------------------------- */
 /* ------------ INIT ---------------------------------------------------------- */
 // Render characters and background on start
-setBackground()
-displayBattleCount()
-getRandomMonster()
-getRandomPokemon()
+function init() {
+    setBackground()
+    displayBattleCount()
+    getRandomMonster()
+    getRandomPokemon()
+    setMutedStatus()
+}
 
 // Event listeners
 fetchBtn.addEventListener('click', function(e) {
@@ -643,9 +646,23 @@ increaseAttackBtn.addEventListener('click', function(e) {
     increaseAttack()
 })
 
+quitToMainBtn.addEventListener('click', function(e) {
+    window.location.href = 'index.html'
+})
+
+playAgainBtn.addEventListener('click', function(e){
+    score = 0
+    init()
+    lowScoreModal.style.display = 'none'
+
+})
+
 highScoreForm.addEventListener('submit', function(e) {
     e.preventDefault()
-    const highScoreName = document.getElementById('nameEntry').value
+    const init1 = document.getElementById('init1').value
+    const init2 = document.getElementById('init2').value
+    const init3 = document.getElementById('init3').value
+    const highScoreName = (init1 + init2 + init3).toUpperCase()
     const scoreObject = {'name': highScoreName, 'pokemon': pokemonData.name, 'score': score}
     setHighScores(scoreObject)
     highScoreForm.reset()
@@ -653,4 +670,4 @@ highScoreForm.addEventListener('submit', function(e) {
 })
 /* ---------------------------------------------------------------------------- */
 
-
+init()
