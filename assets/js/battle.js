@@ -152,7 +152,7 @@ function victory() {
 function defeat() {
     console.log('You kind of smell')
     // Need to add function to check if score is high score
-    showHighScoreModal()
+    // showHighScoreModal()
 }
 // Take health potion
 function healthPotion() {
@@ -474,6 +474,17 @@ function parsePokemonData(data) {
 }
 /* ---------------------------------------------------------------------------- */
 /* ------------------------High Score Functions--------------------------------------------- */
+function checkHighScores() {
+    if (highScores.length < 10){
+        highScoreModal()
+    } else if (score > highScores[9].score){
+        highScoreModal()
+    } else {
+        lowScoreModal()
+    }
+
+}
+
 function setHighScores(scoreObject) {
     if (highScores.length < 10){
         highScores.push(scoreObject)
