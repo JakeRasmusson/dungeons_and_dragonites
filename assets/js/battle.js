@@ -10,6 +10,7 @@ const increaseAttackBtn = document.getElementById('increaseAttackBtn')
 const postFightButtons = document.querySelectorAll('.post-fight-btn')
 const continueAttackBtn = document.getElementById('continueAttack')
 const fetchBtn = document.getElementById('fetchBtn')
+const muteToggle = document.getElementById('muteToggle')
 // Dice Images
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceRollingImage = document.getElementById('diceRollingImage')
@@ -39,17 +40,82 @@ const rollModal = document.getElementById('rollModal')
 const highScoreForm = document.getElementById('highScoreForm')
 /* ---------------------------------------------------------------------------- */
 
+/* ------------ OBJECTS, ARRAYS, VARIABLES ------------------------------------ */
+// Total score
+let score = 0
+//Gets local high scores if any exist
+let highScores = JSON.parse(localStorage.getItem('highScores')) || []
+//Sets player turn
+let isPlayerTurn = true
+//Global objects to be populated by parseMonsterData/parsePokemonData
+let pokemonData = {}
+let monsterData = {}
+let monsterDice = {}
+
+// Background dungeon image array
+const bgArray = [
+    'assets/images/dungeon-bg-1.png',
+    'assets/images/dungeon-bg-2.png',
+    'assets/images/dungeon-bg-3.png',
+    'assets/images/dungeon-bg-4.png',
+    'assets/images/dungeon-bg-5.png',
+    'assets/images/dungeon-bg-6.png'
+]
+/* ---------------------------------------------------------------------------- */
+
 /* ------------ GLOBAL SOUNDS ------------------------------------------------- */
 const bgMusic1 = new Audio('assets/sounds/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3')
 const bgMusic2 = new Audio('assets/sounds/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3')
 const bgMusic3 = new Audio('assets/sounds/2021-08-30_-_Boss_Time_-_www.FesliyanStudios.com.mp3')
 const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3]
+function setMutedStatus() {
+    if (muted) {
+        muteToggle.textContent = '🔇'
+    } else {
+        muteToggle.textContent = '🔊'
+    }
+}
+let muted = JSON.parse(localStorage.getItem('muted')) || false
+let canUnmute = false
 
 function playBgMusic() {
     const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
-    track.play()
-    track.addEventListener('ended', playBgMusic)
+    if (!muted) {
+        track.play()
+        track.addEventListener('ended', playBgMusic)
+    }
 }
+
+function toggleBgMusic() {
+    const track = bgMusicArray.find(track => !track.paused)
+    if (!track && muted && canUnmute) {
+        muted = false
+        playBgMusic()
+        muteToggle.textContent = '🔊'
+    } else if (!track && muted) {
+        muted = false
+        muteToggle.textContent = '🔊'
+    } else if (!track && !muted) {
+        muted = true
+        muteToggle.textContent = '🔇'
+    } else if (track && !muted) {
+        track.muted = true
+        muted = true
+        muteToggle.textContent = '🔇'
+    } else if (track && muted) {
+        track.muted = false
+        muted = false
+        muteToggle.textContent = '🔊'
+    }
+    localStorage.setItem('muted', JSON.stringify(muted))
+}
+
+muteToggle.addEventListener('click', function(e) {
+    toggleBgMusic()
+})
+
+
+
 
 const attackSound1 = new Audio('assets/sounds/8-bit-explosion-95847.mp3')
 const attackSound2 = new Audio('assets/sounds/kick-hard-8-bit-103746.mp3')
@@ -58,11 +124,18 @@ const attackSoundArray = [attackSound1, attackSound2, attackSound3]
 
 function playAttackSound() {
     const sound = attackSoundArray[Math.floor(Math.random() * attackSoundArray.length)]
-    sound.play()
+    if (!muted) {
+        sound.play()
+    }    
+}
+
+function playPokemonCry() {
+    if (!muted) {
+        pokemonData.pokemonAudio.play()
+    }
 }
 
 /* ---------------------------------------------------------------------------- */
-
 
 /* ------------ MODAL POP-UPS ------------------------------------------------- */
 // Improve Pokemon Modal
@@ -110,29 +183,6 @@ function showrollModal() {
     }
     document.addEventListener('keydown', stopEscape)
 }
-/* ---------------------------------------------------------------------------- */
-
-/* ------------ OBJECTS, ARRAYS, VARIABLES ------------------------------------ */
-// Total score
-let score = 0
-//Gets local high scores if any exist
-let highScores = JSON.parse(localStorage.getItem('highScores')) || []
-//Sets player turn
-let isPlayerTurn = true
-//Global objects to be populated by parseMonsterData/parsePokemonData
-let pokemonData = {}
-let monsterData = {}
-let monsterDice = {}
-
-// Background dungeon image array
-const bgArray = [
-    'assets/images/dungeon-bg-1.png',
-    'assets/images/dungeon-bg-2.png',
-    'assets/images/dungeon-bg-3.png',
-    'assets/images/dungeon-bg-4.png',
-    'assets/images/dungeon-bg-5.png',
-    'assets/images/dungeon-bg-6.png'
-]
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR COMBAT ------------------------------------------ */
@@ -263,7 +313,7 @@ function pokemonHits() {
     setTimeout(function() {
         if (monsterData.currentHp <= 0) {
             monsterImage.classList.add('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
-            pokemonData.pokemonAudio.play()
+            playPokemonCry()
         }
     }, 50)
     setTimeout(function() {
@@ -543,7 +593,7 @@ function setHighScores(scoreObject) {
 
     }
     highScores.sort((a, b) => b.score - a.score)
-    localStorage.setItem('highScores', JSON.stringify( highScores))
+    localStorage.setItem('highScores', JSON.stringify(highScores))
     console.log(highScores)
 
 }
@@ -562,8 +612,9 @@ getRandomPokemon()
 fetchBtn.addEventListener('click', function(e) {
     mainContainer.classList.remove('hidden')
     fetchBtn.parentElement.classList.add('hidden')
-    pokemonData.pokemonAudio.play()
+    playPokemonCry()
     playBgMusic()
+    canUnmute = true
 })
 
 attackBtn.addEventListener('click', function(e) {
