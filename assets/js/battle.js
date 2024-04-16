@@ -31,9 +31,11 @@ const rollDamageEl = document.getElementById('rollDamageEl')
 // Modals
 const improvePokemonModal = document.getElementById('improvePokemonModal')
 const highScoreModal = document.getElementById('highScoreModal')
+const lowScoreModal = document.getElementById('lowScoreModal')
 const rollModal = document.getElementById('rollModal')
 const highScoreForm = document.getElementById('highScoreForm')
 /* ---------------------------------------------------------------------------- */
+
 
 /* ------------ MODAL POP-UPS ------------------------------------------------- */
 // Improve Pokemon Modal
@@ -50,6 +52,18 @@ function showImproveModal() {
 // High Score Entry Modal
 function showHighScoreModal() {
     highScoreModal.showModal()
+    function stopEscape(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+    }
+    document.addEventListener('keydown', stopEscape)
+}
+
+// Game Over with no High Score Modal
+function showLowScoreModal() {
+    lowScoreModal.showModal()
     function stopEscape(e) {
         if (e.key === 'Escape') {
           e.preventDefault()
@@ -506,10 +520,12 @@ function setHighScores(scoreObject) {
 /* ---------------------------------------------------------------------------- */
 /* ------------ INIT ---------------------------------------------------------- */
 // Render characters and background on start
+let audio = new Audio('assets/Opening.mp3');
 setBackground()
 displayBattleCount()
 getRandomMonster()
 getRandomPokemon()
+audio.play()
 
 // Event listeners
 attackBtn.addEventListener('click', function(e) {
@@ -545,7 +561,7 @@ highScoreForm.addEventListener('submit', function(e) {
     setHighScores(scoreObject)
     highScoreForm.reset()
     highScoreModal.style.display = 'none'
-
-
 })
 /* ---------------------------------------------------------------------------- */
+
+
