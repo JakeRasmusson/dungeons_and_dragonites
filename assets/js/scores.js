@@ -13,17 +13,33 @@ function showHighscores() {
         // Capitalize pokemon names
         const pokemonName = capitalizeFirstLetter(score.pokemon)
         if (score.score >= 10) {
-            const scoreData = $(`
-            <p class="score">${i}. ${score.name} ${pokemonName} <span class='highNumber'>${score.score}</span></p>
+            const scoreName = $(`
+            <p class="score">${i}. ${score.name}</p>
             `)
+            scoreList.append(scoreName)
+            const scorePokemon = $(`
+            <p class="score">${pokemonName}</p>
+            `)
+            scoreList.append(scorePokemon)
+            const scoreScore = $(`
+            <p class="score highNumber scoreScore">${score.score}</p>
+            `)
+            scoreList.append(scoreScore)
             i++
-            scoreList.append(scoreData)
         } else { 
-            const scoreData = $(`
-            <p class="score">${i}. ${score.name} ${pokemonName} ${score.score}</p>
+            const scoreName = $(`
+            <p class="score">${i}. ${score.name}</p>
             `)
+            scoreList.append(scoreName)
+            const scorePokemon = $(`
+            <p class="score">${pokemonName}</p>
+            `)
+            scoreList.append(scorePokemon)
+            const scoreScore = $(`
+            <p class="score  scoreScore">${score.score}</p>
+            `)
+            scoreList.append(scoreScore)
             i++
-            scoreList.append(scoreData)
         }
 
     }
