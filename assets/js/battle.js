@@ -303,7 +303,7 @@ function rollRender(roll) {
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
 //Get random characters
 function getRandomMonster() {
-const lvlOneToFourArray = [
+const lvlOneToNineArray = [
     'giant-crab',
     'mimic',
     'ghost',
@@ -312,37 +312,34 @@ const lvlOneToFourArray = [
     'nightmare',
     'awakened-tree'
 ]
-const lvlSixToTen = [
+const lvlElevenToFifteen = [
     'mammoth',
     'clay-golem',
     'minotaur',
     'fire-giant',
     'berserker'
 ]
-const lvlTenAndBeyond = [
+const lvlSixteenAndBeyond = [
     'pit-fiend',
     'giant-ape',
     'hydra',
     'tyrannosaurus-rex'
-
-
-
 ]
-    if (score < 4) {
-        const randomIndex = Math.floor(Math.random() * (lvlOneToFourArray.length))
-        fetchDNDMonster(lvlOneToFourArray[randomIndex])
-    } else if (score == 4) {
+    if (score < 9) {
+        const randomIndex = Math.floor(Math.random() * (lvlOneToNineArray.length))
+        fetchDNDMonster(lvlOneToNineArray[randomIndex])
+    } else if (score == 9) {
         fetchDNDMonster('archmage')
-    } else if (score >= 5 && score < 9){
-        const randomIndex = Math.floor(Math.random() * (lvlSixToTen.length))
-        fetchDNDMonster(lvlSixToTen[randomIndex])
-    } else if (score == 9){
-        fetchDNDMonster('ancient-black-dragon')
+    } else if (score >= 10 && score < 14){
+        const randomIndex = Math.floor(Math.random() * (lvlElevenToFifteen.length))
+        fetchDNDMonster(lvlElevenToFifteen[randomIndex])
     } else if (score == 14){
+        fetchDNDMonster('ancient-black-dragon')
+    } else if (score == 19){
         fetchDNDMonster('kraken')
     } else {
-        const randomIndex = Math.floor(Math.random() * (lvlTenAndBeyond.length))
-        fetchDNDMonster(lvlTenAndBeyond[randomIndex])
+        const randomIndex = Math.floor(Math.random() * (lvlSixteenAndBeyond.length))
+        fetchDNDMonster(lvlSixteenAndBeyond[randomIndex])
     }
 }
 
