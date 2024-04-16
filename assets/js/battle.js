@@ -164,7 +164,8 @@ function victory() {
 }
 // Defeat
 function defeat() {
-    console.log('You kind of smell')
+    checkHighScores()
+    // console.log('You kind of smell')
     // Need to add function to check if score is high score
     // showHighScoreModal()
 }
@@ -490,11 +491,11 @@ function parsePokemonData(data) {
 /* ------------------------High Score Functions--------------------------------------------- */
 function checkHighScores() {
     if (highScores.length < 10){
-        highScoreModal()
+        showHighScoreModal()
     } else if (score > highScores[9].score){
-        highScoreModal()
+        showHighScoreModal()
     } else {
-        lowScoreModal()
+        showLowScoreModal()
     }
 
 }
