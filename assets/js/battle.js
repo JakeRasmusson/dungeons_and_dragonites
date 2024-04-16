@@ -65,20 +65,30 @@ const bgArray = [
 ]
 /* ---------------------------------------------------------------------------- */
 
-/* ------------ GLOBAL SOUNDS ------------------------------------------------- */
+/* ------------ GLOBAL SOUND VARIABLES ---------------------------------------- */
+// Mute Statuses
+let muted = JSON.parse(localStorage.getItem('muted')) || false
+let canUnmute = false
+// Background Music
 const bgMusic1 = new Audio('assets/sounds/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3')
 const bgMusic2 = new Audio('assets/sounds/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3')
 const bgMusic3 = new Audio('assets/sounds/2021-08-30_-_Boss_Time_-_www.FesliyanStudios.com.mp3')
 const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3]
-function setMutedStatus() {
+// Attack Sounds
+const attackSound1 = new Audio('assets/sounds/8-bit-explosion-95847.mp3')
+const attackSound2 = new Audio('assets/sounds/kick-hard-8-bit-103746.mp3')
+const attackSound3 = new Audio('assets/sounds/punch-41105.mp3')
+const attackSoundArray = [attackSound1, attackSound2, attackSound3]
+/* ---------------------------------------------------------------------------- */
+
+/* ------------ SOUND FUNCTIONS ----------------------------------------------- */
+function setMuteToggle() {
     if (muted) {
         muteToggle.textContent = '🔇'
     } else {
         muteToggle.textContent = '🔊'
     }
 }
-let muted = JSON.parse(localStorage.getItem('muted')) || false
-let canUnmute = false
 
 function playBgMusic() {
     const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
@@ -93,36 +103,24 @@ function toggleBgMusic() {
     if (!track && muted && canUnmute) {
         muted = false
         playBgMusic()
-        muteToggle.textContent = '🔊'
+        setMuteToggle()
     } else if (!track && muted) {
         muted = false
-        muteToggle.textContent = '🔊'
+        setMuteToggle()
     } else if (!track && !muted) {
         muted = true
-        muteToggle.textContent = '🔇'
+        setMuteToggle()
     } else if (track && !muted) {
         track.muted = true
         muted = true
-        muteToggle.textContent = '🔇'
+        setMuteToggle()
     } else if (track && muted) {
         track.muted = false
         muted = false
-        muteToggle.textContent = '🔊'
+        setMuteToggle()
     }
     localStorage.setItem('muted', JSON.stringify(muted))
 }
-
-muteToggle.addEventListener('click', function(e) {
-    toggleBgMusic()
-})
-
-
-
-
-const attackSound1 = new Audio('assets/sounds/8-bit-explosion-95847.mp3')
-const attackSound2 = new Audio('assets/sounds/kick-hard-8-bit-103746.mp3')
-const attackSound3 = new Audio('assets/sounds/punch-41105.mp3')
-const attackSoundArray = [attackSound1, attackSound2, attackSound3]
 
 function playAttackSound() {
     const sound = attackSoundArray[Math.floor(Math.random() * attackSoundArray.length)]
@@ -136,7 +134,6 @@ function playPokemonCry() {
         pokemonData.pokemonAudio.play()
     }
 }
-
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ MODAL POP-UPS ------------------------------------------------- */
@@ -608,7 +605,7 @@ function init() {
     displayBattleCount()
     getRandomMonster()
     getRandomPokemon()
-    setMutedStatus()
+    setMuteToggle()
 }
 
 // Event listeners
@@ -618,6 +615,10 @@ fetchBtn.addEventListener('click', function(e) {
     playPokemonCry()
     playBgMusic()
     canUnmute = true
+})
+
+muteToggle.addEventListener('click', function(e) {
+    toggleBgMusic()
 })
 
 attackBtn.addEventListener('click', function(e) {
