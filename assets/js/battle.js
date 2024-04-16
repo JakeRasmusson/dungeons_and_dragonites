@@ -1,12 +1,15 @@
 /* ------------ SET DOM VARIABLES --------------------------------------------- */
 // Top Header
 const battleCountEl = document.getElementById('battleCountEl')
+// Main Battle Screen
+const mainContainer = document.getElementById('mainContainer')
 // Buttons
 const attackBtn = document.getElementById('attackBtn')
 const healthPotionBtn = document.getElementById('healthBtn')
 const increaseAttackBtn = document.getElementById('increaseAttackBtn')
 const postFightButtons = document.querySelectorAll('.post-fight-btn')
 const continueAttackBtn = document.getElementById('continueAttack')
+const fetchBtn = document.getElementById('fetchBtn')
 // Dice Images
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceRollingImage = document.getElementById('diceRollingImage')
@@ -34,6 +37,30 @@ const highScoreModal = document.getElementById('highScoreModal')
 const lowScoreModal = document.getElementById('lowScoreModal')
 const rollModal = document.getElementById('rollModal')
 const highScoreForm = document.getElementById('highScoreForm')
+/* ---------------------------------------------------------------------------- */
+
+/* ------------ GLOBAL SOUNDS ------------------------------------------------- */
+const bgMusic1 = new Audio('assets/sounds/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3')
+const bgMusic2 = new Audio('assets/sounds/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3')
+const bgMusic3 = new Audio('assets/sounds/2021-08-30_-_Boss_Time_-_www.FesliyanStudios.com.mp3')
+const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3]
+
+function playBgMusic() {
+    const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
+    track.play()
+    track.addEventListener('ended', playBgMusic)
+}
+
+const attackSound1 = new Audio('assets/sounds/8-bit-explosion-95847.mp3')
+const attackSound2 = new Audio('assets/sounds/kick-hard-8-bit-103746.mp3')
+const attackSound3 = new Audio('assets/sounds/punch-41105.mp3')
+const attackSoundArray = [attackSound1, attackSound2, attackSound3]
+
+function playAttackSound() {
+    const sound = attackSoundArray[Math.floor(Math.random() * attackSoundArray.length)]
+    sound.play()
+}
+
 /* ---------------------------------------------------------------------------- */
 
 
@@ -236,11 +263,13 @@ function pokemonHits() {
     setTimeout(function() {
         if (monsterData.currentHp <= 0) {
             monsterImage.classList.add('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
+            pokemonData.pokemonAudio.play()
         }
     }, 50)
     setTimeout(function() {
         pokemonImage.classList.remove('translate-y-[25%]')
         pokemonImage.classList.add('translate-x-[100%]')
+        playAttackSound()
         toggleMonsterVisibility()
     }, 150)
     setTimeout(function() {
@@ -262,6 +291,7 @@ function monsterHits() {
     setTimeout(function() {
         monsterImage.classList.remove('translate-y-[25%]')
         monsterImage.classList.add('-translate-x-[100%]')
+        playAttackSound()
         togglePokemonVisibility()
     }, 150)
     setTimeout(function() {
@@ -478,6 +508,8 @@ function parsePokemonData(data) {
         pokemonData.baseAttack = pokemonData.attack
     }
     pokemonData.sprite = data.sprites.other.showdown.front_default
+    pokemonData.cry = data.cries.legacy
+    pokemonData.pokemonAudio = new Audio(pokemonData.cry);
     setPokemonImage()
     setPokemonCard()
     console.log(pokemonData.name)
@@ -521,14 +553,19 @@ function setHighScores(scoreObject) {
 /* ---------------------------------------------------------------------------- */
 /* ------------ INIT ---------------------------------------------------------- */
 // Render characters and background on start
-let audio = new Audio('assets/Opening.mp3');
 setBackground()
 displayBattleCount()
 getRandomMonster()
 getRandomPokemon()
-audio.play()
 
 // Event listeners
+fetchBtn.addEventListener('click', function(e) {
+    mainContainer.classList.remove('hidden')
+    fetchBtn.parentElement.classList.add('hidden')
+    pokemonData.pokemonAudio.play()
+    playBgMusic()
+})
+
 attackBtn.addEventListener('click', function(e) {
     playerTurn()
     attackBtn.classList.add('hidden')
