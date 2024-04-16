@@ -32,11 +32,10 @@ body {
     20px 40px 40px rgba(0,0,0)
 }
 
-button:hover {
-    scale: 255%;
+#back:hover {
     cursor: pointer;
     color: darkred;
-    background-color: rgb(150, 122, 122);
+    background-color: rgba(8, 0, 0, 0.918);
 }
 
 section {
@@ -64,13 +63,17 @@ h2 {
 }
 
 #scoreList {
+    margin-top: 20px;
     height: 90%;
     width: 100%;
 }
 
 .score {
-    margin: 20px;
     font-size: 38px;
+}
+
+.scoreScore {
+    text-align: center;
 }
 
 .highNumber {
@@ -81,10 +84,37 @@ h2 {
     3px 3px 3px rgba(207, 186, 94, 0.479);  
 }
 
-@media (max-width: 900px) {
+@media (max-width: 600px) {
+    #scoreList {
+        margin-top: 10px;
+    }
+
+    .score {
+        font-size: 24px;
+    }
+
+    #highScoreBox {
+        margin-top: 50px;
+        height: 500px;
+        width: 98%;
+    }
+
+    #back {
+        font-size: 14px;
+        margin: 30px auto 0 auto;
+        height: 18px;
+        width: 110px;
+        float: none;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
     body {
         background-size: auto;
-        height: 80%;
+        height: 100%;
     }
 
     #back {
@@ -98,13 +128,16 @@ h2 {
     }
 
     #highScoreBox {
-        margin-top: 60px;
-        height: 650px;
+        margin-top: 120px;
+        height: 750px;
+    }
+
+    h2 {
+        font-size: 24px ;
     }
 
     .score {
-        margin: 10px;
-        font-size: 28px;
+        font-size: 36px;
     }
 }
 
