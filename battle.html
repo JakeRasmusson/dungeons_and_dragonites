@@ -9,38 +9,45 @@
 	<title>Dungeons and Dragonites</title>
 </head>
 
-<body class="bg-cover bg-no-repeat bg-center h-[100vh]">
+<body class="bg-cover bg-no-repeat bg-center min-h-screen">
 	<header class=" bg-black bg-opacity-80 text-white">
-		<h1 class="text-4xl md:text-6xl text-center py-5" id="battleCountEl"></h1>
+		<button class="text-5xl mt-2 ml-2" id="muteToggle"></button>
+		<h1 class="text-6xl md:text-8xl text-center py-5" id="battleCountEl"></h1>
 	</header>
-	<audio src="assets/Opening.mp3" autoplay controls></audio>
-	<div class="py-5">
-		<div class="max-h-full flex flex-wrap justify-center w-full flex-row text-white font-bold">
+	<div class="flex justify-center"><button class="btn btn-primary w-[50%] mt-32 h-32 text-lg sm:text-2xl" id="fetchBtn">Get Your Pokemon!</button></div>
+	<div class="py-5 hidden" id="mainContainer">
+		<div class="size-max flex flex-wrap justify-center w-full flex-row text-white font-bold">
 <!-- /* ----------------------------- POKEMON CARD ----------------------------------------------- */ -->
-			<div class="grid flex-1 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4">
-				<div class="border-white border-b-2 w-[100%] text-center sm:flex justify-between px-2 py-2" id="pokemonCard">
-					<h2 class="md:text-base lg:text-xl" id="pokemonNameHeader"></h2>
-					<h3 class="md:text-base lg:text-xl">
-						<span id="pokemonCurrentHp"></span><span id="pokemonTotalHp"></span>
-					</h3>
+			<div class="size-max grid flex-1 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4 font-dragon-hunter">
+				<div class="border-white border-b-2 w-[100%] text-center py-2 text-center">
+					<h2 class="text-base md:text-xl lg:text-2xl" id="pokemonNameHeader"></h2>
 				</div>
-				<progress class="hp-bar progress progress-primary bg-white border border-white w-[75%] my-4" value="100" max="100" id="pokemonHpBar"></progress>
+				<div class="flex justify-around items-center w-[100%]">
+					<div class="flex-1 text-sm lg:text-xl block min-w-[20%] text-center">
+						<span id="pokemonCurrentHp"></span><span id="pokemonTotalHp"></span>
+					</div>
+					<progress class="flex-2 hp-bar progress progress-primary bg-white border border-white m-2 min-w-[50%] max-w-[60%]" value="100" max="100" id="pokemonHpBar"></progress>
+				</div>
 				<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
 					<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="pokemonImage" />
 				</div>
+				<h2 class=" text-xs lg:text-xl text-center" id="pokemonAttackHeader"></h2>
 			</div>
 <!-- /* ----------------------------- MONSTER CARD ----------------------------------------------- */ -->
-			<div class="grid flex-1 md:order-2 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4">
-				<div class="border-white border-b-2 w-[100%] text-center sm:flex justify-between px-3 py-2" id="monsterCard">
-					<h2 class="md:text-base lg:text-2xl" id="monsterNameHeader"></h2>
-					<h3 class="md:text-base lg:text-2xl">
-						<span id="monsterCurrentHp"></span><span id="monsterTotalHp"></span>
-					</h3>
+			<div class="size-max grid flex-1 md:order-2 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4 font-dragon-hunter">
+				<div class="border-white border-b-2 w-[100%] text-center py-2 text-center">
+					<h2 class="text-base md:text-xl lg:text-2xl" id="monsterNameHeader"></h2>
 				</div>
-				<progress class="hp-bar progress progress-primary bg-white border border-white w-[75%] my-4" value="100" max="100" id="monsterHpBar"></progress>
+				<div class="flex justify-around items-center w-[100%]">
+					<div class="flex-1 text-sm lg:text-xl block min-w-[20%] text-center">
+						<span id="monsterCurrentHp"></span><span id="monsterTotalHp"></span>
+					</div>
+					<progress class="flex-2 hp-bar progress progress-primary bg-white border border-white m-2 min-w-[50%] max-w-[60%]" value="100" max="100" id="monsterHpBar"></progress>
+				</div>
 				<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
 					<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="monsterImage" />
 				</div>
+				<h2 class=" text-xs lg:text-xl text-center" id="monsterAttackHeader"></h2>
 			</div>
 <!-- /* ----------------------------- DICE BOX----------------------------------------------- */ -->
 			<div class="flex-1 order-4 flex-grow-1 md:flex-1 md:order-1 max-w-48 md:max-w-32 lg:max-w-48 shadow-xl mx-4 self-center">
@@ -54,7 +61,7 @@
 			</div>
 <!-- /* ----------------------------- ATTACK BUTTON ----------------------------------------------- */ -->
 			<div class="w-[100%] flex-grow-1 order-3 shadow-xl mx-auto my-5 text-center">
-				<button class="btn btn-primary w-[50%] text-2xl hidden" id="attackBtn">Attack!</button>
+				<button class="btn btn-primary w-[50%] text-xl sm:text-2xl hidden" id="attackBtn">Attack!</button>
 			</div>
 
 		</div>
@@ -67,12 +74,25 @@
 			<p class="py-4 text-center">Would you like to heal your Pokemon or increase attack power?</p>
 			<div class="flex flex-col">
 				<form method="dialog">
-					<button class="post-fight-btn btn btn-primary w-[100%] my-3" id="healthBtn">Increase Health</button>
-					<button class="post-fight-btn btn btn-primary w-[100%] my-3" id="increaseAttackBtn">Increase Attack</button>
+					<button class="post-fight-btn btn btn-primary w-[100%] my-3" id="healBtn">Restore HP</button>
+					<button class="post-fight-btn btn btn-primary w-[100%] my-3" id="increaseHpBtn">Increase Max HP</button>
+					<button class="post-fight-btn btn btn-primary w-[100%] my-3" id="increaseAttackBtn">Increase Base Attack</button>
 				</form>
 			</div>
 		</div>
 	</dialog>
+
+	<dialog id="improvementResultsModal" class="modal">
+		<div class="modal-box">
+		  <h3 class="font-bold text-xl text-center my-3" id="improvementResultsHeader"></h3>
+		  <h3 class="font-bold text-xl text-center my-3" id="damageModIncreaseHeader"></h3>
+		  <div class="modal-action">
+			<form method="dialog">
+			  <button class="btn btn-primary" id="nextBattleButton">Next Battle</button>
+			</form>
+		  </div>
+		</div>
+	  </dialog>
 
 	<dialog id="lowScoreModal" class="modal">
 		<div class="modal-box">
@@ -92,9 +112,9 @@
 			<p class="py-4 text-center">You made the high score list! Enter your name below.</p>
 			<form id="highScoreForm" class="flex flex-col" method="submit">
 				<div class="flex justify-center gap-x-3">
-					<input type="text" maxlength="1" placeholder="" class="inline-block input input-bordered w-12" id="init1" />
-					<input type="text" maxlength="1" placeholder="" class="inline-block input input-bordered w-12" id="init2" />
-					<input type="text" maxlength="1" placeholder="" class="inline-block input input-bordered w-12" id="init3" />
+					<input type="text" maxlength="1" placeholder="" class="initials-input inline-block input input-bordered w-12" id="init1" />
+					<input type="text" maxlength="1" placeholder="" class="initials-input inline-block input input-bordered w-12" id="init2" />
+					<input type="text" maxlength="1" placeholder="" class="initials-input inline-block input input-bordered w-12" id="init3" />
 				</div>
 				<button class="btn btn-primary w-24 mt-4 self-center" id="submitNameBtn">Submit</button>
 			</form>
@@ -105,10 +125,10 @@
 		<div class="modal-box">
 				<h2 class="text-2xl text-center font-bold">Roll Results</h2>
 				<ul class="flex flex-1 flex-col ml-3 justify-evenly my-2">
-					<li class="my-1" id="rollTypeEl"></li>
-					<li class="my-1" id="rollTotalEl"></li>
-					<li class="my-1" id="damageModEl"></li>
-					<li class="my-1" id="rollDamageEl"></li>
+					<li class="my-1 ml-1" id="rollTypeEl"></li>
+					<li class="my-1 ml-1" id="rollTotalEl"></li>
+					<li class="my-1 ml-1" id="damageModEl"></li>
+					<li class="flex-shrink-1 py-1 px-3 my-1 font-bold border-2 border-black self-start" id="rollDamageEl"></li>
 				</ul>
 			<form class="text-right" method="dialog">
 				<button class="btn btn-primary" id="continueAttack">Continue</button>
