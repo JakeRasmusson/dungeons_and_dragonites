@@ -5,9 +5,10 @@ const battleCountEl = document.getElementById('battleCountEl')
 const mainContainer = document.getElementById('mainContainer')
 // Buttons
 const attackBtn = document.getElementById('attackBtn')
-const healthPotionBtn = document.getElementById('healthBtn')
+const healBtn = document.getElementById('healBtn')
 const increaseAttackBtn = document.getElementById('increaseAttackBtn')
-const postFightButtons = document.querySelectorAll('.post-fight-btn')
+const increaseHpBtn = document.getElementById('increaseHpBtn')
+const nextBattleButton = document.getElementById('nextBattleButton')
 const continueAttackBtn = document.getElementById('continueAttack')
 const fetchBtn = document.getElementById('fetchBtn')
 const muteToggle = document.getElementById('muteToggle')
@@ -36,6 +37,9 @@ const damageModEl = document.getElementById('damageModEl')
 const rollDamageEl = document.getElementById('rollDamageEl')
 // Modals
 const improvePokemonModal = document.getElementById('improvePokemonModal')
+const improvementResultsModal = document.getElementById('improvementResultsModal')
+const improvementResultsHeader = document.getElementById('improvementResultsHeader')
+const damageModIncreaseHeader = document.getElementById('damageModIncreaseHeader')
 const highScoreModal = document.getElementById('highScoreModal')
 const lowScoreModal = document.getElementById('lowScoreModal')
 const rollModal = document.getElementById('rollModal')
@@ -54,7 +58,6 @@ let isPlayerTurn = true
 let pokemonData = {}
 let monsterData = {}
 let monsterDice = {}
-
 // Background dungeon image array
 const bgArray = [
     'assets/images/dungeon-bg-1.png',
@@ -64,6 +67,17 @@ const bgArray = [
     'assets/images/dungeon-bg-5.png',
     'assets/images/dungeon-bg-6.png'
 ]
+// Attack Damage Increase Array
+const attackIncreaseArray = [5, 5, 5, 5, 10]
+// Heal Amount Array
+const healArray = [20, 20, 20, 20, 20, 50, 50, 50, 50, 200]
+// Max HP Increase Array
+const maxHpIncreaseArray = [5, 5, 5, 5, 10]
+// Function to pull random index from array
+function getRandom(array) {
+    const index = array[Math.floor(Math.random() * array.length)]
+    return index
+}
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ GLOBAL SOUND VARIABLES ---------------------------------------- */
@@ -150,6 +164,17 @@ function showImproveModal() {
     }
     document.addEventListener('keydown', stopEscape)
 }
+// Improvement Results Modal
+function showimprovementResultsModal() {
+    improvementResultsModal.showModal()
+    function stopEscape(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+    }
+    document.addEventListener('keydown', stopEscape)
+}
 // High Score Entry Modal
 function showHighScoreModal() {
     highScoreModal.showModal()
@@ -163,12 +188,12 @@ function showHighScoreModal() {
 }
 // Jump to next input when a character is entered, jump to previous input when backspaced (USED CHAT GPT)
 function handleInitialsInput() {
-    inputs.forEach((input, index) => {
+    initialsInputs.forEach((input, index) => {
         // Focus to next input when character is entered
         input.addEventListener('input', function() {
             if (this.value.length === 1) {
-                if (index < inputs.length - 1) {
-                    inputs[index + 1].focus();
+                if (index < initialsInputs.length - 1) {
+                    initialsInputs[index + 1].focus();
                 }
             }
         });
@@ -176,7 +201,7 @@ function handleInitialsInput() {
         input.addEventListener('keyup', function(event) {    
             if (event.key === 'Backspace' && this.value.length === 0) {        
                 if (index > 0) {            
-                    inputs[index - 1].focus();
+                    initialsInputs[index - 1].focus();
                 }
             }
         });
@@ -208,7 +233,7 @@ function showrollModal() {
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR COMBAT ------------------------------------------ */
-
+// Check to see if either player is dead
 function checkHealth() {
     if (monsterData.currentHp <= 0) {
         victory()
@@ -216,40 +241,38 @@ function checkHealth() {
         defeat()
     }
 }
-
 // Pokemon attack
 function playerTurn(){
-    const dmgModifier = Math.round(pokemonData.baseAttack / 20)
     const thisRoll = rollDice(20)
-    const attackDmg = thisRoll * dmgModifier
+    const attackDamage = thisRoll * pokemonData.damageModifier
     resultsReset()
     rollRender(thisRoll)
     setTimeout(function() {
         pokemonHits()
-        resultsRender('1d20', thisRoll, dmgModifier, attackDmg)
+        resultsRender('1d20', thisRoll, pokemonData.damageModifier, attackDamage)
         setMonsterCard()
     }, 1500)
-    monsterData.currentHp -= attackDmg
-    console.log('Damage: ' + attackDmg);
-    console.log('Damage mod: ' + dmgModifier);
+    monsterData.currentHp -= attackDamage
+    console.log('Damage: ' + attackDamage);
+    console.log('Damage mod: ' + pokemonData.damageModifier);
     // checkHealth()
     isPlayerTurn = false
     setTimeout(showrollModal, 3000)
 }
 // Monster attack
 function monsterTurn(){
-    const thisRoll = damageRoll(monsterDice.numberOfRolls, monsterDice.diceMax, monsterDice.additionalDmg)
-    const thisRollNoMod = thisRoll - monsterDice.additionalDmg
-    const attackDmg = thisRoll
+    const thisRoll = damageRoll(monsterDice.numberOfRolls, monsterDice.diceMax, monsterDice.additionalDamage)
+    const thisRollNoMod = thisRoll - monsterDice.additionalDamage
+    const attackDamage = thisRoll
     resultsReset()
     rollRender(thisRollNoMod)
     setTimeout(function() {
         monsterHits()
-        resultsRender(monsterData.dmgDice, (thisRoll - monsterDice.additionalDmg), monsterDice.additionalDmg, attackDmg)
+        resultsRender(monsterData.damageDice, (thisRoll - monsterDice.additionalDamage), monsterDice.additionalDamage, attackDamage)
         setPokemonCard()
     }, 1500)
-    pokemonData.currentHp -= attackDmg
-    console.log('Damage: ' + attackDmg)
+    pokemonData.currentHp -= attackDamage
+    console.log('Damage: ' + attackDamage)
     // checkHealth()
     isPlayerTurn = true
     setTimeout(showrollModal, 3000)
@@ -264,41 +287,60 @@ function victory() {
 // Defeat
 function defeat() {
     checkHighScores()
-    // console.log('You kind of smell')
-    // Need to add function to check if score is high score
-    // showHighScoreModal()
 }
 // Take health potion
 function healthPotion() {
-    pokemonData.currentHp += 20
+    const prevCurrentHp = pokemonData.currentHp
+    const healAmount = getRandom(healArray) 
+    pokemonData.currentHp += healAmount
     if (pokemonData.currentHp > pokemonData.hp) {
         pokemonData.currentHp = pokemonData.hp
     }
-    setPokemonCard()
-    displayBattleCount()
-    getRandomMonster()
-    console.log(pokemonData.currentHp)
+    improvementResultsHeader.innerHTML = `Current HP: ${prevCurrentHp} &rarr; ${pokemonData.currentHp}`
+    showimprovementResultsModal()
 }
 // Increase pokemon attack
 function increaseAttack() {
-    pokemonData.baseAttack += 2
+    const attackIncrease = getRandom(attackIncreaseArray)
+    pokemonData.baseAttack += attackIncrease
+    pokemonData.damageModifier = Math.round(pokemonData.baseAttack / 20)
+    const prevBaseAttack = pokemonData.baseAttack - attackIncrease
+    console.log(pokemonData.baseAttack)
+    improvementResultsHeader.innerHTML = `Base Attack: ${pokemonData.baseAttack - attackIncrease} &rarr; ${pokemonData.baseAttack}`
+    if (Math.round(prevBaseAttack / 20) !== pokemonData.damageModifier) {
+        damageModIncreaseHeader.innerHTML = `Damage Modifier: ${pokemonData.damageModifier - 1} &rarr; ${pokemonData.damageModifier}`
+    }
+    showimprovementResultsModal()
+}
+// Increase max HP
+function increaseHp() {
+    const prevHp = pokemonData.hp
+    hpIncrease = getRandom(maxHpIncreaseArray)
+    pokemonData.hp += hpIncrease
+    pokemonData.currentHp += hpIncrease
+    improvementResultsHeader.innerHTML = `Max HP: ${prevHp} &rarr; ${pokemonData.hp}`
+    showimprovementResultsModal()
+}
+// Start next battle
+function nextBattle() {
+    damageModIncreaseHeader.innerHTML = ''
+    setPokemonCard()
     displayBattleCount()
     getRandomMonster()
-    console.log(pokemonData.baseAttack)
 }
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR DICE ROLLS -------------------------------------- */
 //Split monster damageDice string
 function splitDamageDice() {
-    const dmgDice = monsterData.dmgDice
-    const numberOfRolls = parseInt(dmgDice.split('d')[0])
-    const dmgDice2 = dmgDice.split('d')[1]
-    const diceMax = parseInt(dmgDice2.split('+')[0])
-    const additionalDmg = parseInt(dmgDice2.split('+')[1])
+    const damageDice = monsterData.damageDice
+    const numberOfRolls = parseInt(damageDice.split('d')[0])
+    const damageDice2 = damageDice.split('d')[1]
+    const diceMax = parseInt(damageDice2.split('+')[0])
+    const additionalDamage = parseInt(damageDice2.split('+')[1])
     monsterDice.numberOfRolls = numberOfRolls
     monsterDice.diceMax = diceMax
-    monsterDice.additionalDmg = additionalDmg
+    monsterDice.additionalDamage = additionalDamage
 }
 // One roll of a specified numbered die
 function rollDice(number) {
@@ -307,16 +349,16 @@ function rollDice(number) {
     return result
 }
 // Multiple rolls of the same numbered die
-function damageRoll(numberofRolls, diceMax, additionalDmg) {
+function damageRoll(numberofRolls, diceMax, additionalDamage) {
     let result = 0;
     for (let i = 0; i < numberofRolls; i++) {
         result += rollDice(diceMax)
     }
-    result += additionalDmg
+    result += additionalDamage
     console.log("Total: " + result)
     return result
 }
-/* ------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR BATTLE ANIMATIONS ------------------------------- */
 
@@ -373,17 +415,17 @@ function monsterHits() {
     setTimeout(togglePokemonVisibility, 600)
     setTimeout(togglePokemonVisibility, 800)
 }
-// Get random number between -150 and 150 for dice bounces
-function randomNumber() {
+// Get random positive or negative number for dice bounces
+function randomPosOrNeg(num) {
     const posOrNeg = Math.round(Math.random()) * 2 -1
-    const randomInt = Math.ceil(Math.random() * 150)
+    const randomInt = Math.ceil(Math.random() * num)
     const randomNumber = posOrNeg * randomInt
     return randomNumber
 }
 // Set random translations for dice bounces
 function randomBounce() {
-    const randomX = randomNumber();
-    const randomY = randomNumber();
+    const randomX = randomPosOrNeg(150);
+    const randomY = randomPosOrNeg(150);
     diceRollingImage.classList.add(`translate-x-[${randomX}%]`)
     diceRollingImage.classList.add(`translate-y-[${randomY}%]`)
 }
@@ -415,33 +457,33 @@ function rollRender(roll) {
         rollTotalSpan.innerText = roll
     }, 1200)
 }
-/* ------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
-//Get random characters
+//Get random monster by current level
 function getRandomMonster() {
-const lvlOneToNineArray = [
-    'giant-crab',
-    'mimic',
-    'ghost',
-    'zombie',
-    'flying-sword',
-    'nightmare',
-    'awakened-tree'
-]
-const lvlElevenToFifteen = [
-    'mammoth',
-    'clay-golem',
-    'minotaur',
-    'fire-giant',
-    'berserker'
-]
-const lvlSixteenAndBeyond = [
-    'pit-fiend',
-    'giant-ape',
-    'hydra',
-    'tyrannosaurus-rex'
-]
+    const lvlOneToNineArray = [
+        'giant-crab',
+        'mimic',
+        'ghost',
+        'zombie',
+        'flying-sword',
+        'nightmare',
+        'awakened-tree'
+    ]
+    const lvlElevenToFifteen = [
+        'mammoth',
+        'clay-golem',
+        'minotaur',
+        'fire-giant',
+        'berserker'
+    ]
+    const lvlSixteenAndBeyond = [
+        'pit-fiend',
+        'giant-ape',
+        'hydra',
+        'tyrannosaurus-rex'
+    ]
     if (score < 9) {
         const randomIndex = Math.floor(Math.random() * (lvlOneToNineArray.length))
         fetchDNDMonster(lvlOneToNineArray[randomIndex])
@@ -459,7 +501,7 @@ const lvlSixteenAndBeyond = [
         fetchDNDMonster(lvlSixteenAndBeyond[randomIndex])
     }
 }
-
+// Get random Pokemon
 function getRandomPokemon() {
     const randomIndex = Math.ceil(Math.random() * 151)
     fetchPokemon(randomIndex)
@@ -477,7 +519,7 @@ function fetchDNDMonster(monster) {
 }
 
 function fetchPokemon(pokemon) {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then(function (response){
             return response.json()
         })
@@ -486,7 +528,7 @@ function fetchPokemon(pokemon) {
         })
 }
 
-/* ---------------------------------------------------------------------------------------------*/
+/* -----------------------------------------------------------------------------*/
 
 /* ------------ FUNCTIONS FOR RENDERING CHARACTERS AND BG --------------------- */
 // Set Background
@@ -556,7 +598,7 @@ function parseMonsterData(data) {
     monsterData.name = monsterName
     monsterData.hp = data.hit_points
     monsterData.currentHp = data.hit_points
-    monsterData.dmgDice = damageDice
+    monsterData.damageDice = damageDice
     monsterData.imgUrl = `assets/images/${monsterIndex}.png`
     monsterData.armor = data.armor_class[0].value
     monsterData.strength = data.strength
@@ -572,13 +614,14 @@ function parsePokemonData(data) {
     pokemonData.hp = data.stats[0].base_stat
     pokemonData.currentHp = data.stats[0].base_stat
     pokemonData.attack = data.stats[1].base_stat
-    pokemonData.defense = data.stats[2].base_stat
     pokemonData.spAttack = data.stats[3].base_stat
+    pokemonData.defense = data.stats[2].base_stat
     if (pokemonData.spAttack > pokemonData.attack) {
         pokemonData.baseAttack = pokemonData.spAttack
     } else {
         pokemonData.baseAttack = pokemonData.attack
     }
+    pokemonData.damageModifier = Math.round(pokemonData.baseAttack / 20)
     pokemonData.sprite = data.sprites.other.showdown.front_default
     pokemonData.cry = data.cries.legacy
     pokemonData.pokemonAudio = new Audio(pokemonData.cry);
@@ -592,7 +635,8 @@ function parsePokemonData(data) {
     attackBtn.classList.remove('hidden')
 }
 /* ---------------------------------------------------------------------------- */
-/* ------------------------High Score Functions--------------------------------------------- */
+
+/* ------------ FUNCTIONS FOR HIGH SCORES ------------------------------------- */
 function checkHighScores() {
     if (highScores.length < 10){
         showHighScoreModal()
@@ -601,7 +645,6 @@ function checkHighScores() {
     } else {
         showLowScoreModal()
     }
-
 }
 
 function setHighScores(scoreObject) {
@@ -617,11 +660,9 @@ function setHighScores(scoreObject) {
     localStorage.setItem('highScores', JSON.stringify(highScores))
     window.location.href = 'scores.html'
 }
-
-
-
 /* ---------------------------------------------------------------------------- */
-/* ------------ INIT ---------------------------------------------------------- */
+
+/* ------------ INIT ---------------------------------------------------------- */ 
 // Render characters and background on start
 function init() {
     setBackground()
@@ -663,12 +704,20 @@ continueAttackBtn.addEventListener('click', function(e) {
     }
 })
 
-healthPotionBtn.addEventListener('click', function(e) {
+healBtn.addEventListener('click', function(e) {
     healthPotion()
 })
 
 increaseAttackBtn.addEventListener('click', function(e) {
     increaseAttack()
+})
+
+increaseHpBtn.addEventListener('click', function(e) {
+    increaseHp()
+})
+
+nextBattleButton.addEventListener('click', function(e) {
+    nextBattle()
 })
 
 quitToMainBtn.addEventListener('click', function(e) {
@@ -679,7 +728,6 @@ playAgainBtn.addEventListener('click', function(e){
     score = 0
     init()
     lowScoreModal.close()
-
 })
 
 highScoreForm.addEventListener('submit', function(e) {
