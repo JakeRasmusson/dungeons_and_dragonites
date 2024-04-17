@@ -1,4 +1,4 @@
-const loadScores = JSON.parse( localStorage.getItem('highScores'))
+const loadScores = JSON.parse( localStorage.getItem('highScores')) || []
 
 // Capitalize first letter of text
 function capitalizeFirstLetter(pokemon){

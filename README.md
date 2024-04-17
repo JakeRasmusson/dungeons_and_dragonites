@@ -4,7 +4,7 @@
 
 Our esteemed group embarked on a noble quest: to craft a gaming masterpiece leveraging the prowess of two distinct API calls. With unwavering determination, we chose to harness the mystical energies of the DND5EAPI and the enchanting allure of the Pokeapi. As the curtains rise on our digital stage, players are bestowed with a divine gift: a whimsical Pokémon from the hallowed annals of the original 151 creatures. Armed with this mystical companion, adventurers delve into the perilous depths of the Dungeons and Dragons universe, confronting a myriad of foes lurking in the shadows. With each passing encounter, the crucible of battle grows ever fiercer, challenging the very essence of our players' intellect and dexterity. In this epic odyssey, players are tasked with enduring the relentless onslaught of increasingly formidable adversaries, testing the limits of their strategic acumen and tactical finesse. Will you emerge victorious, defying the odds in this captivating turn-based journey through the labyrinthine depths of our dungeon crawler?
 
-[Link to deployed Github website](https://jakerasmusson.github.io/weather_app/)
+[Link to deployed Github website](https://jakerasmusson.github.io/dungeons_and_dragonites/)
 
 ## Built With
 
@@ -40,15 +40,25 @@ Victory Modal
 
 ![Victory Modal](/assets/images/Readme/victory-modal.png)
 
-You loose modal
+You lose modal
+
+![Lose Modal](/assets/images/Readme/you-lose-modal.png)
+
+High scores page
 
 ![Victory Modal](/assets/images/Readme/high-score-treasure-hoarde.png)
 
 ## Credits
+Music used.
+The Puzzle Door - Fenmos\
+[The puzzle Door](https://barony-of-fenmoss.bandcamp.com/album/the-puzzle-door)
 
-Group member githubs
-[Kent Tuneberg](https://github.com/ktunebe)
-[Parker Rosemeyer](https://github.com/parros)
+Esper the Bard\
+[Esper the Bard YT](https://www.youtube.com/@esperthebard)
+
+Group member githubs\
+[Kent Tuneberg](https://github.com/ktunebe)\
+[Parker Rosemeyer](https://github.com/parros)\
 [Jake Rasmusson](https://github.com/JakeRasmusson)
 
 
