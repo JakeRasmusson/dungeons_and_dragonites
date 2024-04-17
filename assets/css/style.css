@@ -20,14 +20,14 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.24);
 }
 
 h1 {
     font-size: 80px;
     text-align: center;
     height: 20%;
-    text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.774),
+    text-shadow: -1px -1px 0 rgb(255, 255, 255),
     1px 1px 0 rgba(133, 37, 37, 0.801),
     3px 3px 3px rgba(94, 2, 2, 0.863),
     10px 10px 20px rgba(102, 2, 2, 0.795),
@@ -47,8 +47,8 @@ h1 {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    color: black;
-    text-shadow: -.45px -.45px 0 rgba(247, 244, 244, 0.856),
+    color: rgb(255, 255, 255);
+    text-shadow: -1.5px -1.5px 0 rgb(0, 0, 0),
     1px 1px 0 rgba(116, 32, 32, 0.726),
     2px 2px 1px rgba(92, 5, 5, 0.801),
     3px 3px 5px rgba(58, 5, 5, 0.829);
@@ -60,9 +60,19 @@ h1 {
 
 .doors {
     position: relative;
-    /* scale: 175%; */
     z-index: -1;
     bottom: 0;
+}
+
+.doors::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(31, 30, 30, 0.342);
 }
 
 a:hover .doorTxt  {
@@ -74,4 +84,39 @@ a:hover .doorTxt  {
     bottom: 0px;
     height: 30%;
     width: 100%;
+}
+
+#floor::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(32, 32, 32, 0.315);
+}
+
+@media (max-width: 550px) {
+    .doorTxt {
+        left: 10px;
+    }
+}
+
+@media (max-width: 750px) {
+    .doorTxt {
+        top: 25px;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 1020px) {
+    body {
+        background-size: contain;
+        background-size: cover;
+    }
+    #floor {
+        background-size: contain;
+        background-size: cover;
+    }
 }
