@@ -87,10 +87,14 @@ function getRandom(array) {
 let muted = JSON.parse(localStorage.getItem('muted')) || false
 let canUnmute = false
 // Background Music
-const bgMusic1 = new Audio('assets/sounds/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3')
-const bgMusic2 = new Audio('assets/sounds/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3')
-const bgMusic3 = new Audio('assets/sounds/2021-08-30_-_Boss_Time_-_www.FesliyanStudios.com.mp3')
-const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3]
+const bgMusic1 = new Audio('assets/sounds/Armorial-Bearings.mp3')
+const bgMusic2 = new Audio('assets/sounds/Bold-Kobolds.mp3')
+const bgMusic3 = new Audio('assets/sounds/Down-Down-Again.mp3')
+const bgMusic4 = new Audio('assets/sounds/Alone-in-the-Dark.mp3')
+const bgMusic5 = new Audio('assets/sounds/Mare-Trogloditum.mp3')
+const bgMusic6 = new Audio('assets/sounds/The-Legend-of-Nodwic- O-Bodwick.mp3')
+const bgMusic7 = new Audio('assets/sounds/Through-the-Door.mp3')
+const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3, bgMusic4, bgMusic5, bgMusic6, bgMusic7]
 // Attack Sounds
 const attackSound1 = new Audio('assets/sounds/8-bit-explosion-95847.mp3')
 const attackSound2 = new Audio('assets/sounds/kick-hard-8-bit-103746.mp3')
@@ -487,20 +491,20 @@ function getRandomMonster() {
         'tyrannosaurus-rex'
     ]
     if (score < 9) {
-        const randomIndex = Math.floor(Math.random() * (lvlOneToNineArray.length))
-        fetchDNDMonster(lvlOneToNineArray[randomIndex])
+        const monster = getRandom(lvlOneToNineArray)
+        fetchDNDMonster(monster)
     } else if (score == 9) {
         fetchDNDMonster('archmage')
     } else if (score >= 10 && score < 14){
-        const randomIndex = Math.floor(Math.random() * (lvlElevenToFifteen.length))
-        fetchDNDMonster(lvlElevenToFifteen[randomIndex])
+        const monster = getRandom(lvlElevenToFifteen)
+        fetchDNDMonster(monster)
     } else if (score == 14){
         fetchDNDMonster('ancient-black-dragon')
     } else if (score == 19){
         fetchDNDMonster('kraken')
     } else {
-        const randomIndex = Math.floor(Math.random() * (lvlSixteenAndBeyond.length))
-        fetchDNDMonster(lvlSixteenAndBeyond[randomIndex])
+        const monster = getRandom(lvlSixteenAndBeyond)
+        fetchDNDMonster(monster)
     }
 }
 // Get random Pokemon
@@ -595,7 +599,6 @@ function displayBattleCount() {
 /* ------------ FUNCTIONS FOR CREATING CHARACTERS ----------------------------- */
 //Parse Monster Fetch Data
 function parseMonsterData(data) {
-    console.log(data)
     const damageDice = data.actions[0].name == 'Multiattack'? data.actions[1].damage[0].damage_dice : data.actions[0].damage[0].damage_dice
     const monsterIndex = data.index
     const monsterName = data.name
@@ -606,7 +609,6 @@ function parseMonsterData(data) {
     monsterData.imgUrl = `assets/images/${monsterIndex}.png`
     monsterData.armor = data.armor_class[0].value
     monsterData.strength = data.strength
-    console.log(monsterData)
     setMonsterImage()
     setMonsterCard()
     splitDamageDice()
