@@ -26,10 +26,12 @@ const pokemonNameHeader = document.getElementById('pokemonNameHeader')
 const pokemonCurrentHpSpan = document.getElementById('pokemonCurrentHp')
 const pokemonTotalHpSpan = document.getElementById('pokemonTotalHp')
 const pokemonHpBar = document.getElementById('pokemonHpBar')
+pokemonAttackHeader = document.getElementById('pokemonAttackHeader')
 const monsterNameHeader = document.getElementById('monsterNameHeader')
 const monsterCurrentHpSpan = document.getElementById('monsterCurrentHp')
 const monsterTotalHpSpan = document.getElementById('monsterTotalHp')
 const monsterHpBar = document.getElementById('monsterHpBar')
+const monsterAttackHeader = document.getElementById('monsterAttackHeader')
 // Roll Results
 const rollTypeEl = document.getElementById('rollTypeEl')
 const rollTotalEl = document.getElementById('rollTotalEl')
@@ -552,6 +554,7 @@ function setPokemonCard() {
     }
     pokemonCurrentHpSpan.innerText = `HP: ${pokemonData.currentHp}/`
     pokemonTotalHpSpan.innerText = pokemonData.hp
+    pokemonAttackHeader.innerText = `Base Attack: ${pokemonData.baseAttack}`
     pokemonImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
     pokemonHpBar.value = pokemonData.currentHp
     pokemonHpBar.max = pokemonData.hp
@@ -564,6 +567,7 @@ function setMonsterCard() {
     }
     monsterCurrentHpSpan.innerText = `HP: ${monsterData.currentHp}/`
     monsterTotalHpSpan.innerText = monsterData.hp
+    monsterAttackHeader.innerText = `Attack: ${monsterData.damageDice}`
     monsterImage.classList.remove('origin-bottom','rotate-90', '-translate-x-[25%]', '-translate-y-[25%]')
     monsterHpBar.value = monsterData.currentHp
     monsterHpBar.max = monsterData.hp
