@@ -11,9 +11,8 @@ html {
 body {
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 1400px 1000px;
-    height: 100%;
-    width: 100%;
+    background-size: contain;
+    background-size: cover;
 }
 
 #back {
@@ -85,6 +84,10 @@ h2 {
 }
 
 @media (max-width: 600px) {
+    body {
+        background-size: 600px 1200px;
+    }
+
     #scoreList {
         margin-top: 10px;
     }
@@ -101,13 +104,15 @@ h2 {
 
     #back {
         font-size: 14px;
-        margin: 30px auto 0 auto;
+        margin: 30px auto 5px auto;
         height: 18px;
         width: 110px;
         float: none;
         display: flex;
         justify-content: center;
         text-align: center;
+        background-color: rgba(8, 0, 0, 0.918);
+        color: darkred;
     }
 }
 
@@ -118,7 +123,7 @@ h2 {
     }
 
     #back {
-        margin: 30px auto 0 auto;
+        margin: 30px auto 5px auto;
         height: 20px;
         width: 125px;
         float: none;
