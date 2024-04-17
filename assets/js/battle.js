@@ -40,6 +40,7 @@ const highScoreModal = document.getElementById('highScoreModal')
 const lowScoreModal = document.getElementById('lowScoreModal')
 const rollModal = document.getElementById('rollModal')
 const highScoreForm = document.getElementById('highScoreForm')
+const initialsInputs = document.querySelectorAll('.initials-input');
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ OBJECTS, ARRAYS, VARIABLES ------------------------------------ */
@@ -93,6 +94,7 @@ function setMuteToggle() {
 function playBgMusic() {
     const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
     if (!muted) {
+        track.volume = 0.5
         track.play()
         track.addEventListener('ended', playBgMusic)
     }
@@ -158,6 +160,27 @@ function showHighScoreModal() {
         }
     }
     document.addEventListener('keydown', stopEscape)
+}
+// Jump to next input when a character is entered, jump to previous input when backspaced (USED CHAT GPT)
+function handleInitialsInput() {
+    inputs.forEach((input, index) => {
+        // Focus to next input when character is entered
+        input.addEventListener('input', function() {
+            if (this.value.length === 1) {
+                if (index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            }
+        });
+        // Focus to previous input when backspace to 0 characters
+        input.addEventListener('keyup', function(event) {    
+            if (event.key === 'Backspace' && this.value.length === 0) {        
+                if (index > 0) {            
+                    inputs[index - 1].focus();
+                }
+            }
+        });
+    });
 }
 
 // Game Over with no High Score Modal
@@ -606,6 +629,7 @@ function init() {
     getRandomMonster()
     getRandomPokemon()
     setMuteToggle()
+    handleInitialsInput()
 }
 
 // Event listeners
@@ -654,7 +678,7 @@ quitToMainBtn.addEventListener('click', function(e) {
 playAgainBtn.addEventListener('click', function(e){
     score = 0
     init()
-    lowScoreModal.style.display = 'none'
+    lowScoreModal.close()
 
 })
 
