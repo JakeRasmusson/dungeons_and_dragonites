@@ -20,8 +20,8 @@
 <!-- /* ----------------------------- POKEMON CARD ----------------------------------------------- */ -->
 			<div class="grid flex-1 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4">
 				<div class="border-white border-b-2 w-[100%] text-center sm:flex justify-between px-2 py-2" id="pokemonCard">
-					<h2 class="md:text-base lg:text-xl" id="pokemonNameHeader"></h2>
-					<h3 class="md:text-base lg:text-xl">
+					<h2 class="md:text-base lg:text-2xl" id="pokemonNameHeader"></h2>
+					<h3 class="md:text-base lg:text-2xl">
 						<span id="pokemonCurrentHp"></span><span id="pokemonTotalHp"></span>
 					</h3>
 				</div>
@@ -93,9 +93,9 @@
 			<p class="py-4 text-center">You made the high score list! Enter your name below.</p>
 			<form id="highScoreForm" class="flex flex-col" method="submit">
 				<div class="flex justify-center gap-x-3">
-					<input type="text" maxlength="1" placeholder="" class="inline-block input input-bordered w-12" id="init1" />
-					<input type="text" maxlength="1" placeholder="" class="inline-block input input-bordered w-12" id="init2" />
-					<input type="text" maxlength="1" placeholder="" class="inline-block input input-bordered w-12" id="init3" />
+					<input type="text" maxlength="1" placeholder="" class="initials-input inline-block input input-bordered w-12" id="init1" />
+					<input type="text" maxlength="1" placeholder="" class="initials-input inline-block input input-bordered w-12" id="init2" />
+					<input type="text" maxlength="1" placeholder="" class="initials-input inline-block input input-bordered w-12" id="init3" />
 				</div>
 				<button class="btn btn-primary w-24 mt-4 self-center" id="submitNameBtn">Submit</button>
 			</form>
