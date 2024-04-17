@@ -72,9 +72,9 @@ const bgArray = [
 // Attack Damage Increase Array
 const attackIncreaseArray = [5, 5, 5, 5, 10]
 // Heal Amount Array
-const healArray = [20, 20, 20, 20, 20, 50, 50, 50, 50, 200]
+const healArray = [20, 20, 20, 50, 50, 50, 50, 50, 200, 200]
 // Max HP Increase Array
-const maxHpIncreaseArray = [5, 5, 5, 5, 10]
+const maxHpIncreaseArray = [5, 5, 5, 10, 10]
 // Function to pull random index from array
 function getRandom(array) {
     const index = array[Math.floor(Math.random() * array.length)]
