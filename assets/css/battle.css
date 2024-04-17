@@ -25,14 +25,12 @@ h1 {
 
 #rollModal,
 dialog,
-.btn-primary {
+.btn-primary,
+#pokemonAttackHeader,
+#monsterAttackHeader {
     font-family: pokemon-gb;
 }
 
-#monsterCard {
-    font-family: dragon-hunter;
-}
-
-#pokemonCard {
+.font-dragon-hunter {
     font-family: dragon-hunter;
 }
