@@ -92,7 +92,7 @@ const bgMusic2 = new Audio('assets/sounds/Bold-Kobolds.mp3')
 const bgMusic3 = new Audio('assets/sounds/Down-Down-Again.mp3')
 const bgMusic4 = new Audio('assets/sounds/Alone-in-the-Dark.mp3')
 const bgMusic5 = new Audio('assets/sounds/Mare-Trogloditum.mp3')
-const bgMusic6 = new Audio('assets/sounds/The-Legend-of-Nodwic- O-Bodwick.mp3')
+const bgMusic6 = new Audio('assets/sounds/The-Legend-of-Nodwic-O-Bodwick.mp3')
 const bgMusic7 = new Audio('assets/sounds/Through-the-Door.mp3')
 const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3, bgMusic4, bgMusic5, bgMusic6, bgMusic7]
 // Attack Sounds
