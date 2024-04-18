@@ -87,14 +87,13 @@ function getRandom(array) {
 let muted = JSON.parse(localStorage.getItem('muted')) || false
 let canUnmute = false
 // Background Music
-const bgMusic1 = new Audio('assets/sounds/Armorial-Bearings.mp3')
+const bgMusic1 = new Audio('assets/sounds/Through-the-Door.mp3')
 const bgMusic2 = new Audio('assets/sounds/Bold-Kobolds.mp3')
 const bgMusic3 = new Audio('assets/sounds/Down-Down-Again.mp3')
 const bgMusic4 = new Audio('assets/sounds/Alone-in-the-Dark.mp3')
 const bgMusic5 = new Audio('assets/sounds/Mare-Trogloditum.mp3')
 const bgMusic6 = new Audio('assets/sounds/The-Legend-of-Nodwic-O-Bodwick.mp3')
-const bgMusic7 = new Audio('assets/sounds/Through-the-Door.mp3')
-const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3, bgMusic4, bgMusic5, bgMusic6, bgMusic7]
+const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3, bgMusic4, bgMusic5, bgMusic6]
 // Attack Sounds
 const attackSound1 = new Audio('assets/sounds/8-bit-explosion-95847.mp3')
 const attackSound2 = new Audio('assets/sounds/kick-hard-8-bit-103746.mp3')
@@ -114,7 +113,7 @@ function setMuteToggle() {
 function playBgMusic() {
     const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
     if (!muted) {
-        track.volume = 0.5
+        track.volume = 0.05
         track.play()
         track.addEventListener('ended', playBgMusic)
     }
@@ -468,6 +467,7 @@ function rollRender(roll) {
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
 //Get random monster by current level
 function getRandomMonster() {
+    let monster = ''
     const lvlOneToNineArray = [
         'giant-crab',
         'mimic',
@@ -484,28 +484,42 @@ function getRandomMonster() {
         'fire-giant',
         'berserker'
     ]
-    const lvlSixteenAndBeyond = [
+    const lvlSixteentoNinteen = [
         'pit-fiend',
         'giant-ape',
         'hydra',
         'tyrannosaurus-rex'
     ]
+    const lvlTwentyandBeyond = [
+        'kraken',
+        'pit-fiend',
+        'tyrannosaurus-rex',
+        'ancient-black-dragon'
+
+    ]
     if (score < 9) {
-        const monster = getRandom(lvlOneToNineArray)
-        fetchDNDMonster(monster)
+        monster = getRandom(lvlOneToNineArray)
+        // fetchDNDMonster(monster)
     } else if (score == 9) {
-        fetchDNDMonster('archmage')
+        monster = 'archmage'
+        // fetchDNDMonster('archmage')
     } else if (score >= 10 && score < 14){
-        const monster = getRandom(lvlElevenToFifteen)
-        fetchDNDMonster(monster)
+        monster = getRandom(lvlElevenToFifteen)
+        // fetchDNDMonster(monster)
     } else if (score == 14){
-        fetchDNDMonster('ancient-black-dragon')
+        monster = 'ancient-black-dragon'
+        // fetchDNDMonster('ancient-black-dragon')
     } else if (score == 19){
-        fetchDNDMonster('kraken')
+        monster = 'kraken'
+        // fetchDNDMonster('kraken')
+    } else if (score >= 15 && score < 20) {
+        monster = getRandom(lvlSixteentoNinteen)
+        // fetchDNDMonster(monster)
     } else {
-        const monster = getRandom(lvlSixteenAndBeyond)
-        fetchDNDMonster(monster)
+        monster = getRandom(lvlTwentyandBeyond)
+        // fetchDNDMonster(monster)
     }
+    fetchDNDMonster(monster)
 }
 // Get random Pokemon
 function getRandomPokemon() {
