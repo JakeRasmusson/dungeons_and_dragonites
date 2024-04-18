@@ -60,8 +60,15 @@ h1 {
 
 .doors {
     position: relative;
-    z-index: -1;
-    bottom: 0;
+    bottom: -3px;
+}
+
+#tomb {
+    position: relative;
+    scale: 50%;
+    left: 100px;
+    bottom: -55px;
+    z-index: 1;
 }
 
 .doors::before {
@@ -118,5 +125,23 @@ a:hover .doorTxt  {
     #floor {
         background-size: contain;
         background-size: cover;
+    }
+}
+
+@media (max-width: 1250px) {
+    #tomb {
+        display: none;
+    }
+}
+
+@media (max-width: 1600px) {
+    #tomb {
+        left: 275px;
+    }
+}
+
+@media (min-width: 2000px) {
+    #tomb {
+        left: 0px;
     }
 }
