@@ -20,7 +20,7 @@ Our esteemed group embarked on a noble quest: to craft a gaming masterpiece leve
 ## Installation
 
 
-Select index.html to open the webpage.  You have two options.  The door on the left takes you to the battle page, and the door on the right takes you to the high scores treasure hoarde.  If you want to battle select the Enter the Dungeon door.  A random pokemon and monster will be generated for you.  To play the game you will simply click "Attack!", the game will roll the dice for you and attack the enemy.  A modal will popup with your attack summary.  Once you close the modal the enemy will take their turn.  If you defeat the enemy another modal will open with two options, Increase Attack and Restore Health.  Select one and the website will generate another monster for you to battle.  Continue this loop until you lose.  Another modal will pop up prompting you to input your name.  If your score is in the top ten it will be added to local storage and be displayed in the high score treasure hoarde.  Select play again to be given another Pokémon and another shot at glory. If you want to see the scores select the check High Scores door.
+Select index.html to open the webpage.  You have two options.  The door on the left takes you to the battle page, and the door on the right takes you to the high scores treasure hoard.  If you want to battle select the Enter the Dungeon door.  A random pokemon and monster will be generated for you.  To play the game you will simply click "Attack!", the game will roll the dice for you and attack the enemy.  A modal will popup with your attack summary.  Once you close the modal the enemy will take their turn.  If you defeat the enemy another modal will open with three options: Increase Attack, Increase Max HP and Restore Health.  Select one and the website will generate another monster for you to battle.  Continue this loop until you lose.  Another modal will pop up prompting you to input your name.  If your score is in the top ten it will be added to local storage and be displayed in the high score treasure hoard.  Select play again to be given another Pokémon and another shot at glory. If you want to see the scores select the check High Scores door.
 
 ## Usage
 
@@ -49,12 +49,19 @@ High scores page
 ![Victory Modal](/assets/images/Readme/high-score-treasure-hoarde.png)
 
 ## Credits
-Music used.
+Music used:
 The Puzzle Door - Fenmos\
 [The puzzle Door](https://barony-of-fenmoss.bandcamp.com/album/the-puzzle-door)
 
 Esper the Bard\
 [Esper the Bard YT](https://www.youtube.com/@esperthebard)
+
+Battle Sounds available for free at https://pixabay.com/
+
+Fonts:\
+The Wild Breath of Zelda - link: https://www.fontspace.com/the-wild-breath-of-zelda-font-f25653\
+Pokémon GB - link: https://www.fontspace.com/pokemon-gb-font-f9621\
+Dragon Hunter - link: https://www.fontspace.com/dragon-hunter-font-f92096
 
 Group member githubs\
 [Kent Tuneberg](https://github.com/ktunebe)\

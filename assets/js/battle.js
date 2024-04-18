@@ -125,7 +125,7 @@ function playBgMusic() {
     const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
     nowPlaying(track.src)
     if (!muted) {
-        track.volume = 0.05
+        track.volume = 0.1
         track.play()
         track.addEventListener('ended', playBgMusic)
     }
@@ -159,12 +159,14 @@ function playAttackSound() {
     const sound = attackSoundArray[Math.floor(Math.random() * attackSoundArray.length)]
     if (!muted) {
         sound.play()
+        sound.volume = 0.6
     }    
 }
 
 function playPokemonCry() {
     if (!muted) {
         pokemonData.pokemonAudio.play()
+        pokemonData.pokemonAudio.volume = 0.3
     }
 }
 /* ---------------------------------------------------------------------------- */
