@@ -14,6 +14,7 @@ const fetchBtn = document.getElementById('fetchBtn')
 const muteToggle = document.getElementById('muteToggle')
 const quitToMainBtn = document.getElementById('quitBtn')
 const playAgainBtn = document.getElementById('playAgainBtn')
+const nowPlayingP = document.getElementById('now-playing')
 // Dice Images
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceRollingImage = document.getElementById('diceRollingImage')
@@ -70,11 +71,11 @@ const bgArray = [
     'assets/images/dungeon-bg-6.png'
 ]
 // Attack Damage Increase Array
-const attackIncreaseArray = [5, 5, 5, 5, 10]
+const attackIncreaseArray = [5, 5, 5, 10, 10]
 // Heal Amount Array
 const healArray = [20, 20, 20, 50, 50, 50, 50, 50, 200, 200]
 // Max HP Increase Array
-const maxHpIncreaseArray = [5, 5, 5, 10, 10]
+const maxHpIncreaseArray = [5, 10, 10, 10, 20]
 // Function to pull random index from array
 function getRandom(array) {
     const index = array[Math.floor(Math.random() * array.length)]
@@ -87,10 +88,13 @@ function getRandom(array) {
 let muted = JSON.parse(localStorage.getItem('muted')) || false
 let canUnmute = false
 // Background Music
-const bgMusic1 = new Audio('assets/sounds/2019-12-09_-_Retro_Forest_-_David_Fesliyan.mp3')
-const bgMusic2 = new Audio('assets/sounds/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3')
-const bgMusic3 = new Audio('assets/sounds/2021-08-30_-_Boss_Time_-_www.FesliyanStudios.com.mp3')
-const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3]
+const bgMusic1 = new Audio('assets/sounds/Through-the-Door.mp3')
+const bgMusic2 = new Audio('assets/sounds/Bold-Kobolds.mp3')
+const bgMusic3 = new Audio('assets/sounds/Down-Down-Again.mp3')
+const bgMusic4 = new Audio('assets/sounds/Alone-in-the-Dark.mp3')
+const bgMusic5 = new Audio('assets/sounds/Mare-Trogloditum.mp3')
+const bgMusic6 = new Audio('assets/sounds/The-Legend-of-Nodwic-O-Bodwick.mp3')
+const bgMusicArray = [bgMusic1, bgMusic2, bgMusic3, bgMusic4, bgMusic5, bgMusic6]
 // Attack Sounds
 const attackSound1 = new Audio('assets/sounds/8-bit-explosion-95847.mp3')
 const attackSound2 = new Audio('assets/sounds/kick-hard-8-bit-103746.mp3')
@@ -106,11 +110,22 @@ function setMuteToggle() {
         muteToggle.textContent = '🔊'
     }
 }
+//Displays current playing song to the HTML page
+function nowPlaying(track) {
+    let trackSplit = track.split('/',).pop()
+    trackNoFile = trackSplit.split('.')[0]
+    finaltrack = trackNoFile.replaceAll('-',' ')
+    console.log(trackNoFile)
+    nowPlayingP.innerHTML =  `Now Playing: 
+     ${finaltrack} <br>
+      By: Fenmos`
+}
 
 function playBgMusic() {
     const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
+    nowPlaying(track.src)
     if (!muted) {
-        track.volume = 0.5
+        track.volume = 0.05
         track.play()
         track.addEventListener('ended', playBgMusic)
     }
@@ -464,6 +479,7 @@ function rollRender(roll) {
 /* ------------ FUNCTIONS FOR GETTING AND FETCHING CHARACTERS ----------------- */
 //Get random monster by current level
 function getRandomMonster() {
+    let monster = ''
     const lvlOneToNineArray = [
         'giant-crab',
         'mimic',
@@ -480,28 +496,42 @@ function getRandomMonster() {
         'fire-giant',
         'berserker'
     ]
-    const lvlSixteenAndBeyond = [
+    const lvlSixteentoNinteen = [
         'pit-fiend',
         'giant-ape',
         'hydra',
         'tyrannosaurus-rex'
     ]
+    const lvlTwentyandBeyond = [
+        'kraken',
+        'pit-fiend',
+        'tyrannosaurus-rex',
+        'ancient-black-dragon'
+
+    ]
     if (score < 9) {
-        const randomIndex = Math.floor(Math.random() * (lvlOneToNineArray.length))
-        fetchDNDMonster(lvlOneToNineArray[randomIndex])
+        monster = getRandom(lvlOneToNineArray)
+        // fetchDNDMonster(monster)
     } else if (score == 9) {
-        fetchDNDMonster('archmage')
+        monster = 'archmage'
+        // fetchDNDMonster('archmage')
     } else if (score >= 10 && score < 14){
-        const randomIndex = Math.floor(Math.random() * (lvlElevenToFifteen.length))
-        fetchDNDMonster(lvlElevenToFifteen[randomIndex])
+        monster = getRandom(lvlElevenToFifteen)
+        // fetchDNDMonster(monster)
     } else if (score == 14){
-        fetchDNDMonster('ancient-black-dragon')
+        monster = 'ancient-black-dragon'
+        // fetchDNDMonster('ancient-black-dragon')
     } else if (score == 19){
-        fetchDNDMonster('kraken')
+        monster = 'kraken'
+        // fetchDNDMonster('kraken')
+    } else if (score >= 15 && score < 20) {
+        monster = getRandom(lvlSixteentoNinteen)
+        // fetchDNDMonster(monster)
     } else {
-        const randomIndex = Math.floor(Math.random() * (lvlSixteenAndBeyond.length))
-        fetchDNDMonster(lvlSixteenAndBeyond[randomIndex])
+        monster = getRandom(lvlTwentyandBeyond)
+        // fetchDNDMonster(monster)
     }
+    fetchDNDMonster(monster)
 }
 // Get random Pokemon
 function getRandomPokemon() {
@@ -595,7 +625,6 @@ function displayBattleCount() {
 /* ------------ FUNCTIONS FOR CREATING CHARACTERS ----------------------------- */
 //Parse Monster Fetch Data
 function parseMonsterData(data) {
-    console.log(data)
     const damageDice = data.actions[0].name == 'Multiattack'? data.actions[1].damage[0].damage_dice : data.actions[0].damage[0].damage_dice
     const monsterIndex = data.index
     const monsterName = data.name
@@ -606,7 +635,6 @@ function parseMonsterData(data) {
     monsterData.imgUrl = `assets/images/${monsterIndex}.png`
     monsterData.armor = data.armor_class[0].value
     monsterData.strength = data.strength
-    console.log(monsterData)
     setMonsterImage()
     setMonsterCard()
     splitDamageDice()

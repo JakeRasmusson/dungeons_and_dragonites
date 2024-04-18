@@ -11,7 +11,13 @@
 
 <body class="bg-cover bg-no-repeat bg-center min-h-screen">
 	<header class=" bg-black bg-opacity-80 text-white">
-		<button class="text-5xl mt-2 ml-2" id="muteToggle"></button>
+		<div class="flex justify-between">
+			<div class="flex items-center">
+			<button class="text-5xl mt-2 ml-2" id="muteToggle"></button>
+			<p id='now-playing'class="text-white ml-2 pt-2"></p>
+			</div>
+			<a href="index.html"><button class="m-3 btn btn-primary text-right">Quit</button></a>
+		</div>
 		<h1 class="text-6xl md:text-8xl text-center py-5" id="battleCountEl"></h1>
 	</header>
 	<div class="flex justify-center"><button class="btn btn-primary w-[50%] mt-32 h-32 text-lg sm:text-2xl" id="fetchBtn">Get Your Pokemon!</button></div>
