@@ -14,6 +14,7 @@ const fetchBtn = document.getElementById('fetchBtn')
 const muteToggle = document.getElementById('muteToggle')
 const quitToMainBtn = document.getElementById('quitBtn')
 const playAgainBtn = document.getElementById('playAgainBtn')
+const nowPlayingP = document.getElementById('now-playing')
 // Dice Images
 const rollTotalSpan = document.getElementById('rollTotal')
 const diceRollingImage = document.getElementById('diceRollingImage')
@@ -109,9 +110,20 @@ function setMuteToggle() {
         muteToggle.textContent = '🔊'
     }
 }
+//Displays current playing song to the HTML page
+function nowPlaying(track) {
+    let trackSplit = track.split('/',).pop()
+    trackNoFile = trackSplit.split('.')[0]
+    finaltrack = trackNoFile.replaceAll('-',' ')
+    console.log(trackNoFile)
+    nowPlayingP.innerHTML =  `Now Playing: 
+     ${finaltrack} <br>
+      By: Fenmos`
+}
 
 function playBgMusic() {
     const track = bgMusicArray[Math.floor(Math.random() * bgMusicArray.length)]
+    nowPlaying(track.src)
     if (!muted) {
         track.volume = 0.05
         track.play()
