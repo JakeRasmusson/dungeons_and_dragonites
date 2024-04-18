@@ -88,20 +88,6 @@ h2 {
         background-size: 600px 1200px;
     }
 
-    #scoreList {
-        margin-top: 10px;
-    }
-
-    .score {
-        font-size: 24px;
-    }
-
-    #highScoreBox {
-        margin-top: 50px;
-        height: 500px;
-        width: 98%;
-    }
-
     #back {
         font-size: 14px;
         margin: 30px auto 5px auto;
@@ -113,6 +99,20 @@ h2 {
         text-align: center;
         background-color: rgba(8, 0, 0, 0.918);
         color: darkred;
+    }
+
+    #highScoreBox {
+        margin-top: 50px;
+        height: 500px;
+        width: 98%;
+    }
+
+    #scoreList {
+        margin-top: 10px;
+    }
+
+    .score {
+        font-size: 24px;
     }
 }
 
