@@ -10,70 +10,73 @@
 </head>
 
 <body class="bg-cover bg-no-repeat bg-center min-h-screen">
+<!-- /* --------------------------------- HEADER ------------------------------------------------------- */ -->
 	<header class=" bg-black bg-opacity-80 text-white">
 		<div class="flex justify-between">
 			<div class="flex items-center">
-			<button class="text-5xl mt-2 ml-2" id="muteToggle"></button>
-			<p id='now-playing'class="text-white ml-2 pt-2"></p>
+				<button class="text-5xl mt-2 ml-2" id="muteToggle"></button>
+				<p id='now-playing'class="text-white ml-2 pt-2"></p>
 			</div>
 			<a href="index.html"><button class="m-3 btn btn-primary text-right">Quit</button></a>
 		</div>
 		<h1 class="text-6xl md:text-8xl text-center pb-3" id="battleCountEl"></h1>
 	</header>
+<!-- /* ------------------------------ MAIN CONTAINER -------------------------------------------------- */ -->
 	<div class="flex justify-center"><button class="btn btn-primary w-[50%] mt-32 h-32 text-lg sm:text-2xl" id="fetchBtn">Get Your Pokémon!</button></div>
-	<div class="py-5 hidden" id="mainContainer">
-		<div class="size-max flex flex-wrap justify-center w-full flex-row text-white font-bold">
-<!-- /* ----------------------------- POKEMON CARD ----------------------------------------------- */ -->
-			<div class="size-max grid flex-1 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4 font-dragon-hunter">
-				<div class="border-white border-b-2 w-[100%] text-center py-2 text-center">
-					<h2 class="text-base md:text-xl lg:text-2xl" id="pokemonNameHeader"></h2>
-				</div>
-				<div class="flex justify-around items-center w-[100%]">
-					<div class="flex-1 text-sm lg:text-xl block min-w-[20%] text-center">
-						<span id="pokemonCurrentHp"></span><span id="pokemonTotalHp"></span>
+		<div class="py-5 hidden" id="mainContainer">
+			<div class="size-max flex flex-wrap justify-center w-full flex-row text-white font-bold">
+	<!-- /* ------------------------------- POKEMON CARD --------------------------------------------------- */ -->
+				<div class="size-max grid flex-1 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4 font-dragon-hunter">
+					<div class="border-white border-b-2 w-[100%] text-center py-2 text-center">
+						<h2 class="text-base md:text-xl lg:text-2xl" id="pokemonNameHeader"></h2>
 					</div>
-					<progress class="flex-2 hp-bar progress progress-primary bg-white border border-white m-2 min-w-[50%] max-w-[60%]" value="100" max="100" id="pokemonHpBar"></progress>
-				</div>
-				<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
-					<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="pokemonImage" />
-				</div>
-				<h2 class=" text-xs lg:text-xl text-center hidden sm:contents" id="pokemonAttackHeader"></h2>
-			</div>
-<!-- /* ----------------------------- MONSTER CARD ----------------------------------------------- */ -->
-			<div class="size-max grid flex-1 md:order-2 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4 font-dragon-hunter">
-				<div class="border-white border-b-2 w-[100%] text-center py-2 text-center">
-					<h2 class="text-base md:text-xl lg:text-2xl" id="monsterNameHeader"></h2>
-				</div>
-				<div class="flex justify-around items-center w-[100%]">
-					<div class="flex-1 text-sm lg:text-xl block min-w-[20%] text-center">
-						<span id="monsterCurrentHp"></span><span id="monsterTotalHp"></span>
+					<div class="flex justify-around items-center w-[100%]">
+						<div class="flex-1 text-sm lg:text-xl block min-w-[20%] text-center">
+							<span id="pokemonCurrentHp"></span><span id="pokemonTotalHp"></span>
+						</div>
+						<progress class="flex-2 hp-bar progress progress-primary bg-white border border-white m-2 min-w-[50%] max-w-[60%]" value="100" max="100" id="pokemonHpBar"></progress>
 					</div>
-					<progress class="flex-2 hp-bar progress progress-primary bg-white border border-white m-2 min-w-[50%] max-w-[60%]" value="100" max="100" id="monsterHpBar"></progress>
+					<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
+						<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="pokemonImage" />
+					</div>
+					<h2 class=" text-xs lg:text-xl text-center hidden sm:contents" id="pokemonAttackHeader"></h2>
 				</div>
-				<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
-					<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="monsterImage" />
+	<!-- /* -------------------------------- MONSTER CARD ------------------------------------------------ */ -->
+				<div class="size-max grid flex-1 md:order-2 max-w-56 lg:max-w-96 aspect-square bg-black bg-opacity-50 border-2 border-white rounded-box place-items-center mx-4 font-dragon-hunter">
+					<div class="border-white border-b-2 w-[100%] text-center py-2 text-center">
+						<h2 class="text-base md:text-xl lg:text-2xl" id="monsterNameHeader"></h2>
+					</div>
+					<div class="flex justify-around items-center w-[100%]">
+						<div class="flex-1 text-sm lg:text-xl block min-w-[20%] text-center">
+							<span id="monsterCurrentHp"></span><span id="monsterTotalHp"></span>
+						</div>
+						<progress class="flex-2 hp-bar progress progress-primary bg-white border border-white m-2 min-w-[50%] max-w-[60%]" value="100" max="100" id="monsterHpBar"></progress>
+					</div>
+					<div class="grid flex-1 h-[100%] w-[100%] max-w-56 lg:max-w-96 aspect-square place-items-center">
+						<img class="h-[75%] w-[75%] object-fill aspect-square transition ease-in-out" id="monsterImage" />
+					</div>
+					<h2 class=" text-xs lg:text-xl text-center hidden sm:contents" id="monsterAttackHeader"></h2>
 				</div>
-				<h2 class=" text-xs lg:text-xl text-center hidden sm:contents" id="monsterAttackHeader"></h2>
-			</div>
-<!-- /* ----------------------------- DICE BOX----------------------------------------------- */ -->
-			<div class="flex-1 order-4 flex-grow-1 md:flex-1 md:order-1 max-w-48 md:max-w-32 lg:max-w-48 shadow-xl mx-4 self-center">
+	<!-- /* ------------------------------- DICE BOX----------------------------------------------------- */ -->
+				<div class="flex-1 order-4 flex-grow-1 md:flex-1 md:order-1 max-w-48 md:max-w-32 lg:max-w-48 shadow-xl mx-4 self-center">
 					<div class="grid flex-1 aspect-square bg-[#929BAD] border-2 border-white rounded-box place-items-center relative">
 						<span class="absolute top-[33%] text-white font-bold text-xl" id="rollTotal"></span>
 						<img class="h-[25%] w-[25%] object-fill transition ease-in-out" id="diceRollingImage"
 							alt="gif of a d20 spinning" src="assets/images/d-20-roll.gif" />
 						<img class="h-[75%] w-[75%] object-fill transition ease-in-out hidden" id="diceStillImage"
 							alt="image of a d20" src="assets/images/d-20-still.png" />
+					</div>
+				</div>
+	<!-- /* ----------------------------- ATTACK BUTTON ----------------------------------------------- */ -->
+				<div class="w-[100%] flex-grow-1 order-3 shadow-xl mx-auto my-5 text-center">
+					<button class="btn btn-primary w-[50%] text-xl sm:text-2xl hidden" id="attackBtn">Attack!</button>
 				</div>
 			</div>
-<!-- /* ----------------------------- ATTACK BUTTON ----------------------------------------------- */ -->
-			<div class="w-[100%] flex-grow-1 order-3 shadow-xl mx-auto my-5 text-center">
-				<button class="btn btn-primary w-[50%] text-xl sm:text-2xl hidden" id="attackBtn">Attack!</button>
-			</div>
-
 		</div>
 	</div>
 
 <!-- /* ----------------------------- MODALS ----------------------------------------------- */ -->
+	<!-- Improve Pokemon -->
 	<dialog id="improvePokemonModal" class="modal">
 		<div class="modal-box">
 			<h3 class="font-bold text-2xl text-center">You win!</h3>
@@ -87,7 +90,7 @@
 			</div>
 		</div>
 	</dialog>
-
+	<!-- Improvement Results -->
 	<dialog id="improvementResultsModal" class="modal">
 		<div class="modal-box">
 		  <h3 class="font-bold text-xl text-center my-3" id="improvementResultsHeader"></h3>
@@ -98,8 +101,8 @@
 			</form>
 		  </div>
 		</div>
-	  </dialog>
-
+	</dialog>
+	<!-- Game Over, no high score -->
 	<dialog id="lowScoreModal" class="modal">
 		<div class="modal-box">
 			<h3 class="font-bold text-2xl text-center">Game Over!</h3>
@@ -110,8 +113,7 @@
 			</div>
 		</div>
 	</dialog>
-
-
+	<!-- Game Over, high score input -->
 	<dialog id="highScoreModal" class="modal">
 		<div class="modal-box">
 			<h3 class="font-bold text-2xl text-center">Game Over!</h3>
@@ -126,20 +128,19 @@
 			</form>
 		</div>
 	</dialog>
-
+	<!-- Roll Results -->
 	<dialog id="rollModal" class="modal">
 		<div class="modal-box">
-				<h2 class="text-2xl text-center font-bold">Roll Results</h2>
-				<ul class="flex flex-1 flex-col ml-3 justify-evenly my-2">
-					<li class="my-1 ml-1" id="rollTypeEl"></li>
-					<li class="my-1 ml-1" id="rollTotalEl"></li>
-					<li class="my-1 ml-1" id="damageModEl"></li>
-					<li class="flex-shrink-1 py-1 px-3 my-1 font-bold border-2 border-black self-start" id="rollDamageEl"></li>
-				</ul>
+			<h2 class="text-2xl text-center font-bold">Roll Results</h2>
+			<ul class="flex flex-1 flex-col ml-3 justify-evenly my-2">
+				<li class="my-1 ml-1" id="rollTypeEl"></li>
+				<li class="my-1 ml-1" id="rollTotalEl"></li>
+				<li class="my-1 ml-1" id="damageModEl"></li>
+				<li class="flex-shrink-1 py-1 px-3 my-1 font-bold border-2 border-black self-start" id="rollDamageEl"></li>
+			</ul>
 			<form class="text-right" method="dialog">
 				<button class="btn btn-primary" id="continueAttack">Continue</button>
 			</form>
-		</div>
 		</div>
 	</dialog>
 

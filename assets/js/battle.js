@@ -115,7 +115,6 @@ function nowPlaying(track) {
     let trackSplit = track.split('/',).pop()
     trackNoFile = trackSplit.split('.')[0]
     finaltrack = trackNoFile.replaceAll('-',' ')
-    console.log(trackNoFile)
     nowPlayingP.innerHTML =  `Now Playing: 
      ${finaltrack} <br>
       By: Fenmos`
@@ -252,14 +251,6 @@ function showrollModal() {
 /* ---------------------------------------------------------------------------- */
 
 /* ------------ FUNCTIONS FOR COMBAT ------------------------------------------ */
-// Check to see if either player is dead
-function checkHealth() {
-    if (monsterData.currentHp <= 0) {
-        victory()
-    } else if (pokemonData.currentHp <= 0) {
-        defeat()
-    }
-}
 // Pokemon attack
 function playerTurn(){
     const thisRoll = rollDice(20)
@@ -272,9 +263,6 @@ function playerTurn(){
         setMonsterCard()
     }, 1500)
     monsterData.currentHp -= attackDamage
-    console.log('Damage: ' + attackDamage);
-    console.log('Damage mod: ' + pokemonData.damageModifier);
-    // checkHealth()
     isPlayerTurn = false
     setTimeout(showrollModal, 3000)
 }
@@ -291,14 +279,11 @@ function monsterTurn(){
         setPokemonCard()
     }, 1500)
     pokemonData.currentHp -= attackDamage
-    console.log('Damage: ' + attackDamage)
-    // checkHealth()
     isPlayerTurn = true
     setTimeout(showrollModal, 3000)
 }
 // Victory
 function victory() {
-    console.log('You have done it')
     score++
     showImproveModal()
     attackBtn.classList.add('hidden')
@@ -324,7 +309,6 @@ function increaseAttack() {
     pokemonData.baseAttack += attackIncrease
     pokemonData.damageModifier = Math.round(pokemonData.baseAttack / 20)
     const prevBaseAttack = pokemonData.baseAttack - attackIncrease
-    console.log(pokemonData.baseAttack)
     improvementResultsHeader.innerHTML = `Base Attack: ${pokemonData.baseAttack - attackIncrease} &rarr; ${pokemonData.baseAttack}`
     if (Math.round(prevBaseAttack / 20) !== pokemonData.damageModifier) {
         damageModIncreaseHeader.innerHTML = `Damage Modifier: ${pokemonData.damageModifier - 1} &rarr; ${pokemonData.damageModifier}`
@@ -364,7 +348,6 @@ function splitDamageDice() {
 // One roll of a specified numbered die
 function rollDice(number) {
     let result = Math.ceil(Math.random() * number)
-    console.log(result)
     return result
 }
 // Multiple rolls of the same numbered die
@@ -374,7 +357,6 @@ function damageRoll(numberofRolls, diceMax, additionalDamage) {
         result += rollDice(diceMax)
     }
     result += additionalDamage
-    console.log("Total: " + result)
     return result
 }
 /* ---------------------------------------------------------------------------- */
@@ -513,25 +495,18 @@ function getRandomMonster() {
     ]
     if (score < 9) {
         monster = getRandom(lvlOneToNineArray)
-        // fetchDNDMonster(monster)
     } else if (score == 9) {
         monster = 'archmage'
-        // fetchDNDMonster('archmage')
     } else if (score >= 10 && score < 14){
         monster = getRandom(lvlElevenToFifteen)
-        // fetchDNDMonster(monster)
     } else if (score == 14){
         monster = 'ancient-black-dragon'
-        // fetchDNDMonster('ancient-black-dragon')
     } else if (score == 19){
         monster = 'kraken'
-        // fetchDNDMonster('kraken')
     } else if (score >= 15 && score < 20) {
         monster = getRandom(lvlSixteentoNinteen)
-        // fetchDNDMonster(monster)
     } else {
         monster = getRandom(lvlTwentyandBeyond)
-        // fetchDNDMonster(monster)
     }
     fetchDNDMonster(monster)
 }
@@ -661,11 +636,6 @@ function parsePokemonData(data) {
     pokemonData.pokemonAudio = new Audio(pokemonData.cry);
     setPokemonImage()
     setPokemonCard()
-    console.log(pokemonData.name)
-    console.log(`Attack: ${pokemonData.attack}`);
-    console.log(`Defense: ${pokemonData.defense}`);
-    console.log(`Special Attack: ${pokemonData.spAttack}`);
-    console.log(`Base Attack: ${pokemonData.baseAttack}`);
     attackBtn.classList.remove('hidden')
 }
 /* ---------------------------------------------------------------------------- */
