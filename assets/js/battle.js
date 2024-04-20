@@ -250,6 +250,53 @@ function showrollModal() {
 }
 /* ---------------------------------------------------------------------------- */
 
+/* ------------ SPECIAL POKEMON FUNCTIONS ------------------------------------- */
+function transformDitto() {
+    pokemonImage.classList.add('scale-[2.5]')
+    pokemonImage.classList.add('duration-500')
+    setTimeout(function() {
+        pokemonData.sprite = monsterData.imgUrl
+        setPokemonImage()
+        pokemonImage.classList.remove('scale-[2.5]')
+    }, 500)
+    setTimeout(function() {
+        pokemonImage.classList.remove('duration-500')
+    }, 1000)
+}
+    
+function transformDittoBack() {
+    pokemonImage.classList.add('scale-[2.5]')
+    pokemonImage.classList.add('duration-500')
+    setTimeout(function() {
+        pokemonData.sprite = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/132.gif'
+        setPokemonImage()
+        pokemonImage.classList.remove('scale-[2.5]')
+    }, 500)
+    setTimeout(function() {
+        pokemonImage.classList.remove('duration-500')
+    }, 1000)
+}
+
+function evolveToGyarados() {
+    pokemonData.name = 'Shiny Gyarados'
+    pokemonData.sprite = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/shiny/130.gif'
+    pokemonData.hp += 125
+    pokemonData.currentHp += 125
+    pokemonData.baseAttack += 125
+    pokemonData.damageModifier = Math.round(pokemonData.baseAttack / 20)
+    setTimeout(togglePokemonVisibility, 200)
+    setTimeout(togglePokemonVisibility, 400)
+    setTimeout(togglePokemonVisibility, 600)
+    setTimeout(togglePokemonVisibility, 700)
+    setTimeout(togglePokemonVisibility, 800)
+    setTimeout(togglePokemonVisibility, 900)
+    setTimeout(function() {
+        setPokemonCard()
+        setPokemonImage()
+    } ,1000)
+}
+/* ---------------------------------------------------------------------------- */   
+
 /* ------------ FUNCTIONS FOR COMBAT ------------------------------------------ */
 // Pokemon attack
 function playerTurn(){
@@ -257,6 +304,9 @@ function playerTurn(){
     const attackDamage = thisRoll * pokemonData.damageModifier
     resultsReset()
     rollRender(thisRoll)
+    if (pokemonData.sprite === 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/132.gif') {
+        setTimeout(transformDitto, 100)
+    }
     setTimeout(function() {
         pokemonHits()
         resultsRender('1d20', thisRoll, pokemonData.damageModifier, attackDamage)
@@ -284,9 +334,15 @@ function monsterTurn(){
 }
 // Victory
 function victory() {
+    if (pokemonData.name === 'magikarp') {
+        evolveToGyarados()
+    }
     score++
     showImproveModal()
     attackBtn.classList.add('hidden')
+    if (pokemonData.sprite === monsterData.imgUrl) {
+        setTimeout(transformDittoBack, 100)
+    }
 }
 // Defeat
 function defeat() {
